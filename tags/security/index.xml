@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>security on NetSecOps Navigator</title>
+    <link>https://abed1985.github.io/tags/security/</link>
+    <description>Recent content in security on NetSecOps Navigator</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 04 Mar 2025 04:51:13 +0000</lastBuildDate>
+    
+	<atom:link href="https://abed1985.github.io/tags/security/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Saml Authentication</title>
+      <link>https://abed1985.github.io/blogs/saml-authentication/</link>
+      <pubDate>Tue, 04 Mar 2025 04:51:13 +0000</pubDate>
+      
+      <guid>https://abed1985.github.io/blogs/saml-authentication/</guid>
+      <description>What is SAML  Security Assertion Markup Language ( XML based but Base64 encoded). Standard protocol for web Single Sign-On (SSO) &amp;amp; Federated identity. Allow apps and services to offload &amp;ldquo;authentication&amp;rdquo; to a trusted 3rd party. SSO intended to be easy for the user and transparent after the user has logged in the first time.  Key terms  Federated Identity: Linking a user&amp;rsquo;s identity across different identity management systems/domains. eg.</description>
+    </item>
+    
+  </channel>
+</rss>
