@@ -1,15 +1,25 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Fortinet on NetSecOps Navigator</title>
+    <title>fortinet on NetSecOps Navigator</title>
     <link>https://abed1985.github.io/tags/fortinet/</link>
-    <description>Recent content in Fortinet on NetSecOps Navigator</description>
+    <description>Recent content in fortinet on NetSecOps Navigator</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 03 Mar 2025 05:57:15 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 04 Mar 2025 23:54:30 +0000</lastBuildDate>
     
 	<atom:link href="https://abed1985.github.io/tags/fortinet/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Fortigate user level DLP</title>
+      <link>https://abed1985.github.io/blogs/fortinet-dlp/</link>
+      <pubDate>Tue, 04 Mar 2025 23:54:30 +0000</pubDate>
+      
+      <guid>https://abed1985.github.io/blogs/fortinet-dlp/</guid>
+      <description>Block sensitive data leak to ChatGPT example DLP (Data Leak Prevention) has become increasingly crucial with the rise of LLM AI platforms. Many users rely on AI chat platforms to simplify both their work and personal tasks.
+While this convenience is beneficial, it also raises the risk of unintentionally exposing sensitive organizational information. LLM models can incorporate leaked data into their training sets, potentially making it part of responses to external users—significantly increasing security risks.</description>
+    </item>
     
     <item>
       <title>Fortinet Guest Wifi with Captive Portal</title>
