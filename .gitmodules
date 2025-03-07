@@ -3,7 +3,5 @@
 	url = https://github.com/Abed1985/abed1985.github.io
 	branch = main
 
-[submodule "netsecopsblog_site/themes/hugo-profile"]
-    path = netsecopsblog_site/themes/hugo-profile
     url = https://github.com/Abed1985/netsecopsblog.git
     branch = main
