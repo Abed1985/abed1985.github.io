@@ -28,20 +28,16 @@
 
 
 
-<meta property="og:title" content="Fortinet ZTNA Part II" />
-<meta property="og:description" content="In the second part of our Fortinet ZTNA series, we explore a practical use case involving remote access to basic on-premises data center resources.
-The following high-level diagram illustrates the setup:
-This scenario involves the need for remote access to four servers within the data center, each with different access requirements:    Server IP OS Service ZTNA Server Access Proxy Type     192.168.5.100 web server over linux Web access over TCP/443 HTTPS Access Proxy   192." />
+<meta property="og:title" content="Fortinet Ztna Part IV" />
+<meta property="og:description" content="ZTNA Access Proxy Server Types" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://abed1985.github.io/blogs/fortinet-ztna-part2/" />
-<meta property="article:published_time" content="2025-03-06T04:32:54+00:00" />
-<meta property="article:modified_time" content="2025-03-06T04:32:54+00:00" /><meta property="og:site_name" content="NetSecOps Navigator" />
+<meta property="og:url" content="https://abed1985.github.io/blogs/fortinet-ztna-part4/" />
+<meta property="article:published_time" content="2025-03-08T06:46:32+00:00" />
+<meta property="article:modified_time" content="2025-03-08T06:46:32+00:00" /><meta property="og:site_name" content="NetSecOps Navigator" />
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Fortinet ZTNA Part II"/>
-<meta name="twitter:description" content="In the second part of our Fortinet ZTNA series, we explore a practical use case involving remote access to basic on-premises data center resources.
-The following high-level diagram illustrates the setup:
-This scenario involves the need for remote access to four servers within the data center, each with different access requirements:    Server IP OS Service ZTNA Server Access Proxy Type     192.168.5.100 web server over linux Web access over TCP/443 HTTPS Access Proxy   192."/>
+<meta name="twitter:title" content="Fortinet Ztna Part IV"/>
+<meta name="twitter:description" content="ZTNA Access Proxy Server Types"/>
 
 
 <link rel="stylesheet" href="/bootstrap-5/css/bootstrap.min.css" media="all"><link rel="stylesheet" href="/css/header.css" media="all">
@@ -105,7 +101,7 @@ This scenario involves the need for remote access to four servers within the dat
 
 
 
-<meta name="description" content="">
+<meta name="description" content="ZTNA Access Proxy Server Types">
 <link rel="stylesheet" href="/css/single.css">
 
 
@@ -116,7 +112,7 @@ This scenario involves the need for remote access to four servers within the dat
   
 
   <title>
-Fortinet ZTNA Part II | NetSecOps Navigator
+Fortinet Ztna Part IV | NetSecOps Navigator
 
   </title>
 </head>
@@ -293,13 +289,13 @@ Fortinet ZTNA Part II | NetSecOps Navigator
       <div class="col-sm-12 col-md-12 col-lg-9">
         <div class="pr-lg-4">
           <div class="title mb-5">
-            <h1 class="text-center mb-4">Fortinet ZTNA Part II</h1>
+            <h1 class="text-center mb-4">Fortinet Ztna Part IV</h1>
             <div class="text-center">
               
                 Abood Alakhras
                 <small>|</small>
               
-              Mar 6, 2025
+              Mar 8, 2025
 
               
               <span id="readingTime">
@@ -310,99 +306,244 @@ Fortinet ZTNA Part II | NetSecOps Navigator
           </div>
           
           <div class="featured-image">
-            <img class="img-fluid mx-auto d-block" src="/images/fortinet/ztnap.png" alt="Fortinet ZTNA Part II">
+            <img class="img-fluid mx-auto d-block" src="/images/fortinet/ztnap.png" alt="Fortinet Ztna Part IV">
           </div>
           
           <article class="page-content  p-2">
-          <p>In the second part of our Fortinet ZTNA series, we explore a practical use case involving remote access to basic on-premises data center resources.</p>
-<p>The following high-level diagram illustrates the setup:</p>
-<p align="middle">
-  <img src="/images/fortinet/ztnap22.png" alt="My Image">
-</p>
-<br>
-This scenario involves the need for remote access to four servers within the data center, each with different access requirements:
-<br>
-<br>
-<table>
-<thead>
-<tr>
-<th>Server IP</th>
-<th>OS</th>
-<th>Service</th>
-<th>ZTNA Server Access Proxy Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>192.168.5.100</td>
-<td>web server over linux</td>
-<td>Web access over TCP/443</td>
-<td>HTTPS Access Proxy</td>
-</tr>
-<tr>
-<td>192.168.2.222</td>
-<td>web server over esxi host</td>
-<td>Web access over TCP/443</td>
-<td>HTTPS Access Proxy</td>
-</tr>
-<tr>
-<td>192.168.2.2</td>
-<td>Windows server</td>
-<td>RDP access over TCP/3389</td>
-<td>TCP Forwarding Access Proxy</td>
-</tr>
-<tr>
-<td>192.168.2.3</td>
-<td>Ubuntu</td>
-<td>SSH access over TCP/22</td>
-<td>SSH Access Proxy</td>
-</tr>
-</tbody>
-</table>
-<p>The configuration steps will involve both the FortiGate and FortiClient EMS devices. The following topics will be covered:</p>
+          <h2 id="introduction">Introduction</h2>
+<p>In this fourth installment of our Fortinet ZTNA series, we delve into ZTNA access proxy server types and how each is applied in our Proof of Concept (PoC).</p>
+<p>The ZTNA server defines the access proxy VIP and the real servers that clients connect to. Once configured, client requests are redirected to the access proxy VIP, with authentication mechanisms such as SAML layered on top.</p>
+<p>ZTNA supports multiple HTTP and SAML authentication methods.</p>
+<h2 id="poc-scenario">PoC Scenario</h2>
+<p>In our PoC, we need to grant access to:</p>
+<pre><code>Two web servers via HTTPS (TCP 443)
+One RDP server via TCP 3389
+One SSH server via TCP 22
+</code></pre>
+<p>To achieve this, we configure three types of ZTNA proxies:</p>
+<h3 id="ztna-https-access-proxy">ZTNA HTTPS Access Proxy</h3>
+<p>The FortiGate HTTPS access proxy functions as a reverse proxy for web servers, forwarding client connections while enforcing authentication and security policies.</p>
+<h4 id="how-it-works">How It Works:</h4>
 <ul>
-<li>Fortigate &amp; FortiClient EMS connectivity.</li>
-<li>Forticlient &amp; FortiClient EMS connectivity.</li>
-<li>SAML Authentication with Azure as IdP and Fortigate as SP.</li>
-<li>ZTNA access proxy server types, use cases and their basic configuration.</li>
-<li>ZTNA certificate Management.</li>
-<li>ZTNA Destinations configuration.</li>
-<li>ZTNA Rules configuration.</li>
-<li>ZTNA Tags configuration.</li>
+<li>The web server address resolves to the FortiGate access proxy VIP.</li>
+<li>FortiGate proxies the connection, authenticates the device, and enforces security policies.</li>
+<li>The user is prompted to present an endpoint certificate, validated against FortiClient EMS.</li>
 </ul>
-<p>This part focuses on the connectivity between FortiGate/FortiClient EMS and FortiClient/FortiClient EMS.</p>
-<p>FortiGate maintains a continuous connection to the EMS server, synchronizing endpoint information and ZTNA tags.
-This fabric connection plays a critical role in the solution&rsquo;s functionality and traffic flow.</p>
-<h2 id="fortigate--ems-connectivity">Fortigate &amp; EMS Connectivity</h2>
+<h4 id="configuration-example">Configuration Example</h4>
+<p>For our PoC, we use FortiGate proxy VIPs:</p>
 <ul>
-<li>FortiGate uses the FortiClient EMS fabric connector to establish a connection with FortiClient EMS.</li>
-<li>For the fabric connection to work, FortiGate must verify the FortiClient EMS server&rsquo;s certificate. A CA certificate needs to be installed on FortiGate; otherwise, the certificate will not be trusted, causing the fabric connection to fail.</li>
-<li>FortiClient EMS must authorize FortiGate as a fabric device.</li>
+<li>aboodshouse.fortiddns.com:8443</li>
+<li>aboodshouse.fortiddns.com:9443</li>
 </ul>
-<h3 id="configuration">Configuration</h3>
+<p>The equivalent CLI configuration for two web servers:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">config firewall access<span style="color:#f92672">-</span>proxy
+    edit <span style="color:#e6db74">&#34;ABOOD-DC&#34;</span>
+        set vip <span style="color:#e6db74">&#34;ABOOD-DC&#34;</span>
+        set client<span style="color:#f92672">-</span>cert enable
+        config api<span style="color:#f92672">-</span>gateway
+            edit <span style="color:#ae81ff">1</span>
+                config realservers
+                    edit <span style="color:#ae81ff">1</span>
+                        set ip <span style="color:#ae81ff">192.168</span><span style="color:#f92672">.</span><span style="color:#ae81ff">5.100</span>
+                    next
+                end
+            next
+        end
+    next
+end
+FG<span style="color:#f92672">-</span>ABOOD<span style="color:#f92672">-</span>DC<span style="color:#f92672">-</span>WAN (ABOOD<span style="color:#f92672">-</span>DC) <span style="color:#75715e"># next</span>
+FG<span style="color:#f92672">-</span>ABOOD<span style="color:#f92672">-</span>DC<span style="color:#f92672">-</span>WAN (access<span style="color:#f92672">-</span>proxy) <span style="color:#75715e"># edit ABOOD-DC2 </span>
+FG<span style="color:#f92672">-</span>ABOOD<span style="color:#f92672">-</span>DC<span style="color:#f92672">-</span>WAN (ABOOD<span style="color:#f92672">-</span>DC2) <span style="color:#75715e"># show</span>
+config firewall access<span style="color:#f92672">-</span>proxy
+    edit <span style="color:#e6db74">&#34;ABOOD-DC2&#34;</span>
+        set vip <span style="color:#e6db74">&#34;ABOOD-DC2&#34;</span>
+        set client<span style="color:#f92672">-</span>cert enable
+        config api<span style="color:#f92672">-</span>gateway
+            edit <span style="color:#ae81ff">3</span>
+                config realservers
+                    edit <span style="color:#ae81ff">1</span>
+                        set ip <span style="color:#ae81ff">192.168</span><span style="color:#f92672">.</span><span style="color:#ae81ff">2.222</span>
+                    next
+                end
+            next
+            edit <span style="color:#ae81ff">2</span>
+                set service samlsp
+                set saml<span style="color:#f92672">-</span>server <span style="color:#e6db74">&#34;azure-saml&#34;</span>
+            next
+        end
+    next
+end
+FG<span style="color:#f92672">-</span>ABOOD<span style="color:#f92672">-</span>DC<span style="color:#f92672">-</span>WAN (ABOOD<span style="color:#f92672">-</span>DC2) <span style="color:#75715e"># end</span>
+</code></pre></div><h4 id="key-notes">Key notes</h4>
+<ul>
+<li>The certificate &ldquo;aboodfwcert&rdquo; is issued by a trusted CA and used for the access proxy.</li>
+<li>The second web server requires SAML authentication, adding an extra layer of security.</li>
+</ul>
+<h3 id="ztna-tcp-forwarding-access-proxy">ZTNA TCP Forwarding Access Proxy</h3>
+<p>The FortiGate TCP forwarding access proxy enables secure tunneling of TCP-based protocols such as RDP, FTP, and SMB.</p>
+<h4 id="how-it-works-1">How It Works:</h4>
+<ul>
+<li>The proxy forwards TCP traffic to the target server.</li>
+<li>The connection is tunneled over HTTPS between the client and FortiGate.</li>
+<li>FortiGate enforces user and device authentication before granting access.</li>
+<li>Additional security posture checks (LDAP, RADIUS, SAML) can be applied.</li>
+</ul>
+<h4 id="configuration-example-1">Configuration Example</h4>
+<p>For our PoC, we configure one RDP server (TCP 3389) via the FortiGate proxy VIP aboodshouse.fortiddns.com:7443 :</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">config firewall access<span style="color:#f92672">-</span>proxy
+    edit <span style="color:#e6db74">&#34;ABOOD-DC3&#34;</span>
+        set vip <span style="color:#e6db74">&#34;ABOOD-DC3&#34;</span>
+        set client<span style="color:#f92672">-</span>cert enable
+        config api<span style="color:#f92672">-</span>gateway
+            edit <span style="color:#ae81ff">1</span>
+                set url<span style="color:#f92672">-</span>map <span style="color:#e6db74">&#34;/tcp&#34;</span>
+                set service tcp<span style="color:#f92672">-</span>forwarding
+                config realservers
+                    edit <span style="color:#ae81ff">1</span>
+                        set address <span style="color:#e6db74">&#34;Windows_Server&#34;</span>
+                        set mappedport <span style="color:#ae81ff">3389</span> 
+                    next
+                end
+            next
+            edit <span style="color:#ae81ff">2</span>
+                set service samlsp
+                set saml<span style="color:#f92672">-</span>server <span style="color:#e6db74">&#34;azure-saml&#34;</span>
+            next
+        end
+    next
+end
+</code></pre></div><h3 id="ztna-ssh-access-proxy">ZTNA SSH Access Proxy:</h3>
+<p>The FortiGate SSH access proxy secures and controls access to SSH servers.</p>
+<h4 id="how-it-works-2">How It Works:</h4>
+<ul>
+<li>FortiGate acts as a reverse proxy for SSH traffic.</li>
+<li>It validates the SSH host key to verify the server’s identity.</li>
+<li>If the host key matches, the connection is established. Otherwise, it is denied.</li>
+</ul>
+<h4 id="advantages-over-tcp-forwarding">Advantages Over TCP Forwarding:</h4>
+<ul>
+<li>Enables SSH deep inspection.</li>
+<li>Performs optional host key validation.</li>
+<li>Enforces user and device trust context.</li>
+<li>Supports one-time authentication for both FortiGate and the SSH server.</li>
+</ul>
+<h4 id="configuration-steps">Configuration Steps</h4>
+<p>For our PoC, we configure one server access over SSH (TCP 22) via the FortiGate proxy VIP aboodshouse.fortiddns.com:6443 :</p>
 <ol>
-<li>Export the FortiClient EMS SSL certificate and import it into FortiGate. The certificate is stored in the &ldquo;Trusted Root Certification Authorities&rdquo; folder on the FortiClient EMS server. A wildcard certificate can be used, imported as a remote certificate CA in FortiGate.</li>
+<li>Locate the public key files in the SSH server: Choose the public key file based on the hash type ( in this case, ECDSA) , and show its content with cat utility</li>
 </ol>
-<p><img src="/images/fortinet/ztna_emscert.png" alt="My Image"></p>
-<p><img src="/images/fortinet/ztna_emscert2.png" alt="My Image"></p>
+<p><img src="/images/fortinet/ztna_ssh1.PNG" alt="My Image"></p>
 <ol start="2">
-<li>Add EMS as a fabric device on FortiGate. FortiClient EMS must authorize FortiGate as a fabric device.
-The fabric connection can connect directly to an EMS server or an EMS tenant. Each customer site/tenant in EMS must have a DNS A record pointing to FortiEMS for the fabric connection.</li>
+<li>Retrieve the Fortigate CA&rsquo;s public key from the Fortigate:</li>
 </ol>
-<p>After logging into FortiClient EMS, a pop-up will prompt you to authorize FortiGate. Until authorized, the FortiClient EMS connector status will show &ldquo;down.&rdquo;</p>
-<p><img src="/images/fortinet/ztna_conn.png" alt="My Image"></p>
-<p>Under Administration → Fabric Devices, you will see the FortiGate authorized as a fabric device.</p>
-<p>Once connected, FortiGate will automatically synchronize ZTNA tags from FortiClient EMS.</p>
-<p><img src="/images/fortinet/ztna_conn2.png" alt="My Image"></p>
-<h2 id="forticlient--forticlient-ems-connectivity">Forticlient &amp; FortiClient EMS Connectivity</h2>
+<p><img src="/images/fortinet/ztna_ssh2.PNG" alt="My Image"></p>
+<ol start="3">
+<li>On the Linux server, enable the SSH service to use the authorized_keys file:
 <ul>
-<li>The FortiClient endpoint must establish a connection to FortiClient EMS.</li>
-<li>The telemetry connection between FortiClient and FortiClient EMS is a crucial dependency of the ZTNA solution. This step must be completed before moving on to further configurations (with the first step being the fabric connection between FortiGate and FortiClient EMS).</li>
-<li>The connection can be verified on the FortiClient console under the Zero Trust Telemetry menu or by navigating to Endpoints &gt; All Endpoints in FortiClient EMS.</li>
-<li>FortiClient EMS listens for incoming connections from FortiClients on TCP/8013, so ensure inbound access to this port is allowed on the public network.</li>
+<li>Locate and edit  /etc/ssh/sshd_config file.</li>
+<li>Ensure that the AuthorizedKeysFile line is not commented.</li>
 </ul>
-<p><img src="/images/fortinet/ztna_fclient1.png" alt="My Image"></p>
-<p><img src="/images/fortinet/ztna_fems1.png" alt="My Image"></p>
+</li>
+</ol>
+<p><img src="/images/fortinet/ztna_ssh4.PNG" alt="My Image"></p>
+<ol start="4">
+<li>Allow remote SSH log in with certificate authentication and principal name:
+<ul>
+<li>Locate the accounts authorized_keys file in the ~/.ssh directory ( if the directory doesnt exist, create it with mkdir ~/.ssh)</li>
+<li>Create an entry containing following keywards and add them the authorized_keys file . In POC example ( using echo &lsquo;cert-authority,principals=&quot;abooda&rdquo; ssh-rsa ********&rsquo; &raquo; authorized_keys)
+-&gt; cert-authority: Indicates entry us used in certificate authentication by validating the certificate using the public key provided in this entry.
+-&gt; principals=&quot;abood&rdquo; : indicates the user that must match with the username embedded in the SSH certificate.
+-&gt; ssh-rsa **** : indicates the Fortigates CA&rsquo;s public key that is used to validate the SSH certificate</li>
+</ul>
+</li>
+</ol>
+<p><img src="/images/fortinet/ztna_ssh5.PNG" alt="My Image"></p>
+<p><img src="/images/fortinet/ztna_ssh6.PNG" alt="My Image"></p>
+<ol start="5">
+<li>Restart sshd service per above.
+<ul>
+<li>When a user connects from a SSH client using <username>@<server IP>, sshd will locate the authorized_keys file in the directory /home/<username>/.ssh/authorized_keys.</li>
+<li>If the authorized_keys is not in that directory, authentication will fail on the SSH server side.</li>
+<li>If you suspect that authentication is failing on the SSH server, use the following commands to manually start sshd in debug mode to troubleshoot:</li>
+</ul>
+</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">$ sudo systemctl stop sshd
+$ /usr/sbin/sshd -ddd -p <span style="color:#ae81ff">22</span>
+</code></pre></div><ol start="6">
+<li>Create a new VIP on Fortigate to allow access to the SSH proxy ( In POC: aboodshouse.fortiddns.com:6443)</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">config firewall vip
+    edit <span style="color:#e6db74">&#34;ABOOD-DC4&#34;</span>
+        set type access<span style="color:#f92672">-</span>proxy
+        set extip <span style="color:#ae81ff">14.137</span><span style="color:#f92672">.</span><span style="color:#ae81ff">208.29</span>
+        set extintf <span style="color:#e6db74">&#34;NBN&#34;</span>
+        set server<span style="color:#f92672">-</span>type https
+        set extport <span style="color:#ae81ff">6443</span>
+        set ssl<span style="color:#f92672">-</span>certificate <span style="color:#e6db74">&#34;aboodfwcert&#34;</span>
+    next
+end
+</code></pre></div><ol start="7">
+<li>Create the address object of the SSH server on the Fortigate Firewall:</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">config firewall address
+    edit <span style="color:#e6db74">&#34;ubuntu-docker-2&#34;</span>
+        set subnet <span style="color:#ae81ff">192.168</span><span style="color:#f92672">.</span><span style="color:#ae81ff">2.3</span> <span style="color:#ae81ff">255.255</span><span style="color:#f92672">.</span><span style="color:#ae81ff">255.255</span>
+    next
+end
+</code></pre></div><ol start="8">
+<li>Configure the host-key that will be used to authenticate the SSH server. The public key was retrieved when we configured the Linux SSH server ( Step 1).</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">config firewall ssh host<span style="color:#f92672">-</span>key
+    edit <span style="color:#e6db74">&#34;spk-ubuntu-docker-2&#34;</span>
+        set type ECDSA
+        set usage access<span style="color:#f92672">-</span>proxy
+        set public<span style="color:#f92672">-</span>key <span style="color:#e6db74">&#34;AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBBBooCYd+9j47rfY8lFYOqrztZPL8pvpHQRAWmOHa2kjuq8wCcJRiWq3MQxGXKjWsVWxCHVY5HLaMEyd1FySVG4=&#34;</span>
+    next
+end
+
+<span style="color:#ae81ff">9.</span>	 Configure the access proxy SSH client certificate ( A CA certificate <span style="color:#f92672">is</span> assigned to sign the SSH certificate that will be used <span style="color:#f92672">in</span> the SSH authentication<span style="color:#f92672">.</span> The SSH certificate will have the username embedded <span style="color:#f92672">in</span> the certificate principal)<span style="color:#f92672">.</span> 
+config firewall access<span style="color:#f92672">-</span>proxy<span style="color:#f92672">-</span>ssh<span style="color:#f92672">-</span>client<span style="color:#f92672">-</span>cert
+    edit <span style="color:#e6db74">&#34;ubuntu-docker-2-access-proxy-ssh-client-cert&#34;</span>
+        set source<span style="color:#f92672">-</span>address enable
+        set auth<span style="color:#f92672">-</span>ca <span style="color:#e6db74">&#34;Fortinet_SSH_CA&#34;</span>
+    next
+end
+</code></pre></div><ol start="10">
+<li>Configure the access proxy server settings:</li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">config firewall access<span style="color:#f92672">-</span>proxy
+    edit <span style="color:#e6db74">&#34;ABOOD-DC4&#34;</span>
+        set vip <span style="color:#e6db74">&#34;ABOOD-DC4&#34;</span>
+        set client<span style="color:#f92672">-</span>cert enable
+        config api<span style="color:#f92672">-</span>gateway
+            edit <span style="color:#ae81ff">1</span>
+                set url<span style="color:#f92672">-</span>map <span style="color:#e6db74">&#34;/tcp&#34;</span>
+                set service tcp<span style="color:#f92672">-</span>forwarding
+                config realservers
+                    edit <span style="color:#ae81ff">1</span>
+                        set address <span style="color:#e6db74">&#34;ubuntu-docker-2&#34;</span>
+                        set type ssh
+                        set ssh<span style="color:#f92672">-</span>client<span style="color:#f92672">-</span>cert <span style="color:#e6db74">&#34;ubuntu-docker-2-access-proxy-ssh-client-cert&#34;</span>
+                        set ssh<span style="color:#f92672">-</span>host<span style="color:#f92672">-</span>key<span style="color:#f92672">-</span>validation enable
+                        set ssh<span style="color:#f92672">-</span>host<span style="color:#f92672">-</span>key <span style="color:#e6db74">&#34;spk-ubuntu-docker-2&#34;</span>
+                    next
+                end
+            next
+            edit <span style="color:#ae81ff">2</span>
+                set service samlsp
+                set saml<span style="color:#f92672">-</span>server <span style="color:#e6db74">&#34;azure-saml&#34;</span>
+            next
+        end
+    next
+end
+</code></pre></div><h2 id="conclusion">Conclusion</h2>
+<p>ZTNA access proxies provide a flexible and secure method for controlling access to protected resources. By leveraging HTTPS, TCP forwarding, and SSH access proxies, organizations can:</p>
+<ul>
+<li>Ensure strong authentication and identity validation.</li>
+<li>Secure access to web, RDP, and SSH services.</li>
+<li>Maintain zero-trust security principles.</li>
+</ul>
 
           </article>
         </div>
@@ -417,12 +558,15 @@ The fabric connection can connect directly to an EMS server or an EMS tenant. Ea
               <div class="toc-content">
                 <nav id="TableOfContents">
   <ul>
-    <li><a href="#fortigate--ems-connectivity">Fortigate &amp; EMS Connectivity</a>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#poc-scenario">PoC Scenario</a>
       <ul>
-        <li><a href="#configuration">Configuration</a></li>
+        <li><a href="#ztna-https-access-proxy">ZTNA HTTPS Access Proxy</a></li>
+        <li><a href="#ztna-tcp-forwarding-access-proxy">ZTNA TCP Forwarding Access Proxy</a></li>
+        <li><a href="#ztna-ssh-access-proxy">ZTNA SSH Access Proxy:</a></li>
       </ul>
     </li>
-    <li><a href="#forticlient--forticlient-ems-connectivity">Forticlient &amp; FortiClient EMS Connectivity</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
   </ul>
 </nav>
               </div>
@@ -456,22 +600,22 @@ The fabric connection can connect directly to an EMS server or an EMS tenant. Ea
             <div class="social-content">
               <ul class="list-inline">
                 <li class="list-inline-item text-center">
-                  <a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3a%2f%2fabed1985.github.io%2fblogs%2ffortinet-ztna-part2%2f">
+                  <a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3a%2f%2fabed1985.github.io%2fblogs%2ffortinet-ztna-part4%2f">
                     <i class="fab fa-linkedin"></i>
                   </a>
                 </li>
                 <li class="list-inline-item text-center">
-                  <a target="_blank" href="https://twitter.com/share?text=Fortinet%20ZTNA%20Part%20II&url=https%3a%2f%2fabed1985.github.io%2fblogs%2ffortinet-ztna-part2%2f">
+                  <a target="_blank" href="https://twitter.com/share?text=Fortinet%20Ztna%20Part%20IV&url=https%3a%2f%2fabed1985.github.io%2fblogs%2ffortinet-ztna-part4%2f">
                     <i class="fab fa-twitter"></i>
                   </a>
                 </li>
                 <li class="list-inline-item text-center">
-                  <a target="_blank" href="https://api.whatsapp.com/send?text=Fortinet%20ZTNA%20Part%20II: https%3a%2f%2fabed1985.github.io%2fblogs%2ffortinet-ztna-part2%2f">
+                  <a target="_blank" href="https://api.whatsapp.com/send?text=Fortinet%20Ztna%20Part%20IV: https%3a%2f%2fabed1985.github.io%2fblogs%2ffortinet-ztna-part4%2f">
                     <i class="fab fa-whatsapp"></i>
                   </a>
                 </li>
                 <li class="list-inline-item text-center">
-                  <a target="_blank" href='mailto:?subject=Fortinet%20ZTNA%20Part%20II&amp;body=Check%20out%20this%20site https%3a%2f%2fabed1985.github.io%2fblogs%2ffortinet-ztna-part2%2f'>
+                  <a target="_blank" href='mailto:?subject=Fortinet%20Ztna%20Part%20IV&amp;body=Check%20out%20this%20site https%3a%2f%2fabed1985.github.io%2fblogs%2ffortinet-ztna-part4%2f'>
                     <i class="fa fa-envelope"></i>
                   </a>
                 </li>

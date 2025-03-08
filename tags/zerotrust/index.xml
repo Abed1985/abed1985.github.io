@@ -6,10 +6,21 @@
     <description>Recent content in zerotrust on NetSecOps Navigator</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 07 Mar 2025 01:45:48 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 08 Mar 2025 06:46:32 +0000</lastBuildDate>
     
 	<atom:link href="https://abed1985.github.io/tags/zerotrust/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Fortinet Ztna Part IV</title>
+      <link>https://abed1985.github.io/blogs/fortinet-ztna-part4/</link>
+      <pubDate>Sat, 08 Mar 2025 06:46:32 +0000</pubDate>
+      
+      <guid>https://abed1985.github.io/blogs/fortinet-ztna-part4/</guid>
+      <description>Introduction In this fourth installment of our Fortinet ZTNA series, we delve into ZTNA access proxy server types and how each is applied in our Proof of Concept (PoC).
+The ZTNA server defines the access proxy VIP and the real servers that clients connect to. Once configured, client requests are redirected to the access proxy VIP, with authentication mechanisms such as SAML layered on top.
+ZTNA supports multiple HTTP and SAML authentication methods.</description>
+    </item>
     
     <item>
       <title>Fortinet ZTNA Part III</title>
