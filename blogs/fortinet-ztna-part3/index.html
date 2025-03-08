@@ -28,16 +28,16 @@
 
 
 
-<meta property="og:title" content="Fortinet ZTNA Part I" />
-<meta property="og:description" content="Solution Overview Definition &amp; Overview Zero Trust Network Access (ZTNA) is an advanced access control method that leverages client device identification, authentication, and Zero Trust tags to provide role-based access to applications. ZTNA enables administrators to manage network access for both on-fabric local users and off-fabric remote users. Access is granted only after a series of checks: device verification, user identity authentication, user authorization, and context-based posture checks, all using Zero Trust tags." />
+<meta property="og:title" content="Fortinet ZTNA Part III" />
+<meta property="og:description" content="SAML Authentication with MS Azure" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://example.org/blogs/fortinet-ztna-part1/" />
-<meta property="article:published_time" content="2025-03-06T00:58:01+00:00" />
-<meta property="article:modified_time" content="2025-03-06T00:58:01+00:00" />
+<meta property="og:url" content="http://example.org/blogs/fortinet-ztna-part3/" />
+<meta property="article:published_time" content="2025-03-07T01:45:48+00:00" />
+<meta property="article:modified_time" content="2025-03-07T01:45:48+00:00" />
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Fortinet ZTNA Part I"/>
-<meta name="twitter:description" content="Solution Overview Definition &amp; Overview Zero Trust Network Access (ZTNA) is an advanced access control method that leverages client device identification, authentication, and Zero Trust tags to provide role-based access to applications. ZTNA enables administrators to manage network access for both on-fabric local users and off-fabric remote users. Access is granted only after a series of checks: device verification, user identity authentication, user authorization, and context-based posture checks, all using Zero Trust tags."/>
+<meta name="twitter:title" content="Fortinet ZTNA Part III"/>
+<meta name="twitter:description" content="SAML Authentication with MS Azure"/>
 
 
 <link rel="stylesheet" href="/bootstrap-5/css/bootstrap.min.css" media="all"><link rel="stylesheet" href="/css/header.css" media="all">
@@ -101,7 +101,7 @@
 
 
 
-<meta name="description" content="">
+<meta name="description" content="SAML Authentication with MS Azure">
 <link rel="stylesheet" href="/css/single.css">
 
 
@@ -112,7 +112,7 @@
   
 
   <title>
-Fortinet ZTNA Part I | My New Hugo Site
+Fortinet ZTNA Part III | My New Hugo Site
 
   </title>
 </head>
@@ -233,13 +233,13 @@ Fortinet ZTNA Part I | My New Hugo Site
       <div class="col-sm-12 col-md-12 col-lg-9">
         <div class="pr-lg-4">
           <div class="title mb-5">
-            <h1 class="text-center mb-4">Fortinet ZTNA Part I</h1>
+            <h1 class="text-center mb-4">Fortinet ZTNA Part III</h1>
             <div class="text-center">
               
                 Abood Alakhras
                 <small>|</small>
               
-              Mar 6, 2025
+              Mar 7, 2025
 
               
               <span id="readingTime">
@@ -250,48 +250,135 @@ Fortinet ZTNA Part I | My New Hugo Site
           </div>
           
           <div class="featured-image">
-            <img class="img-fluid mx-auto d-block" src="/images/fortinet/ztnap.png" alt="Fortinet ZTNA Part I">
+            <img class="img-fluid mx-auto d-block" src="/images/fortinet/ztnap.png" alt="Fortinet ZTNA Part III">
           </div>
           
           <article class="page-content  p-2">
-          <h2 id="solution-overview">Solution Overview</h2>
-<!-- raw HTML omitted -->
-<h3 id="definition--overview">Definition &amp; Overview</h3>
-<p>Zero Trust Network Access (ZTNA) is an advanced access control method that leverages client device identification, authentication, and Zero Trust tags to provide role-based access to applications. ZTNA enables administrators to manage network access for both on-fabric local users and off-fabric remote users. Access is granted only after a series of checks: device verification, user identity authentication, user authorization, and context-based posture checks, all using Zero Trust tags.</p>
-<p>In traditional networks, users and devices have distinct sets of rules for on-fabric (local) access and off-fabric (remote) access, often through VPNs. With the rise of distributed workforces and the need to access resources across diverse environments such as company networks, data centers, and the cloud, managing these access rules becomes increasingly complex. Additionally, user experience can suffer when multiple VPNs are required to access different resources.</p>
-<p>Traditionally, a user and device have different sets of rules for on-fabric access and off-fabric VPN access to company resources. With a distributed workforce, and access that spans company networks, data centers, and the cloud, ,managing the rules can be complex. User experience is also affected when an organization needs multiple VPNs to access various resources.</p>
-<h4 id="ztna-operates-in-two-primary-modes">ZTNA operates in two primary modes:</h4>
+          <p>In this third installment of our Fortinet ZTNA series, we explore integrating SAML authentication with Microsoft Azure as the Identity Provider (IdP) and FortiGate as the Service Provider (SP). By leveraging SAML, authentication is offloaded from the access proxy to the IdP, allowing organizations to enforce advanced authentication policies such as Multi-Factor Authentication (MFA)</p>
+<p>To learn more about SAML authentication, check out my by blog post: <a href="http://net-sec-ops.com/blogs/saml-authentication/">SAML Authentication</a></p>
+<h2 id="configuring-a-saml-application-idp-on-microsoft-azure">Configuring a SAML Application (IdP) on Microsoft Azure</h2>
+<h4 id="step-1-create-an-enterprise-application">Step 1: Create an Enterprise Application</h4>
 <ol>
-<li>Full ZTNA: Allows users to securely access resources through an SSL-encrypted access proxy, removing the need for traditional VPNs and simplifying remote access.</li>
-<li>IP/MAC Filtering: Combines ZTNA tags with IP/MAC-based filtering to enhance device identification, providing an additional security layer for role-based, Zero Trust access.</li>
+<li>Log in to the Azure Administration Console under your customer tenant.</li>
+<li>Navigate to Enterprise Applications &gt; New Application.</li>
 </ol>
-<h3 id="key-components--workflow">Key Components &amp; Workflow</h3>
-<p>The solution has the following components:</p>
-<h4 id="forticlient-ems-endpoint-management-system">FortiClient EMS (Endpoint Management System):</h4>
+<p><img src="/images/fortinet/ztna_saml1.PNG" alt="My Image">
+3. Choose &ldquo;Create your own application&rdquo;, enter a name (e.g., &ldquo;fortigate-saml&rdquo;), and select &ldquo;Integrate any other application you don&rsquo;t find in the gallery (Non-gallery)&quot;.
+<img src="/images/fortinet/ztna_saml2.PNG" alt="My Image">
+4. Click Create</p>
+<h4 id="step-2-assign-users-and-groups">Step 2: Assign Users and Groups</h4>
+<p>Once the application is created, the overview page will display key configuration steps.</p>
+<ol>
+<li>Under Users and Groups, assign Active Directory users and groups that will use this application.</li>
+<li>Ensure the required users and groups already exist under Azure Active Directory.</li>
+<li>For this Proof of Concept (PoC), we created a group called ZTNA.</li>
+<li>Note the Object ID of the group, as it will be used in FortiGate &ldquo;User Groups&rdquo; to control access through SAML attributes.</li>
+</ol>
+<p><img src="/images/fortinet/ztna_saml3.PNG" alt="My Image">
+<img src="/images/fortinet/ztna_saml6.PNG" alt="My Image"></p>
+<h4 id="step-4-configure-saml-parameters">Step 4: Configure SAML Parameters</h4>
+<h5 id="sections-breakdown">Sections Breakdown:</h5>
 <ul>
-<li>Issues and signs client certificates containing the FortiClient UID, certificate serial number, and EMS serial number.</li>
-<li>Synchronizes client certificates with FortiGate for secure communication.</li>
-<li>Shares its EMS ZTNA Certificate Authority (CA) certificate with FortiGate.</li>
-<li>Uses tagging rules to apply ZTNA tags to endpoints.</li>
-<li>Shares ZTNA tag information with FortiGate via the Security Fabric integration.</li>
-</ul>
-<h4 id="forticlient-endpoint-agent">FortiClient (Endpoint Agent):</h4>
+<li>Sections 1 and 2 require configuration; Sections 3 and 4 are automatically generated.</li>
+<li>Section 1: Identifiers and Reply URLs
 <ul>
-<li>Communicates directly with FortiClient EMS to continuously provide device status updates via ZTNA telemetry.</li>
-<li>Supplies detailed endpoint information such as device type, logged-on users, and security posture (including on-fabric or off-fabric status, antivirus software, vulnerability status, etc.).</li>
-<li>Obtains a client certificate from the FortiClient EMS ZTNA Certificate Authority (CA) on the first connection attempt to the access proxy.</li>
-<li>Uses the certificate to authenticate the device with FortiGate, which uses the shared ZTNA CA to verify the client.</li>
+<li>Use the FortiGate proxy VIP as the SP URL (e.g., aboodshouse.fortiddns.com).</li>
+<li>Any proxy VIP port can be used (e.g., 8443, 7443, 9443, 6443).</li>
 </ul>
-<h4 id="fortigate">FortiGate:</h4>
+</li>
+<li>Section 2: User Attributes &amp; Claims
 <ul>
-<li>Maintains a continuous connection to FortiClient EMS, synchronizing endpoint information such as FortiClient UID, client certificate serial number, EMS serial number, and network details (IP and MAC addresses).</li>
-<li>Acts as an SSL-encrypted access proxy, securing remote access to applications.</li>
-<li>Updates device information as changes occur, with FortiClient EMS notifying FortiGate.</li>
-<li>Uses ZTNA tags to enforce access control rules, ensuring that incoming traffic through the ZTNA access proxy complies with the Zero Trust framework. FortiGate&rsquo;s WAD daemon processes this information during ZTNA traffic handling.</li>
+<li>Ensure the correct attributes are mapped:
+<ul>
+<li>username → userprincipalname</li>
+<li>group → user.groups (group claim)</li>
 </ul>
-<hr>
-<p><em>Some content and images in this post are sourced from <a href="https://www.fortinet.com">Fortinet</a>.<br>
-All rights belong to their respective owners.</em></p>
+</li>
+</ul>
+</li>
+<li>Important: Azure allows only one group claim by default. Delete the existing claim and create a new group claim named groups with value user.groups.</li>
+<li>This step is also documented by Microsoft <a href="https://docs.microsoft.com/en-us/azure/active-directory/saas-apps/fortigate-ssl-vpn-tutorial">for using SAML with FortiGate SSL-VPN: Microsoft Docs</a></li>
+</ul>
+<h4 id="step-5-retrieve-certificate-and-configuration-details">Step 5: Retrieve Certificate and Configuration Details</h4>
+<h5 id="section-3-download-the-certificate-base64this-will-be-imported-into-fortigate">Section 3: Download the Certificate (Base64)—this will be imported into FortiGate.</h5>
+<h5 id="section-4-note-all-the-generated-urls-as-they-will-be-required-when-configuring-saml-on-fortigate">Section 4: Note all the generated URLs, as they will be required when configuring SAML on FortiGate.</h5>
+<p><img src="/images/fortinet/ztna_saml4.PNG" alt="My Image"></p>
+<p>This completes the initial setup of the SAML application on Azure. In the next section, we will cover how to configure FortiGate to integrate with this SAML IdP.</p>
+<h2 id="configuring-a-saml-application-sp-on-fortigate">Configuring a SAML Application (SP) on Fortigate</h2>
+<h4 id="step-1-import-the-saml-certificate">Step 1: Import the SAML Certificate</h4>
+<ol>
+<li>Import the exported SAML Certificate (Base64) into FortiGate.</li>
+<li>Rename the certificate in the CLI using:
+<img src="/images/fortinet/ztna_saml7.PNG" alt="My Image"></li>
+</ol>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">config vpn certificate remote
+set name <span style="color:#e6db74">&#34;azure-saml&#34;</span>
+end
+</code></pre></div><ul>
+<li>This serves as the Remote Certificate, containing only the IdP’s public key, which FortiGate uses to verify signed SAML responses from Azure.</li>
+</ul>
+<h4 id="step-2-configure-saml-on-fortigate">Step 2: Configure SAML on FortiGate</h4>
+<ol>
+<li>Navigate to User &amp; Authentication &gt; Single Sign-on.</li>
+<li>Copy and paste all URLs from Sections 1 and 4 of the Azure SAML configuration.</li>
+<li>Ensure the Local Certificate option is disabled, as FortiGate does not require a private key to sign SAML requests.
+<img src="/images/fortinet/ztna_saml8.PNG" alt="My Image">
+The equivalent CLI Configuration:
+<img src="/images/fortinet/ztna_saml9.PNG" alt="My Image"></li>
+</ol>
+<h4 id="step-2-configure-saml-on-fortigate-1">Step 2: Configure SAML on FortiGate</h4>
+<ol>
+<li>Navigate to User &amp; Authentication &gt; Single Sign-on.</li>
+<li>Copy and paste all URLs from Sections 1 and 4 of the Azure SAML configuration.</li>
+<li>Ensure the Local Certificate option is disabled, as FortiGate does not require a private key to sign SAML requests.</li>
+</ol>
+<h4 id="step-3-create-a-user-group">Step 3: Create a User Group</h4>
+<ol>
+<li>Create a User Group that references the SAML IdP.</li>
+<li>Set the group type to Firewall.</li>
+<li>Add a remote server named azure-saml (configured in Step 2).</li>
+<li>Use the Object ID of the Azure ZTNA group as the group name.
+<img src="/images/fortinet/ztna_saml10.PNG" alt="My Image">
+The equivalent CLI Configuration:
+<img src="/images/fortinet/ztna_saml11.PNG" alt="My Image"></li>
+</ol>
+<h4 id="step-4-configure-authentication-scheme">Step 4: Configure Authentication Scheme</h4>
+<ol>
+<li>Go to Policy &amp; Objects &gt; Authentication &gt; Authentication Schemes.</li>
+<li>Create a scheme named azure-saml-scheme.</li>
+<li>Select SAML as the authentication method.</li>
+<li>Choose azure-saml as the SAML SSO server.
+<img src="/images/fortinet/ztna_saml12.PNG" alt="My Image">
+The equivalent CLI Configuration:
+<img src="/images/fortinet/ztna_saml13.PNG" alt="My Image"></li>
+</ol>
+<h4 id="step-5-create-an-authentication-rule">Step 5: Create an Authentication Rule</h4>
+<ol>
+<li>Go to Policy &amp; Objects &gt; Authentication &gt; Authentication Rules.</li>
+<li>Create a rule named azure-saml-rule.</li>
+<li>Set source address to All.</li>
+<li>Set incoming interface to Any (or the WAN interface).</li>
+<li>Set protocol to HTTP.</li>
+<li>Select azure-saml-scheme as the authentication scheme.
+<img src="/images/fortinet/ztna_saml14.PNG" alt="My Image">
+The equivalent CLI Configuration:
+<img src="/images/fortinet/ztna_saml15.PNG" alt="My Image"></li>
+</ol>
+<h4 id="step-6-enable-captive-portal">Step 6: Enable Captive Portal</h4>
+<ol>
+<li>Go to User &amp; Authentication &gt; Authentication Settings.</li>
+<li>Enable Authentication Scheme and select azure-saml-scheme.</li>
+<li>Enable Captive Portal and set the FortiGate Access Proxy IP or FQDN (e.g., aboodshouse.fortiddns.com).</li>
+<li>Ensure an FQDN/IP address object is created for this setting.</li>
+<li>Enable HTTP Redirect and select the FortiGate SSL certificate (e.g., aboodfwcert).
+<img src="/images/fortinet/ztna_saml16.PNG" alt="My Image">
+The equivalent CLI Configuration:
+<img src="/images/fortinet/ztna_saml17.PNG" alt="My Image"></li>
+<li>Ensure proxy-captive-portal is enabled on the WAN interface.<br>
+<img src="/images/fortinet/ztna_saml18.PNG" alt="My Image"></li>
+</ol>
+<h4 id="next-steps">Next Steps</h4>
+<p>Your SAML authentication is now set up! In the following sections, we’ll apply these settings to ZTNA policies.</p>
 
           </article>
         </div>
@@ -306,10 +393,14 @@ All rights belong to their respective owners.</em></p>
               <div class="toc-content">
                 <nav id="TableOfContents">
   <ul>
-    <li><a href="#solution-overview">Solution Overview</a>
+    <li><a href="#configuring-a-saml-application-idp-on-microsoft-azure">Configuring a SAML Application (IdP) on Microsoft Azure</a>
       <ul>
-        <li><a href="#definition--overview">Definition &amp; Overview</a></li>
-        <li><a href="#key-components--workflow">Key Components &amp; Workflow</a></li>
+        <li></li>
+      </ul>
+    </li>
+    <li><a href="#configuring-a-saml-application-sp-on-fortigate">Configuring a SAML Application (SP) on Fortigate</a>
+      <ul>
+        <li></li>
       </ul>
     </li>
   </ul>
@@ -345,22 +436,22 @@ All rights belong to their respective owners.</em></p>
             <div class="social-content">
               <ul class="list-inline">
                 <li class="list-inline-item text-center">
-                  <a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url=http%3a%2f%2fexample.org%2fblogs%2ffortinet-ztna-part1%2f">
+                  <a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url=http%3a%2f%2fexample.org%2fblogs%2ffortinet-ztna-part3%2f">
                     <i class="fab fa-linkedin"></i>
                   </a>
                 </li>
                 <li class="list-inline-item text-center">
-                  <a target="_blank" href="https://twitter.com/share?text=Fortinet%20ZTNA%20Part%20I&url=http%3a%2f%2fexample.org%2fblogs%2ffortinet-ztna-part1%2f">
+                  <a target="_blank" href="https://twitter.com/share?text=Fortinet%20ZTNA%20Part%20III&url=http%3a%2f%2fexample.org%2fblogs%2ffortinet-ztna-part3%2f">
                     <i class="fab fa-twitter"></i>
                   </a>
                 </li>
                 <li class="list-inline-item text-center">
-                  <a target="_blank" href="https://api.whatsapp.com/send?text=Fortinet%20ZTNA%20Part%20I: http%3a%2f%2fexample.org%2fblogs%2ffortinet-ztna-part1%2f">
+                  <a target="_blank" href="https://api.whatsapp.com/send?text=Fortinet%20ZTNA%20Part%20III: http%3a%2f%2fexample.org%2fblogs%2ffortinet-ztna-part3%2f">
                     <i class="fab fa-whatsapp"></i>
                   </a>
                 </li>
                 <li class="list-inline-item text-center">
-                  <a target="_blank" href='mailto:?subject=Fortinet%20ZTNA%20Part%20I&amp;body=Check%20out%20this%20site http%3a%2f%2fexample.org%2fblogs%2ffortinet-ztna-part1%2f'>
+                  <a target="_blank" href='mailto:?subject=Fortinet%20ZTNA%20Part%20III&amp;body=Check%20out%20this%20site http%3a%2f%2fexample.org%2fblogs%2ffortinet-ztna-part3%2f'>
                     <i class="fa fa-envelope"></i>
                   </a>
                 </li>
