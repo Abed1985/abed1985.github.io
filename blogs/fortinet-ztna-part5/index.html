@@ -28,16 +28,16 @@
 
 
 
-<meta property="og:title" content="Fortinet ZTNA Part III" />
-<meta property="og:description" content="SAML Authentication with MS Azure" />
+<meta property="og:title" content="Fortinet ZTNA Part V" />
+<meta property="og:description" content="ZTNA Certificate Management" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://abed1985.github.io/blogs/fortinet-ztna-part3/" />
-<meta property="article:published_time" content="2025-03-07T01:45:48+00:00" />
-<meta property="article:modified_time" content="2025-03-07T01:45:48+00:00" /><meta property="og:site_name" content="NetSecOps Navigator" />
+<meta property="og:url" content="https://abed1985.github.io/blogs/fortinet-ztna-part5/" />
+<meta property="article:published_time" content="2025-03-09T02:18:29+00:00" />
+<meta property="article:modified_time" content="2025-03-09T02:18:29+00:00" /><meta property="og:site_name" content="NetSecOps Navigator" />
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Fortinet ZTNA Part III"/>
-<meta name="twitter:description" content="SAML Authentication with MS Azure"/>
+<meta name="twitter:title" content="Fortinet ZTNA Part V"/>
+<meta name="twitter:description" content="ZTNA Certificate Management"/>
 
 
 <link rel="stylesheet" href="/bootstrap-5/css/bootstrap.min.css" media="all"><link rel="stylesheet" href="/css/header.css" media="all">
@@ -101,7 +101,7 @@
 
 
 
-<meta name="description" content="SAML Authentication with MS Azure">
+<meta name="description" content="ZTNA Certificate Management">
 <link rel="stylesheet" href="/css/single.css">
 
 
@@ -112,7 +112,7 @@
   
 
   <title>
-Fortinet ZTNA Part III | NetSecOps Navigator
+Fortinet ZTNA Part V | NetSecOps Navigator
 
   </title>
 </head>
@@ -289,13 +289,13 @@ Fortinet ZTNA Part III | NetSecOps Navigator
       <div class="col-sm-12 col-md-12 col-lg-9">
         <div class="pr-lg-4">
           <div class="title mb-5">
-            <h1 class="text-center mb-4">Fortinet ZTNA Part III</h1>
+            <h1 class="text-center mb-4">Fortinet ZTNA Part V</h1>
             <div class="text-center">
               
                 Abood Alakhras
                 <small>|</small>
               
-              Mar 7, 2025
+              Mar 9, 2025
 
               
               <span id="readingTime">
@@ -306,135 +306,127 @@ Fortinet ZTNA Part III | NetSecOps Navigator
           </div>
           
           <div class="featured-image">
-            <img class="img-fluid mx-auto d-block" src="/images/fortinet/ztnap.png" alt="Fortinet ZTNA Part III">
+            <img class="img-fluid mx-auto d-block" src="/images/fortinet/ztnap.png" alt="Fortinet ZTNA Part V">
           </div>
           
           <article class="page-content  p-2">
-          <p>In this third installment of our Fortinet ZTNA series, we explore integrating SAML authentication with Microsoft Azure as the Identity Provider (IdP) and FortiGate as the Service Provider (SP). By leveraging SAML, authentication is offloaded from the access proxy to the IdP, allowing organizations to enforce advanced authentication policies such as Multi-Factor Authentication (MFA)</p>
-<p>To learn more about SAML authentication, check out my by blog post: <a href="http://net-sec-ops.com/blogs/saml-authentication/">SAML Authentication</a></p>
-<h2 id="configuring-a-saml-application-idp-on-microsoft-azure">Configuring a SAML Application (IdP) on Microsoft Azure</h2>
-<h4 id="step-1-create-an-enterprise-application">Step 1: Create an Enterprise Application</h4>
-<ol>
-<li>Log in to the Azure Administration Console under your customer tenant.</li>
-<li>Navigate to Enterprise Applications &gt; New Application.</li>
-</ol>
-<p><img src="/images/fortinet/ztna_saml1.PNG" alt="My Image">
-3. Choose &ldquo;Create your own application&rdquo;, enter a name (e.g., &ldquo;fortigate-saml&rdquo;), and select &ldquo;Integrate any other application you don&rsquo;t find in the gallery (Non-gallery)&quot;.
-<img src="/images/fortinet/ztna_saml2.PNG" alt="My Image">
-4. Click Create</p>
-<h4 id="step-2-assign-users-and-groups">Step 2: Assign Users and Groups</h4>
-<p>Once the application is created, the overview page will display key configuration steps.</p>
-<ol>
-<li>Under Users and Groups, assign Active Directory users and groups that will use this application.</li>
-<li>Ensure the required users and groups already exist under Azure Active Directory.</li>
-<li>For this Proof of Concept (PoC), we created a group called ZTNA.</li>
-<li>Note the Object ID of the group, as it will be used in FortiGate &ldquo;User Groups&rdquo; to control access through SAML attributes.</li>
-</ol>
-<p><img src="/images/fortinet/ztna_saml3.PNG" alt="My Image">
-<img src="/images/fortinet/ztna_saml6.PNG" alt="My Image"></p>
-<h4 id="step-4-configure-saml-parameters">Step 4: Configure SAML Parameters</h4>
-<h5 id="sections-breakdown">Sections Breakdown:</h5>
+          <h2 id="introduction">Introduction</h2>
+<p>In this fifth installment of our Fortinet ZTNA series, we explore ZTNA certificate management and its role in securing client authentication and access control.</p>
+<h2 id="ztna-certificate-management">ZTNA Certificate Management</h2>
+<p>FortiClient EMS plays a central role in managing certificates for ZTNA authentication. Below are key points regarding ZTNA CA and certificate handling:</p>
 <ul>
-<li>Sections 1 and 2 require configuration; Sections 3 and 4 are automatically generated.</li>
-<li>Section 1: Identifiers and Reply URLs
+<li>FortiClient EMS has a default root CA certificate (default_ZTNARootCA), which is assigned to the default customer site. Each customer site, such as BRENNAN-TEST, has a unique root CA.</li>
+<li>The ZTNA CA uses this root certificate to sign CSRs from FortiClient endpoints.</li>
+<li>Root CA updates and revocations automatically propagate to FortiGate and FortiClient endpoints, enforcing certificate renewal.</li>
+<li>FortiClient EMS manages individual client certificates, ensuring each endpoint is securely authenticated.</li>
+<li>Revoking a client certificate is necessary when private keys are compromised. This can be done in FortiClient EMS:
 <ul>
-<li>Use the FortiGate proxy VIP as the SP URL (e.g., aboodshouse.fortiddns.com).</li>
-<li>Any proxy VIP port can be used (e.g., 8443, 7443, 9443, 6443).</li>
+<li>Navigate to Endpoint &gt; All Endpoints.</li>
+<li>Select the client and click Action &gt; Revoke Client Certificate.</li>
 </ul>
 </li>
-<li>Section 2: User Attributes &amp; Claims
+<li>Important: Do not confuse the FortiClient EMS ZTNA CA certificate with the SSL certificate:
 <ul>
-<li>Ensure the correct attributes are mapped:
-<ul>
-<li>username → userprincipalname</li>
-<li>group → user.groups (group claim)</li>
+<li>The ZTNA CA certificate is used for client authentication.</li>
+<li>The SSL certificate is used for FortiClient EMS HTTPS access and FortiGate fabric connectivity.</li>
 </ul>
 </li>
 </ul>
-</li>
-<li>Important: Azure allows only one group claim by default. Delete the existing claim and create a new group claim named groups with value user.groups.</li>
-<li>This step is also documented by Microsoft <a href="https://docs.microsoft.com/en-us/azure/active-directory/saas-apps/fortigate-ssl-vpn-tutorial">for using SAML with FortiGate SSL-VPN: Microsoft Docs</a></li>
+<p><img src="/images/fortinet/ztna_cm1.png" alt="My Image"></p>
+<p>The certificate issued by EMS looks like the following at the endpoint certificate store.</p>
+<p><img src="/images/fortinet/ztna_cm2.png" alt="My Image">
+<img src="/images/fortinet/ztna_cm3.png" alt="My Image"></p>
+<h2 id="certificate-storage-and-verification">Certificate Storage and Verification</h2>
+<ul>
+<li>Windows Endpoints: FortiClient automatically installs the client certificate into the Windows certificate store.</li>
+<li>Certificate Attributes:
+<ul>
+<li>The certificate UID and serial number (SN) should match the records on FortiClient EMS and FortiGate.</li>
+<li>FortiGate validates these attributes before granting access.</li>
 </ul>
-<h4 id="step-5-retrieve-certificate-and-configuration-details">Step 5: Retrieve Certificate and Configuration Details</h4>
-<h5 id="section-3-download-the-certificate-base64this-will-be-imported-into-fortigate">Section 3: Download the Certificate (Base64)—this will be imported into FortiGate.</h5>
-<h5 id="section-4-note-all-the-generated-urls-as-they-will-be-required-when-configuring-saml-on-fortigate">Section 4: Note all the generated URLs, as they will be required when configuring SAML on FortiGate.</h5>
-<p><img src="/images/fortinet/ztna_saml4.PNG" alt="My Image"></p>
-<p>This completes the initial setup of the SAML application on Azure. In the next section, we will cover how to configure FortiGate to integrate with this SAML IdP.</p>
-<h2 id="configuring-a-saml-application-sp-on-fortigate">Configuring a SAML Application (SP) on Fortigate</h2>
-<h4 id="step-1-import-the-saml-certificate">Step 1: Import the SAML Certificate</h4>
-<ol>
-<li>Import the exported SAML Certificate (Base64) into FortiGate.</li>
-<li>Rename the certificate in the CLI using:
-<img src="/images/fortinet/ztna_saml7.PNG" alt="My Image"></li>
-</ol>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">config vpn certificate remote
-set name <span style="color:#e6db74">&#34;azure-saml&#34;</span>
-end
+</li>
+<li>Verification on FortiGate:
+<ul>
+<li>Use the following CLI command to list endpoint records:</li>
+</ul>
+</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">diagnose endpoint record list
 </code></pre></div><ul>
-<li>This serves as the Remote Certificate, containing only the IdP’s public key, which FortiGate uses to verify signed SAML responses from Azure.</li>
+<li>This command displays information such as client UID, certificate SN, and EMS certificate SN.</li>
+<li>If a mismatch or missing data occurs, client authentication may fail due to the inability to locate the corresponding endpoint entry.</li>
 </ul>
-<h4 id="step-2-configure-saml-on-fortigate">Step 2: Configure SAML on FortiGate</h4>
+<p><img src="/images/fortinet/ztna_cm4.png" alt="My Image"></p>
+<h2 id="ssl-certificate-based-authentication">SSL Certificate-Based Authentication</h2>
+<p>SSL certificates play a crucial role in client authentication. Below is the typical workflow:</p>
 <ol>
-<li>Navigate to User &amp; Authentication &gt; Single Sign-on.</li>
-<li>Copy and paste all URLs from Sections 1 and 4 of the Azure SAML configuration.</li>
-<li>Ensure the Local Certificate option is disabled, as FortiGate does not require a private key to sign SAML requests.
-<img src="/images/fortinet/ztna_saml8.PNG" alt="My Image">
-The equivalent CLI Configuration:
-<img src="/images/fortinet/ztna_saml9.PNG" alt="My Image"></li>
+<li>Client Registration:
+<ul>
+<li>When an endpoint registers with FortiClient EMS, it obtains a client certificate.</li>
+</ul>
+</li>
+<li>Certificate Signing Process:
+<ul>
+<li>FortiClient automatically submits a CSR (Certificate Signing Request).</li>
+<li>FortiClient EMS signs the CSR and returns the client certificate.</li>
+</ul>
+</li>
+<li>Certificate Storage:
+<ul>
+<li>The certificate is stored in the OS certificate store for secure authentication.</li>
+</ul>
+</li>
+<li>FortiGate and EMS Synchronization:
+<ul>
+<li>Endpoint information (UID, SN) is synchronized between FortiGate and FortiClient EMS.</li>
+</ul>
+</li>
+<li>Client Disconnects or Unregisters:
+<ul>
+<li>The certificate is removed from the OS store.</li>
+<li>The certificate is revoked on FortiClient EMS.</li>
+</ul>
+</li>
+<li>Client Reconnects:
+<ul>
+<li>A new certificate is obtained when the client re-registers.</li>
+</ul>
+</li>
 </ol>
-<h4 id="step-2-configure-saml-on-fortigate-1">Step 2: Configure SAML on FortiGate</h4>
+<h2 id="client-authentication-process">Client Authentication Process</h2>
+<p>By default, client certificate authentication is enabled on the FortiGate access proxy. The authentication process works as follows:</p>
+<ul>
+<li>When FortiGate receives an HTTPS request, the WAD process challenges the client to present its certificate.</li>
+<li>FortiGate validates the certificate using the following logic:
 <ol>
-<li>Navigate to User &amp; Authentication &gt; Single Sign-on.</li>
-<li>Copy and paste all URLs from Sections 1 and 4 of the Azure SAML configuration.</li>
-<li>Ensure the Local Certificate option is disabled, as FortiGate does not require a private key to sign SAML requests.</li>
+<li>If the client presents a valid certificate:
+<ul>
+<li>FortiGate extracts the client UID and certificate SN.</li>
+<li>If these match an entry in FortiGate’s endpoint record, the client proceeds with ZTNA proxy rule processing.</li>
+<li>If they do not match, access is denied.</li>
+</ul>
+</li>
+<li>If the client cancels authentication or submits an empty certificate:
+<ul>
+<li>FortiGate processes the request based on the empty-cert-action setting:
+<ul>
+<li>If empty-cert-action is set to accept, the client is allowed to continue ZTNA proxy rule processing.</li>
+<li>If empty-cert-action is set to block, the client is denied access.</li>
+</ul>
+</li>
+</ul>
+</li>
 </ol>
-<h4 id="step-3-create-a-user-group">Step 3: Create a User Group</h4>
-<ol>
-<li>Create a User Group that references the SAML IdP.</li>
-<li>Set the group type to Firewall.</li>
-<li>Add a remote server named azure-saml (configured in Step 2).</li>
-<li>Use the Object ID of the Azure ZTNA group as the group name.
-<img src="/images/fortinet/ztna_saml10.PNG" alt="My Image">
-The equivalent CLI Configuration:
-<img src="/images/fortinet/ztna_saml11.PNG" alt="My Image"></li>
-</ol>
-<h4 id="step-4-configure-authentication-scheme">Step 4: Configure Authentication Scheme</h4>
-<ol>
-<li>Go to Policy &amp; Objects &gt; Authentication &gt; Authentication Schemes.</li>
-<li>Create a scheme named azure-saml-scheme.</li>
-<li>Select SAML as the authentication method.</li>
-<li>Choose azure-saml as the SAML SSO server.
-<img src="/images/fortinet/ztna_saml12.PNG" alt="My Image">
-The equivalent CLI Configuration:
-<img src="/images/fortinet/ztna_saml13.PNG" alt="My Image"></li>
-</ol>
-<h4 id="step-5-create-an-authentication-rule">Step 5: Create an Authentication Rule</h4>
-<ol>
-<li>Go to Policy &amp; Objects &gt; Authentication &gt; Authentication Rules.</li>
-<li>Create a rule named azure-saml-rule.</li>
-<li>Set source address to All.</li>
-<li>Set incoming interface to Any (or the WAN interface).</li>
-<li>Set protocol to HTTP.</li>
-<li>Select azure-saml-scheme as the authentication scheme.
-<img src="/images/fortinet/ztna_saml14.PNG" alt="My Image">
-The equivalent CLI Configuration:
-<img src="/images/fortinet/ztna_saml15.PNG" alt="My Image"></li>
-</ol>
-<h4 id="step-6-enable-captive-portal">Step 6: Enable Captive Portal</h4>
-<ol>
-<li>Go to User &amp; Authentication &gt; Authentication Settings.</li>
-<li>Enable Authentication Scheme and select azure-saml-scheme.</li>
-<li>Enable Captive Portal and set the FortiGate Access Proxy IP or FQDN (e.g., aboodshouse.fortiddns.com).</li>
-<li>Ensure an FQDN/IP address object is created for this setting.</li>
-<li>Enable HTTP Redirect and select the FortiGate SSL certificate (e.g., aboodfwcert).
-<img src="/images/fortinet/ztna_saml16.PNG" alt="My Image">
-The equivalent CLI Configuration:
-<img src="/images/fortinet/ztna_saml17.PNG" alt="My Image"></li>
-<li>Ensure proxy-captive-portal is enabled on the WAN interface.<br>
-<img src="/images/fortinet/ztna_saml18.PNG" alt="My Image"></li>
-</ol>
-<h4 id="next-steps">Next Steps</h4>
-<p>Your SAML authentication is now set up! In the following sections, we’ll apply these settings to ZTNA policies.</p>
+</li>
+</ul>
+<h2 id="conclusion">Conclusion</h2>
+<p>ZTNA certificate management is fundamental to ensuring secure, certificate-based authentication in a Zero Trust environment. Proper handling of FortiClient EMS root CA, client certificates, and authentication workflows enhances security and prevents unauthorized access.</p>
+<p>By implementing certificate-based ZTNA authentication, organizations can:</p>
+<ul>
+<li>Automate client certificate management through FortiClient EMS.</li>
+<li>Enhance endpoint security with seamless revocation and renewal processes.</li>
+<li>Ensure accurate authentication records between FortiGate and FortiClient EMS.</li>
+</ul>
 
           </article>
         </div>
@@ -449,16 +441,12 @@ The equivalent CLI Configuration:
               <div class="toc-content">
                 <nav id="TableOfContents">
   <ul>
-    <li><a href="#configuring-a-saml-application-idp-on-microsoft-azure">Configuring a SAML Application (IdP) on Microsoft Azure</a>
-      <ul>
-        <li></li>
-      </ul>
-    </li>
-    <li><a href="#configuring-a-saml-application-sp-on-fortigate">Configuring a SAML Application (SP) on Fortigate</a>
-      <ul>
-        <li></li>
-      </ul>
-    </li>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#ztna-certificate-management">ZTNA Certificate Management</a></li>
+    <li><a href="#certificate-storage-and-verification">Certificate Storage and Verification</a></li>
+    <li><a href="#ssl-certificate-based-authentication">SSL Certificate-Based Authentication</a></li>
+    <li><a href="#client-authentication-process">Client Authentication Process</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
   </ul>
 </nav>
               </div>
@@ -492,22 +480,22 @@ The equivalent CLI Configuration:
             <div class="social-content">
               <ul class="list-inline">
                 <li class="list-inline-item text-center">
-                  <a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3a%2f%2fabed1985.github.io%2fblogs%2ffortinet-ztna-part3%2f">
+                  <a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3a%2f%2fabed1985.github.io%2fblogs%2ffortinet-ztna-part5%2f">
                     <i class="fab fa-linkedin"></i>
                   </a>
                 </li>
                 <li class="list-inline-item text-center">
-                  <a target="_blank" href="https://twitter.com/share?text=Fortinet%20ZTNA%20Part%20III&url=https%3a%2f%2fabed1985.github.io%2fblogs%2ffortinet-ztna-part3%2f">
+                  <a target="_blank" href="https://twitter.com/share?text=Fortinet%20ZTNA%20Part%20V&url=https%3a%2f%2fabed1985.github.io%2fblogs%2ffortinet-ztna-part5%2f">
                     <i class="fab fa-twitter"></i>
                   </a>
                 </li>
                 <li class="list-inline-item text-center">
-                  <a target="_blank" href="https://api.whatsapp.com/send?text=Fortinet%20ZTNA%20Part%20III: https%3a%2f%2fabed1985.github.io%2fblogs%2ffortinet-ztna-part3%2f">
+                  <a target="_blank" href="https://api.whatsapp.com/send?text=Fortinet%20ZTNA%20Part%20V: https%3a%2f%2fabed1985.github.io%2fblogs%2ffortinet-ztna-part5%2f">
                     <i class="fab fa-whatsapp"></i>
                   </a>
                 </li>
                 <li class="list-inline-item text-center">
-                  <a target="_blank" href='mailto:?subject=Fortinet%20ZTNA%20Part%20III&amp;body=Check%20out%20this%20site https%3a%2f%2fabed1985.github.io%2fblogs%2ffortinet-ztna-part3%2f'>
+                  <a target="_blank" href='mailto:?subject=Fortinet%20ZTNA%20Part%20V&amp;body=Check%20out%20this%20site https%3a%2f%2fabed1985.github.io%2fblogs%2ffortinet-ztna-part5%2f'>
                     <i class="fa fa-envelope"></i>
                   </a>
                 </li>
