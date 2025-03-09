@@ -316,10 +316,11 @@ Fortinet Ztna Part IV | NetSecOps Navigator
 <p>ZTNA supports multiple HTTP and SAML authentication methods.</p>
 <h2 id="poc-scenario">PoC Scenario</h2>
 <p>In our PoC, we need to grant access to:</p>
-<pre><code>Two web servers via HTTPS (TCP 443)
-One RDP server via TCP 3389
-One SSH server via TCP 22
-</code></pre>
+<ul>
+<li>Two web servers via HTTPS (TCP 443)</li>
+<li>One RDP server via TCP 3389</li>
+<li>One SSH server via TCP 22</li>
+</ul>
 <p>To achieve this, we configure three types of ZTNA proxies:</p>
 <h3 id="ztna-https-access-proxy">ZTNA HTTPS Access Proxy</h3>
 <p>The FortiGate HTTPS access proxy functions as a reverse proxy for web servers, forwarding client connections while enforcing authentication and security policies.</p>
@@ -430,7 +431,7 @@ end
 <h4 id="configuration-steps">Configuration Steps</h4>
 <p>For our PoC, we configure one server access over SSH (TCP 22) via the FortiGate proxy VIP aboodshouse.fortiddns.com:6443 :</p>
 <ol>
-<li>Locate the public key files in the SSH server: Choose the public key file based on the hash type ( in this case, ECDSA) , and show its content with cat utility</li>
+<li>Locate the public key files in the SSH server, choose the public key file based on the hash type ( in this case, ECDSA) , and show its content with cat utility</li>
 </ol>
 <p><img src="/images/fortinet/ztna_ssh1.PNG" alt="My Image"></p>
 <ol start="2">
