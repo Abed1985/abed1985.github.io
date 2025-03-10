@@ -6,10 +6,20 @@
     <description>Recent content in Blogs on NetSecOps Navigator</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Sun, 09 Mar 2025 02:18:29 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 10 Mar 2025 04:03:33 +0000</lastBuildDate>
     
 	<atom:link href="https://abed1985.github.io/blogs/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Fortinet ZTNA Part VI</title>
+      <link>https://abed1985.github.io/blogs/fortinet-ztna-part6/</link>
+      <pubDate>Mon, 10 Mar 2025 04:03:33 +0000</pubDate>
+      
+      <guid>https://abed1985.github.io/blogs/fortinet-ztna-part6/</guid>
+      <description>In this sixth installment of our Fortinet ZTNA series, we delve into the configuration of ZTNA destinations in FortiEMS. These destinations play a crucial role in enabling secure access to internal resources through the access proxy. This guide provides a step-by-step overview of setting up ZTNA destinations, including key configuration elements and best practices.
+ZTNA Destinations We have a ZTNA Destination profile named &amp;ldquo;ENDPOINTPOLICY-OFF-NETWORK&amp;rdquo; created under Endpoint Profiles &amp;gt; ZTNA Destinations.</description>
+    </item>
     
     <item>
       <title>Fortinet ZTNA Part V</title>
