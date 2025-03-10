@@ -312,13 +312,13 @@ Fortigate user level DLP | NetSecOps Navigator
           <article class="page-content  p-2">
           <h2 id="block-sensitive-data-leak-to-chatgpt-example">Block sensitive data leak to ChatGPT example</h2>
 <p>DLP (Data Leak Prevention) has become increasingly crucial with the rise of LLM AI platforms. Many users rely on AI chat platforms to simplify both their work and personal tasks.</p>
-<p>While this convenience is beneficial, it also raises the risk of unintentionally exposing sensitive organizational information. LLM models can incorporate leaked data into their training sets, potentially making it part of responses to external users—significantly increasing security risks.</p>
+<p>While this convenience is beneficial, it also raises the risk of unintentionally exposing sensitive organizational information. LLM models can incorporate leaked data into their training sets, potentially making it part of responses to external users which in return significantly increasing security risks.</p>
 <p>A notable example is the Samsung data leak to ChatGPT:
 To learn more about this data leak, check:<a href="https://www.forbes.com/sites/siladityaray/2023/05/02/samsung-bans-chatgpt-and-other-chatbots-for-employees-after-sensitive-code-leak/">Samsung Bans ChatGpT for employees after Sesitive Code leak</a></p>
 <p>A comprehensive DLP solution can effectively address these challenges. But what if a customer has a FortiGate firewall and wants to leverage its DLP capabilities to mitigate these risks?</p>
-<h2 id="prerequisites">Prerequisites</h2>
+<h2 id="pre-requisites">Pre-requisites</h2>
 <ul>
-<li>Keyword and Data Samples: Ensure a predefined list of keywords and data samples is available for DLP matching.</li>
+<li>Keyword and Data Samples: Ensure a predefined list of keywords and data samples available for DLP matching.</li>
 <li>Proxy-Based Firewall Policy with Deep SSL Inspection:
 <ul>
 <li>Endpoints must trust the Fortinet CA SSL certificate used for deep inspection.</li>
@@ -328,9 +328,7 @@ To learn more about this data leak, check:<a href="https://www.forbes.com/sites/
 <li>DLP Security Profile: Configure a DLP security profile and attach it to the firewall policy.</li>
 <li>Blocking QUIC Protocol:
 <ul>
-<li>When using a DLP profile in a proxy-based firewall policy, it&rsquo;s recommended to block the QUIC protocol in application control profiles.</li>
-<li>By default, FortiOS 7.0–7.2 can only inspect QUIC traffic in HTTP/3 in flow mode.</li>
-<li>Explicitly blocking QUIC in application control forces most traffic on UDP/443 to revert to TCP/443, allowing FortiGate to properly inspect it.</li>
+<li>When using a DLP profile in a proxy-based firewall policy, it&rsquo;s recommended to block the QUIC protocol in application control profiles. By default, FortiOS 7.0–7.2 can only inspect QUIC traffic in HTTP/3 in flow mode. Explicitly blocking QUIC in application control forces most traffic on UDP/443 to revert to TCP/443, allowing FortiGate to properly inspect it.</li>
 </ul>
 </li>
 </ul>
@@ -346,7 +344,7 @@ To learn more about this data leak, check:<a href="https://www.forbes.com/sites/
 <p>Enable Data Leak prevention under feature visibility.</p>
 <p><img src="/images/fortinet/dlp_featurev.png" alt="My Image"></p>
 <h3 id="step-3-create-dlp-dictionary">Step 3: Create DLP Dictionary</h3>
-<p>Under Data Leak Prevention create a new DLP dictionary with 2 dictionary entry to cover the use cases.</p>
+<p>Under Data Leak Prevention create a new DLP dictionary with two dictionary entries to cover the use cases.</p>
 <ul>
 <li>Dictionary entry with type &ldquo;Keyword&rdquo; to match &ldquo;abood&rdquo; keyword in text.</li>
 <li>Dictionary entry with type &ldquo;Regex&rdquo; to match 1.1.1.0/24 a regex match to cover the subnet (any ip within the range)</li>
@@ -355,14 +353,14 @@ To learn more about this data leak, check:<a href="https://www.forbes.com/sites/
 <br></p>
 <p><img src="/images/fortinet/dlp_dict2.png" alt="My Image"></p>
 <h3 id="step-4-create-a-dlp-sensor">Step 4: Create a DLP Sensor</h3>
-<p>Under Data Leak Prevention create a new DLP sensor and reference the dlp dictionary created earlier.</p>
+<p>Under Data Leak Prevention create a new DLP sensor and reference to the dlp dictionary created earlier.</p>
 <p><img src="/images/fortinet/dlp_sen1.png" alt="My Image">
 <br></p>
 <p><img src="/images/fortinet/dlp_sen2.png" alt="My Image"></p>
 <h3 id="step-4-create-a-dlp-profile">Step 4: Create a DLP Profile</h3>
-<p>Under Data Leak Prevention create a new DLP profile with 2 rules per below referencing the earlier DLP sensor.
+<p>Under Data Leak Prevention create a new DLP profile with two rules as per below referencing the earlier DLP sensor.
 <br>
-The first rule is with type file, and the second rule with type message. Applying settings as shown on the GUI
+The first rule is with type file, and the second rule is with type message. Applying settings as shown on the GUI
 <br>
 For the first rule (file) On the CLI Unset the file type option to enable filtering of all file types, including unknown ones (unset file-type)</p>
 <p><img src="/images/fortinet/dlp_prof1.png" alt="My Image">
@@ -467,16 +465,16 @@ FG<span style="color:#f92672">-</span>ABOOD<span style="color:#f92672">-</span>D
 <br>
 <br></p>
 <h3 id="step-7-testing">Step 7: Testing</h3>
-<p>Lets now visit the website and attempt leaking information. Note that the &ldquo;Fortinet&rdquo; CA SSL certificate present itself for deep inspection.</p>
-<p>Thats why its a prerequiste that the CA cert is imported to avoid certificate warning when a traffic interception occurs at the fortigate level as part of SSL decryption process.</p>
+<p>Let&rsquo;s now visit the website and attempt to leak information. Note that the &ldquo;Fortinet&rdquo; CA SSL certificate present itself for deep inspection.</p>
+<p>This is why it&rsquo;s a pre-requiste that the CA cert is imported to avoid certificate warning when a traffic interception occurs at the fortigate level as part of SSL decryption process.</p>
 <p><img src="/images/fortinet/dlp_deepinspection.PNG" alt="My Image"></p>
-<p>As per the testing below, notice that anything that contains &ldquo;abood&rdquo; or any ip from subnet 1.1.1.0/24 is not being leaked to ChatGPT.</p>
+<p>As per the testing below, notice that anything that contains the word &ldquo;abood&rdquo; or any ip from subnet 1.1.1.0/24 is not leaked to ChatGPT.</p>
 <p><img src="/images/fortinet/dlp_test1.PNG" alt="My Image"></p>
 <p><img src="/images/fortinet/dlp_test2.PNG" alt="My Image"></p>
 <p><img src="/images/fortinet/dlp_test3.PNG" alt="My Image">
 <br>
 <br></p>
-<h4 id="notice-the-dlp-logs-about-the-these-patterns-being-blocked">Notice the dlp logs about the these patterns being blocked</h4>
+<h4 id="notice-the-dlp-logs-of-the-these-patterns-are-blocked">Notice the dlp logs of the these patterns are blocked</h4>
 <p><img src="/images/fortinet/dlp_testoutcome.PNG" alt="My Image"></p>
 
           </article>
@@ -493,7 +491,7 @@ FG<span style="color:#f92672">-</span>ABOOD<span style="color:#f92672">-</span>D
                 <nav id="TableOfContents">
   <ul>
     <li><a href="#block-sensitive-data-leak-to-chatgpt-example">Block sensitive data leak to ChatGPT example</a></li>
-    <li><a href="#prerequisites">Prerequisites</a></li>
+    <li><a href="#pre-requisites">Pre-requisites</a></li>
     <li><a href="#procedures">Procedures</a>
       <ul>
         <li><a href="#step-1-determine-what-do-you-want-to-prevent-from-leaking">Step 1: Determine what do you want to prevent from leaking</a></li>

@@ -81,7 +81,7 @@ This scenario involves the need for remote access to four servers within the dat
       
       <guid>https://abed1985.github.io/blogs/fortinet-dlp/</guid>
       <description>Block sensitive data leak to ChatGPT example DLP (Data Leak Prevention) has become increasingly crucial with the rise of LLM AI platforms. Many users rely on AI chat platforms to simplify both their work and personal tasks.
-While this convenience is beneficial, it also raises the risk of unintentionally exposing sensitive organizational information. LLM models can incorporate leaked data into their training sets, potentially making it part of responses to external users—significantly increasing security risks.</description>
+While this convenience is beneficial, it also raises the risk of unintentionally exposing sensitive organizational information. LLM models can incorporate leaked data into their training sets, potentially making it part of responses to external users which in return significantly increasing security risks.</description>
     </item>
     
     <item>
@@ -91,7 +91,7 @@ While this convenience is beneficial, it also raises the risk of unintentionally
       
       <guid>https://abed1985.github.io/blogs/saml-authentication/</guid>
       <description>What is SAML SAML (Security Assertion Markup Language) is an XML based (but Base64 encoded) protocol.It is a standard protocol for web Single Sign-On (SSO) &amp;amp; Federated identity. SAML allows apps and services to offload &amp;ldquo;authentication&amp;rdquo; to a trusted 3rd party. SSO intended to be easy for the user and transparent after the user has logged in the first time.
-Key terms  Federated Identity: Linking a user&amp;rsquo;s identity across different identity management systems/domains.</description>
+Key terms  Federated Identity: Linking a user&amp;rsquo;s identity across different identity management systems or domains, such as between two different organizations, like a service porvider &amp;amp; a customer.</description>
     </item>
     
     <item>

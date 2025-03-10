@@ -315,53 +315,33 @@ Saml Authentication | NetSecOps Navigator
 SAML allows apps and services to offload &ldquo;authentication&rdquo; to a trusted 3rd party. SSO intended to be easy for the user and transparent after the user has logged in the first time.</p>
 <h3 id="key-terms">Key terms</h3>
 <ul>
-<li>Federated Identity:  Linking a user&rsquo;s identity across different identity management systems/domains. eg. between two different organizations like a service porvider &amp; a customer.</li>
-<li>IdP - Identity Provider: Authenticates the user. It is the user directory. Like Azure AD or G suite, FortiAuthenticator, Cisco ISE, or any other user directory.
+<li>Federated Identity:  Linking a user&rsquo;s identity across different identity management systems or domains, such as between two different organizations, like a service porvider &amp; a customer.</li>
+<li>IdP - Identity Provider: Authenticating users. It is a user directory for Azure AD or G suite, FortiAuthenticator, Cisco ISE, etc&hellip;
 <ul>
 <li>Entity ID :
 <ul>
-<li>Both Idp and SP have an EntityID which is a globally unique name for a SAML entity.</li>
-<li>Must be a URI, typically is a URL</li>
-<li>Does not need to be resolvable as it is an identifier, not a web location</li>
+<li>Idp and SP have an EntityID which is a globally unique name for a SAML entity. This must be a URI, typically in the form of a URL. However, It does not need to be resolvable as it is an identifier rather than a web location.</li>
 </ul>
 </li>
 <li>Single SignOn Service endpoint:
 <ul>
-<li>Must be HTTPS URL</li>
-<li>This is the URL the user is redirected to by the SP with the SAML auth request ( Base64 encoded XML).</li>
-<li>The IdP will respond by challenging the user to login ( i.e present a login page to the user, and do MFA if configured).</li>
-<li>Also referred to as the IdP login URL.</li>
+<li>It must be HTTPS URL, which is where the user will be redirected to the SP with SAML authntication request (Base64 encoded XML). Then the IDP will respond by challenging  users to log in by presenting  them a login page and apply MFA if configured. This is also reffered to as the IDP login URL.</li>
 </ul>
 </li>
 <li>Single Logout Service ( SLS) endpoint:
 <ul>
-<li>The user is redirected to the IdP SLS URL to log them out of the IdP when they have chosen to logout of the SP.</li>
-<li>The IdP may ( if configured to do so) then send a logout request directly to other SP&rsquo;s that are also participants in this user&rsquo;s SSO session.</li>
-<li>Also referred to as the IdP logout URL</li>
+<li>The user is redirected to the IdP SLS URL to log out of the IdP when they have chosen to logout of the SP. If configered tp do so, the Idp may send a logout request directly to the other SP&rsquo;s that are also participating in this user&rsquo;s SSO session. This is also reffered to as the Idp logout URL.</li>
 </ul>
 </li>
 </ul>
 </li>
-<li>Service Provider (SP): Provides services to the user. An access proxy or anything like Salesforce, AWS, Egnyte..</li>
-<li>Assertion: A statement about a user&rsquo;s identity made by the Idp.
-<ul>
-<li>May contain attributes such as username,groups, email address.
-<ol>
-<li>I have authenticated this user as abood</li>
-<li>abood email address is <a href="mailto:abood@gmail.com">abood@gmail.com</a></li>
-<li>abood belongs to these groups: immortals, actionheroes, super_admin</li>
-<li>abood first name is Abood</li>
-<li>abood surname is Alakhras.</li>
-</ol>
-</li>
-</ul>
-</li>
+<li>Service Provider (SP) is an entity that offers services to users such as an access proxy or platform like  salesforce, AWS, and Egnyte. An assertion is a statement made by the Idp regarding a user&rsquo;s identity, which may include attributes such as username, groups, and email address. For example: the Idp has authenticated the user Abood, confirming that their email address is <a href="mailto:abood@gmail.com">abood@gmail.com</a>. Abood also belongs to the following groups: immortals, actionheros, and super_admin. the Idp asserts that Abood&rsquo;s first name is Abood and their surename is Alakhras.</li>
 </ul>
 <br>
 <h3 id="saml-generic-sp-initiated-auth-flow">SAML Generic SP Initiated Auth Flow</h3>
 <br>
 <p><img src="/images/fortinet/saml_2.PNG" alt="My Image"></p>
-<p>Service provider (SP) that uses SAML authentication should not support IdP initiated SAML auth, due to it being less secure.
+<p>Service provider (SP) that uses SAML authentication should not support IdP initiated SAML authentication due being less secure.
 IdP initiated has been described as like a CSRF/XSRF (Cross Site Request Forgery) attack.</p>
 <p><img src="/images/fortinet/saml_3.PNG" alt="My Image"></p>
 <hr>
