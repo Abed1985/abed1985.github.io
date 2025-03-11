@@ -6,10 +6,20 @@
     <description>Recent content in zerotrust on NetSecOps Navigator</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 10 Mar 2025 04:03:33 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 11 Mar 2025 21:22:27 +0000</lastBuildDate>
     
 	<atom:link href="https://abed1985.github.io/tags/zerotrust/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Fortinet ZTNZ Part VII</title>
+      <link>https://abed1985.github.io/blogs/fortinet-ztna-part7/</link>
+      <pubDate>Tue, 11 Mar 2025 21:22:27 +0000</pubDate>
+      
+      <guid>https://abed1985.github.io/blogs/fortinet-ztna-part7/</guid>
+      <description>Introduction Welcome to the seventh installment of our Fortinet ZTNA series! In this guide, we explore the configuration of ZTNA tags and tagging rules—essential components that determine whether an endpoint is compliant or non-compliant when accessing data center (DC) resources. This step-by-step tutorial will walk you through setting up ZTNA tags, defining tagging rules, and understanding the available configuration options.
+Zero-Trust Tagging Rules Tagging rules are configured within FortiClient EMS (Endpoint Management System) and help classify endpoints based on compliance criteria.</description>
+    </item>
     
     <item>
       <title>Fortinet ZTNA Part VI</title>

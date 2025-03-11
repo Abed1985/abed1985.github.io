@@ -28,16 +28,16 @@
 
 
 
-<meta property="og:title" content="Fortigate user level DLP" />
-<meta property="og:description" content="Basic dlp on Fortigate" />
+<meta property="og:title" content="Fortinet ZTNZ Part VII" />
+<meta property="og:description" content="ZTNA Destinations|Tags|Rules" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://abed1985.github.io/blogs/fortinet-dlp/" />
-<meta property="article:published_time" content="2025-03-04T23:54:30+00:00" />
-<meta property="article:modified_time" content="2025-03-04T23:54:30+00:00" /><meta property="og:site_name" content="NetSecOps Navigator" />
+<meta property="og:url" content="https://abed1985.github.io/blogs/fortinet-ztna-part7/" />
+<meta property="article:published_time" content="2025-03-11T21:22:27+00:00" />
+<meta property="article:modified_time" content="2025-03-11T21:22:27+00:00" /><meta property="og:site_name" content="NetSecOps Navigator" />
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Fortigate user level DLP"/>
-<meta name="twitter:description" content="Basic dlp on Fortigate"/>
+<meta name="twitter:title" content="Fortinet ZTNZ Part VII"/>
+<meta name="twitter:description" content="ZTNA Destinations|Tags|Rules"/>
 
 
 <link rel="stylesheet" href="/bootstrap-5/css/bootstrap.min.css" media="all"><link rel="stylesheet" href="/css/header.css" media="all">
@@ -101,7 +101,7 @@
 
 
 
-<meta name="description" content="Basic dlp on Fortigate">
+<meta name="description" content="ZTNA Destinations|Tags|Rules">
 <link rel="stylesheet" href="/css/single.css">
 
 
@@ -112,7 +112,7 @@
   
 
   <title>
-Fortigate user level DLP | NetSecOps Navigator
+Fortinet ZTNZ Part VII | NetSecOps Navigator
 
   </title>
 </head>
@@ -289,13 +289,13 @@ Fortigate user level DLP | NetSecOps Navigator
       <div class="col-sm-12 col-md-12 col-lg-9">
         <div class="pr-lg-4">
           <div class="title mb-5">
-            <h1 class="text-center mb-4">Fortigate user level DLP</h1>
+            <h1 class="text-center mb-4">Fortinet ZTNZ Part VII</h1>
             <div class="text-center">
               
                 Abood Alakhras
                 <small>|</small>
               
-              Mar 4, 2025
+              Mar 11, 2025
 
               
               <span id="readingTime">
@@ -306,176 +306,62 @@ Fortigate user level DLP | NetSecOps Navigator
           </div>
           
           <div class="featured-image">
-            <img class="img-fluid mx-auto d-block" src="/images/fortinet/dlp_1.png" alt="Fortigate user level DLP">
+            <img class="img-fluid mx-auto d-block" src="/images/fortinet/ztnap.png" alt="Fortinet ZTNZ Part VII">
           </div>
           
           <article class="page-content  p-2">
-          <h2 id="block-sensitive-data-leak-to-chatgpt-example">Block sensitive data leak to ChatGPT example</h2>
-<p>DLP (Data Leak Prevention) has become increasingly crucial with the rise of LLM AI platforms. Many users rely on AI chat platforms to simplify both their work and personal tasks.</p>
-<p>While this convenience is beneficial, it also raises the risk of unintentionally exposing sensitive organizational information. LLM models can incorporate leaked data into their training sets, potentially making it part of responses to external users which in return significantly increasing security risks.</p>
-<p>A notable example is the Samsung data leak to ChatGPT:
-To learn more about this data leak, check:<a href="https://www.forbes.com/sites/siladityaray/2023/05/02/samsung-bans-chatgpt-and-other-chatbots-for-employees-after-sensitive-code-leak/">Samsung Bans ChatGpT for employees after Sesitive Code leak</a></p>
-<p>A comprehensive DLP solution can effectively address these challenges. But what if a customer has a FortiGate firewall and wants to leverage its DLP capabilities to mitigate these risks?</p>
-<h2 id="pre-requisites">Pre-requisites</h2>
+          <h2 id="introduction">Introduction</h2>
+<p>Welcome to the seventh installment of our Fortinet ZTNA series! In this guide, we explore the configuration of ZTNA tags and tagging rules—essential components that determine whether an endpoint is compliant or non-compliant when accessing data center (DC) resources. This step-by-step tutorial will walk you through setting up ZTNA tags, defining tagging rules, and understanding the available configuration options.</p>
+<h2 id="zero-trust-tagging-rules">Zero-Trust Tagging Rules</h2>
+<p>Tagging rules are configured within FortiClient EMS (Endpoint Management System) and help classify endpoints based on compliance criteria.</p>
+<h3 id="rule-types">Rule Types</h3>
+<p><img src="/images/fortinet/ztna_tag1.PNG" alt="My Image"></p>
+<h4 id="tagging-rules">Tagging Rules</h4>
 <ul>
-<li>Keyword and Data Samples: Ensure a predefined list of keywords and data samples available for DLP matching.</li>
-<li>Proxy-Based Firewall Policy with Deep SSL Inspection:
+<li>Tagging rules vary depending on the operating system of the endpoint.</li>
+<li>The image above showcases some rule options available for Windows OS. (Fortinet continuously enhances telemetry to collect more endpoint data and update rules accordingly.)</li>
+<li>Each rule type provides different selection criteria. For example, when using an Active Directory (AD) Group rule, you must specify an AD group from the available domain groups. (Ensure your domain is properly configured under Endpoints to use this option.)</li>
+<li>Multiple conditions can be applied to any rule.</li>
+<li>By default, an endpoint must meet all conditions to satisfy a rule. However, using the &ldquo;NOT&rdquo; operator (where supported) or modifying the rule logic allows flexibility—e.g., an endpoint can match condition (1 AND 2) OR 3 instead.</li>
+<li>The screenshot below illustrates this logic in action:</li>
+</ul>
+<p><img src="/images/fortinet/ztna_tag2.PNG" alt="My Image"></p>
+<h4 id="tag-logic-example">Tag Logic Example</h4>
+<p>For our Proof of Concept (PoC), we’ve configured two tagging rules in EMS:</p>
+<h5 id="rule-1-lab-test">Rule 1: &ldquo;lab-test&rdquo;</h5>
 <ul>
-<li>Endpoints must trust the Fortinet CA SSL certificate used for deep inspection.</li>
-<li>Certificate distribution can be managed via an MDM or onboarded using FortiClient EMS as part of the Fortinet Security Fabric.</li>
+<li>Tag Name: got-the-file</li>
+<li>Logic: The endpoint must satisfy all conditions to be tagged as got-the-file.</li>
 </ul>
-</li>
-<li>DLP Security Profile: Configure a DLP security profile and attach it to the firewall policy.</li>
-<li>Blocking QUIC Protocol:
+<p><img src="/images/fortinet/ztna_tag3.PNG" alt="My Image"></p>
+<h5 id="rule-2-net-sec-ops-domain">Rule 2: &ldquo;net-sec-ops-domain&rdquo;</h5>
 <ul>
-<li>When using a DLP profile in a proxy-based firewall policy, it&rsquo;s recommended to block the QUIC protocol in application control profiles. By default, FortiOS 7.0–7.2 can only inspect QUIC traffic in HTTP/3 in flow mode. Explicitly blocking QUIC in application control forces most traffic on UDP/443 to revert to TCP/443, allowing FortiGate to properly inspect it.</li>
+<li>Tag Name: net-sec-ops-domain</li>
+<li>Logic: The endpoint must be logged into the net-sec-ops.com.au domain. If this condition is met, the endpoint is tagged as net-sec-ops-domain.</li>
 </ul>
-</li>
-</ul>
-<h2 id="procedures">Procedures</h2>
-<h3 id="step-1-determine-what-do-you-want-to-prevent-from-leaking">Step 1: Determine what do you want to prevent from leaking</h3>
-<p>In this example I will prevent leaking to chatGPT the following:</p>
+<p><img src="/images/fortinet/ztna_tag4.PNG" alt="My Image"></p>
+<h3 id="zero-trust-tag-monitor">Zero Trust Tag Monitor</h3>
+<p>The Zero Trust Tag Monitor provides a real-time view of dynamically assigned endpoint tags based on configured rules.
+If an endpoint connected to EMS meets the rule conditions, the corresponding tags appear in the monitor.</p>
+<p><img src="/images/fortinet/ztna_tag5.PNG" alt="My Image"></p>
+<p>Additionally, you can verify assigned tags directly on the FortiClient:</p>
+<p><img src="/images/fortinet/ztna_tag6.PNG" alt="My Image"></p>
+<h2 id="ztna-tags-in--fortigate">ZTNA Tags in  Fortigate</h2>
+<p>Once the Security Fabric connection between FortiGate and FortiClient EMS is established, all ZTNA tags sync back to FortiGate and are displayed under ZTNA &gt; ZTNA Tags.
+For this PoC, we focus on two tags:</p>
 <ul>
-<li>Any text/keyword that contains &ldquo;abood&rdquo;.</li>
-<li>Any IP address that matches the subnet 1.1.1.0/24 as an example.</li>
+<li>net-sec-ops-domain</li>
+<li>got-the-file</li>
 </ul>
-<p>This will be matched using regex. Tools such as <a href="https://regex101.com">https://regex101.com</a> can help fine tunning the pattern you are after.</p>
-<h3 id="step-2-enable-dlp">Step 2: Enable DLP</h3>
-<p>Enable Data Leak prevention under feature visibility.</p>
-<p><img src="/images/fortinet/dlp_featurev.png" alt="My Image"></p>
-<h3 id="step-3-create-dlp-dictionary">Step 3: Create DLP Dictionary</h3>
-<p>Under Data Leak Prevention create a new DLP dictionary with two dictionary entries to cover the use cases.</p>
+<p>Each tag exists in two forms:</p>
 <ul>
-<li>Dictionary entry with type &ldquo;Keyword&rdquo; to match &ldquo;abood&rdquo; keyword in text.</li>
-<li>Dictionary entry with type &ldquo;Regex&rdquo; to match 1.1.1.0/24 a regex match to cover the subnet (any ip within the range)</li>
+<li>ZTNA IP Tag – Used for full ZTNA (mainly for remote user access).</li>
+<li>ZTNA MAC Tag – Used for on-premises security, controlling access between on-fabric devices, internal web servers, and the internet. (This method does not require an access proxy and can be directly applied to firewall policies.)</li>
 </ul>
-<p><img src="/images/fortinet/dlp_dict1.png" alt="My Image">
-<br></p>
-<p><img src="/images/fortinet/dlp_dict2.png" alt="My Image"></p>
-<h3 id="step-4-create-a-dlp-sensor">Step 4: Create a DLP Sensor</h3>
-<p>Under Data Leak Prevention create a new DLP sensor and reference to the dlp dictionary created earlier.</p>
-<p><img src="/images/fortinet/dlp_sen1.png" alt="My Image">
-<br></p>
-<p><img src="/images/fortinet/dlp_sen2.png" alt="My Image"></p>
-<h3 id="step-4-create-a-dlp-profile">Step 4: Create a DLP Profile</h3>
-<p>Under Data Leak Prevention create a new DLP profile with two rules as per below referencing the earlier DLP sensor.
-<br>
-The first rule is with type file, and the second rule is with type message. Applying settings as shown on the GUI
-<br>
-For the first rule (file) On the CLI Unset the file type option to enable filtering of all file types, including unknown ones (unset file-type)</p>
-<p><img src="/images/fortinet/dlp_prof1.png" alt="My Image">
-<br></p>
-<p><img src="/images/fortinet/dlp_prof2.png" alt="My Image">
-<br></p>
-<p><img src="/images/fortinet/dlp_prof3.png" alt="My Image"></p>
-<h4 id="the-complete-cli-commands-for-the-dlp-dictionary-sensor-profile-looks-like-this">The complete CLI commands for the DLP Dictionary, sensor, profile looks like this</h4>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">FG<span style="color:#f92672">-</span>ABOOD<span style="color:#f92672">-</span>DC<span style="color:#f92672">-</span>WAN <span style="color:#75715e"># config dlp dictionary </span>
-
-FG<span style="color:#f92672">-</span>ABOOD<span style="color:#f92672">-</span>DC<span style="color:#f92672">-</span>WAN (dictionary) <span style="color:#75715e"># show</span>
-config dlp dictionary
-    edit <span style="color:#e6db74">&#34;llmapps&#34;</span>
-        set uuid f24f4ee4<span style="color:#f92672">-</span>fd65<span style="color:#f92672">-</span><span style="color:#ae81ff">51</span>ee<span style="color:#f92672">-</span><span style="color:#ae81ff">0</span>f5e<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>f6f999f30d0
-        set comment <span style="color:#e6db74">&#34;block leaks to  AI platforms&#34;</span>
-        config entries
-            edit <span style="color:#ae81ff">1</span>
-                set type <span style="color:#e6db74">&#34;keyword&#34;</span>
-                set pattern <span style="color:#e6db74">&#34;brennan&#34;</span>
-            next
-            edit <span style="color:#ae81ff">2</span>
-                set type <span style="color:#e6db74">&#34;regex&#34;</span>
-                set pattern <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">b210</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">.18</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">.244</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">.(?:</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">d{1,2}|1</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">d{2}|2[0-4]</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">d|25[0-4])</span><span style="color:#ae81ff">\\</span><span style="color:#e6db74">b&#34;</span>
-            next
-        end
-    next
-end
-
-FG<span style="color:#f92672">-</span>ABOOD<span style="color:#f92672">-</span>DC<span style="color:#f92672">-</span>WAN (dictionary) <span style="color:#75715e"># end</span>
-
-FG<span style="color:#f92672">-</span>ABOOD<span style="color:#f92672">-</span>DC<span style="color:#f92672">-</span>WAN <span style="color:#75715e"># config dlp sensor </span>
-
-FG<span style="color:#f92672">-</span>ABOOD<span style="color:#f92672">-</span>DC<span style="color:#f92672">-</span>WAN (sensor) <span style="color:#75715e"># show</span>
-config dlp sensor
-    edit <span style="color:#e6db74">&#34;llmapps&#34;</span>
-        config entries
-            edit <span style="color:#ae81ff">1</span>
-                set dictionary <span style="color:#e6db74">&#34;llmapps&#34;</span>
-            next
-        end
-    next
-end
-
-FG<span style="color:#f92672">-</span>ABOOD<span style="color:#f92672">-</span>DC<span style="color:#f92672">-</span>WAN (sensor) <span style="color:#75715e"># end</span>
-
-FG<span style="color:#f92672">-</span>ABOOD<span style="color:#f92672">-</span>DC<span style="color:#f92672">-</span>WAN <span style="color:#75715e"># config dlp profile </span>
-
-FG<span style="color:#f92672">-</span>ABOOD<span style="color:#f92672">-</span>DC<span style="color:#f92672">-</span>WAN (profile) <span style="color:#75715e"># show</span>
-config dlp profile
-    edit <span style="color:#e6db74">&#34;default&#34;</span>
-        set comment <span style="color:#e6db74">&#34;Default profile.&#34;</span>
-    next
-    edit <span style="color:#e6db74">&#34;sniffer-profile&#34;</span>
-        set comment <span style="color:#e6db74">&#34;Log a summary of email and web traffic.&#34;</span>
-        set summary<span style="color:#f92672">-</span>proto smtp pop3 imap http<span style="color:#f92672">-</span>get http<span style="color:#f92672">-</span>post
-    next
-    edit <span style="color:#e6db74">&#34;def-cc-sensor&#34;</span>
-    next
-    edit <span style="color:#e6db74">&#34;SSN-Sensor-r1s&#34;</span>
-    next
-    edit <span style="color:#e6db74">&#34;def-ssn-sensor&#34;</span>
-    next
-    edit <span style="color:#e6db74">&#34;llmapps&#34;</span>
-        config rule
-            edit <span style="color:#ae81ff">1</span>
-                set name <span style="color:#e6db74">&#34;llmapps1&#34;</span>
-                set severity critical
-                set proto http<span style="color:#f92672">-</span>post
-                set filter<span style="color:#f92672">-</span>by sensor
-                set sensor <span style="color:#e6db74">&#34;llmapps&#34;</span>
-                set action block
-            next
-            edit <span style="color:#ae81ff">2</span>
-                set name <span style="color:#e6db74">&#34;llmapps2&#34;</span>
-                set severity critical
-                set type message
-                set proto http<span style="color:#f92672">-</span>post
-                set filter<span style="color:#f92672">-</span>by sensor
-                set sensor <span style="color:#e6db74">&#34;llmapps&#34;</span>
-                set action block
-            next
-        end
-    next
-end
-
-FG<span style="color:#f92672">-</span>ABOOD<span style="color:#f92672">-</span>DC<span style="color:#f92672">-</span>WAN (profile) <span style="color:#75715e"># </span>
-</code></pre></div><h3 id="step-4-create-an-address-object">Step 4: Create an address object</h3>
-<p>Create an address object type &ldquo;FQDN&rdquo; for &ldquo;chat.openai.com&rdquo;</p>
-<p><img src="/images/fortinet/dlp_addr.png" alt="My Image"></p>
-<h3 id="step-5-create-an-app-control-profile">Step 5: Create an APP control profile</h3>
-<p>Create an application control profile with default settings (monitor all), with an override to block the QUIC protocol.</p>
-<p><img src="/images/fortinet/dlp_appprof.png" alt="My Image"></p>
-<h3 id="step-6-create-a-firewall-policy">Step 6: Create a Firewall Policy</h3>
-<p>Create A firewall policy referencing the following:</p>
-<ul>
-<li>FQDN address created earlier as a destination.</li>
-<li>The Application control profile created earlier.</li>
-<li>The DLP profile created earlier.</li>
-</ul>
-<p>The policy inspection type need to be proxy based , and using deep inspection.</p>
-<p><img src="/images/fortinet/dlp_fwp.PNG" alt="My Image">
-<br>
-<br></p>
-<h3 id="step-7-testing">Step 7: Testing</h3>
-<p>Let&rsquo;s now visit the website and attempt to leak information. Note that the &ldquo;Fortinet&rdquo; CA SSL certificate present itself for deep inspection.</p>
-<p>This is why it&rsquo;s a pre-requiste that the CA cert is imported to avoid certificate warning when a traffic interception occurs at the fortigate level as part of SSL decryption process.</p>
-<p><img src="/images/fortinet/dlp_deepinspection.PNG" alt="My Image"></p>
-<p>As per the testing below, notice that anything that contains the word &ldquo;abood&rdquo; or any ip from subnet 1.1.1.0/24 is not leaked to ChatGPT.</p>
-<p><img src="/images/fortinet/dlp_test1.PNG" alt="My Image"></p>
-<p><img src="/images/fortinet/dlp_test2.PNG" alt="My Image"></p>
-<p><img src="/images/fortinet/dlp_test3.PNG" alt="My Image">
-<br>
-<br></p>
-<h4 id="notice-the-dlp-logs-of-the-these-patterns-are-blocked">Notice the dlp logs of the these patterns are blocked</h4>
-<p><img src="/images/fortinet/dlp_testoutcome.PNG" alt="My Image"></p>
+<p><img src="/images/fortinet/ztna_tag7.PNG" alt="My Image"></p>
+<h2 id="conclusion">Conclusion</h2>
+<p>ZTNA tags and tagging rules play a crucial role in Fortinet’s Zero Trust security model, ensuring that only compliant endpoints gain access to critical resources. By leveraging FortiClient EMS tagging rules, Zero Trust Tag Monitor, and FortiGate ZTNA tags, organizations can implement a robust access control mechanism for both remote and on-premises users.</p>
+<p>Stay tuned for the next part of the Fortinet ZTNA series! 🚀</p>
 
           </article>
         </div>
@@ -490,21 +376,15 @@ FG<span style="color:#f92672">-</span>ABOOD<span style="color:#f92672">-</span>D
               <div class="toc-content">
                 <nav id="TableOfContents">
   <ul>
-    <li><a href="#block-sensitive-data-leak-to-chatgpt-example">Block sensitive data leak to ChatGPT example</a></li>
-    <li><a href="#pre-requisites">Pre-requisites</a></li>
-    <li><a href="#procedures">Procedures</a>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#zero-trust-tagging-rules">Zero-Trust Tagging Rules</a>
       <ul>
-        <li><a href="#step-1-determine-what-do-you-want-to-prevent-from-leaking">Step 1: Determine what do you want to prevent from leaking</a></li>
-        <li><a href="#step-2-enable-dlp">Step 2: Enable DLP</a></li>
-        <li><a href="#step-3-create-dlp-dictionary">Step 3: Create DLP Dictionary</a></li>
-        <li><a href="#step-4-create-a-dlp-sensor">Step 4: Create a DLP Sensor</a></li>
-        <li><a href="#step-4-create-a-dlp-profile">Step 4: Create a DLP Profile</a></li>
-        <li><a href="#step-4-create-an-address-object">Step 4: Create an address object</a></li>
-        <li><a href="#step-5-create-an-app-control-profile">Step 5: Create an APP control profile</a></li>
-        <li><a href="#step-6-create-a-firewall-policy">Step 6: Create a Firewall Policy</a></li>
-        <li><a href="#step-7-testing">Step 7: Testing</a></li>
+        <li><a href="#rule-types">Rule Types</a></li>
+        <li><a href="#zero-trust-tag-monitor">Zero Trust Tag Monitor</a></li>
       </ul>
     </li>
+    <li><a href="#ztna-tags-in--fortigate">ZTNA Tags in  Fortigate</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
   </ul>
 </nav>
               </div>
@@ -524,6 +404,10 @@ FG<span style="color:#f92672">-</span>ABOOD<span style="color:#f92672">-</span>D
                 target="_blank"
               >fortinet</a></li>
               
+              <li class="list-inline-item"><a href="https://abed1985.github.io/tags/zerotrust"
+                target="_blank"
+              >zerotrust</a></li>
+              
             </ul>
           </aside>
           
@@ -534,22 +418,22 @@ FG<span style="color:#f92672">-</span>ABOOD<span style="color:#f92672">-</span>D
             <div class="social-content">
               <ul class="list-inline">
                 <li class="list-inline-item text-center">
-                  <a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3a%2f%2fabed1985.github.io%2fblogs%2ffortinet-dlp%2f">
+                  <a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3a%2f%2fabed1985.github.io%2fblogs%2ffortinet-ztna-part7%2f">
                     <i class="fab fa-linkedin"></i>
                   </a>
                 </li>
                 <li class="list-inline-item text-center">
-                  <a target="_blank" href="https://twitter.com/share?text=Fortigate%20user%20level%20DLP&url=https%3a%2f%2fabed1985.github.io%2fblogs%2ffortinet-dlp%2f">
+                  <a target="_blank" href="https://twitter.com/share?text=Fortinet%20ZTNZ%20Part%20VII&url=https%3a%2f%2fabed1985.github.io%2fblogs%2ffortinet-ztna-part7%2f">
                     <i class="fab fa-twitter"></i>
                   </a>
                 </li>
                 <li class="list-inline-item text-center">
-                  <a target="_blank" href="https://api.whatsapp.com/send?text=Fortigate%20user%20level%20DLP: https%3a%2f%2fabed1985.github.io%2fblogs%2ffortinet-dlp%2f">
+                  <a target="_blank" href="https://api.whatsapp.com/send?text=Fortinet%20ZTNZ%20Part%20VII: https%3a%2f%2fabed1985.github.io%2fblogs%2ffortinet-ztna-part7%2f">
                     <i class="fab fa-whatsapp"></i>
                   </a>
                 </li>
                 <li class="list-inline-item text-center">
-                  <a target="_blank" href='mailto:?subject=Fortigate%20user%20level%20DLP&amp;body=Check%20out%20this%20site https%3a%2f%2fabed1985.github.io%2fblogs%2ffortinet-dlp%2f'>
+                  <a target="_blank" href='mailto:?subject=Fortinet%20ZTNZ%20Part%20VII&amp;body=Check%20out%20this%20site https%3a%2f%2fabed1985.github.io%2fblogs%2ffortinet-ztna-part7%2f'>
                     <i class="fa fa-envelope"></i>
                   </a>
                 </li>
