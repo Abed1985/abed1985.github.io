@@ -6,10 +6,20 @@
     <description>Recent content in Blogs on NetSecOps Navigator</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 11 Mar 2025 21:22:27 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 18 Mar 2025 23:40:02 +0000</lastBuildDate>
     
 	<atom:link href="https://abed1985.github.io/blogs/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>Fortinet ZTNZ Part VIII</title>
+      <link>https://abed1985.github.io/blogs/fortinet-ztna-part8/</link>
+      <pubDate>Tue, 18 Mar 2025 23:40:02 +0000</pubDate>
+      
+      <guid>https://abed1985.github.io/blogs/fortinet-ztna-part8/</guid>
+      <description>Finalizing Fortinet ZTNA: Rules, Verification, and Testing In this final installment of the Fortinet ZTNA series, we will explore FortiGate ZTNA rules, conduct final verifications, and test the proof of concept (POC) from an end-user perspective.
+ZTNA Rules ZTNA rules define access policies using proxy policies to enforce Zero Trust role-based access control. These policies can include ZTNA tags, which are synchronized from FortiClient EMS, and security profiles for additional protection.</description>
+    </item>
     
     <item>
       <title>Fortinet ZTNZ Part VII</title>
@@ -39,7 +49,7 @@ ZTNA Destinations We have a ZTNA Destination profile named &amp;ldquo;ENDPOINTPO
       <guid>https://abed1985.github.io/blogs/fortinet-ztna-part5/</guid>
       <description>Introduction In this fifth installment of our Fortinet ZTNA series, we explore ZTNA certificate management and its role in securing client authentication and access control.
 ZTNA Certificate Management FortiClient EMS plays a central role in managing certificates for ZTNA authentication. Below are key points regarding ZTNA CA and certificate handling:
- FortiClient EMS has a default root CA certificate (default_ZTNARootCA), which is assigned to the default customer site. Each customer site, such as BRENNAN-TEST, has a unique root CA.</description>
+ FortiClient EMS has a default root CA certificate (default_ZTNARootCA), which is assigned to the default customer site. Each customer site, such as CUSTOMER-TEST, has a unique root CA.</description>
     </item>
     
     <item>
