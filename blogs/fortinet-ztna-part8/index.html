@@ -409,51 +409,43 @@ Fortinet ZTNZ Part VIII | NetSecOps Navigator
 end
 </code></pre></div><h3 id="final-endpoint-verification">Final Endpoint Verification</h3>
 <ol>
-<li>
-<p>Verify FortiClient EMS Connection
-<img src="/images/fortinet/ztna_ver1.PNG" alt="My Image"></p>
-</li>
-<li>
-<p>Confirm ZTNA Destinations Learned via Endpoint Policy
-<img src="/images/fortinet/ztna_ver2.PNG" alt="My Image"></p>
-</li>
-<li>
-<p>Verify Correct ZTNA Tag Assignment
-<img src="/images/fortinet/ztna_ver3.PNG" alt="My Image">
-<img src="/images/fortinet/ztna_ver4.PNG" alt="My Image"></p>
-</li>
-<li>
-<p>Confirm ZTNA Certificate Assignment
-<img src="/images/fortinet/ztna_ver5.PNG" alt="My Image"></p>
-</li>
-<li>
-<p>Validate Endpoint Information in FortiGate</p>
-</li>
+<li>Verify FortiClient EMS Connection</li>
+</ol>
+<p><img src="/images/fortinet/ztna_ver1.PNG" alt="My Image"></p>
+<ol start="2">
+<li>Confirm ZTNA Destinations Learned via Endpoint Policy</li>
+</ol>
+<p><img src="/images/fortinet/ztna_ver2.PNG" alt="My Image"></p>
+<ol start="3">
+<li>Verify Correct ZTNA Tag Assignment</li>
+</ol>
+<p><img src="/images/fortinet/ztna_ver3.PNG" alt="My Image"></p>
+<p><img src="/images/fortinet/ztna_ver4.PNG" alt="My Image"></p>
+<ol start="4">
+<li>Confirm ZTNA Certificate Assignment</li>
+</ol>
+<p><img src="/images/fortinet/ztna_ver5.PNG" alt="My Image"></p>
+<ol start="5">
+<li>Validate Endpoint Information in FortiGate</li>
 </ol>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">diagnose endpoint record list
 </code></pre></div><p><img src="/images/fortinet/ztna_ver6.PNG" alt="My Image"></p>
 <h2 id="access-testing">Access Testing</h2>
 <ol>
-<li>
-<p>Web Server Access Without SAML Authentication
-<img src="/images/fortinet/ztna_ver7.PNG" alt="My Image">
-<img src="/images/fortinet/ztna_ver8.PNG" alt="My Image"></p>
-</li>
-<li>
-<p>Web Server Access with SAML Authentication</p>
-</li>
+<li>Web Server Access Without SAML Authentication</li>
+</ol>
+<p><img src="/images/fortinet/ztna_ver7.PNG" alt="My Image"></p>
+<p><img src="/images/fortinet/ztna_ver8.PNG" alt="My Image"></p>
+<ol start="2">
+<li>Web Server Access with SAML Authentication</li>
 </ol>
 <ul>
-<li>
-<p>Redirected to SAML IdP for authentication.</p>
-</li>
-<li>
-<p>Successful login with MFA.
-<img src="/images/fortinet/ztna_ver9.PNG" alt="My Image"></p>
-</li>
-<li>
-<p>Directed to SAML IdP for authentication :  Completing login and MFA</p>
-</li>
+<li>Redirected to SAML IdP for authentication.</li>
+<li>Successful login with MFA.</li>
+</ul>
+<p><img src="/images/fortinet/ztna_ver9.PNG" alt="My Image"></p>
+<ul>
+<li>Directed to SAML IdP for authentication :  Completing login and MFA</li>
 </ul>
 <p><img src="/images/fortinet/ztna_ver10.PNG" alt="My Image">
 <img src="/images/fortinet/ztna_ver11.PNG" alt="My Image"></p>
@@ -464,9 +456,9 @@ end
 </ol>
 <ul>
 <li>Accessing machine 192.168.2.3 via SSH.</li>
-<li>FortiGate handles proxying and SAML authentication.
-<img src="/images/fortinet/ztna_ver13.PNG" alt="My Image"></li>
+<li>FortiGate handles proxying and SAML authentication.</li>
 </ul>
+<p><img src="/images/fortinet/ztna_ver13.PNG" alt="My Image"></p>
 <h2 id="conclusion">Conclusion</h2>
 <p>This concludes the Fortinet ZTNA series. Below are the key takeaways:</p>
 <ul>
