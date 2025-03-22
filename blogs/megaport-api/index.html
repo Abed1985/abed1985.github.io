@@ -505,7 +505,7 @@ The following method accepts the access token and the product UID to retrieve th
 <p>Now that we have the circuit details, let’s explore a use case. Imagine you have multiple redundant circuits between two data centers, and the Megaport-provisioned link serves as a backup. You may be running IGP with metrics or BGP with local AS path, preferring the circuit with higher bandwidth. However, you don’t want to pay extra fees for the backup circuit unless it&rsquo;s needed.</p>
 <p>With Megaport’s SDN fabric, you can upgrade the circuit’s bandwidth on-demand, and I’ve written a Python method to automate this process.</p>
 <p>For example, if you want to upgrade a circuit to 500Mbps based on certain triggers (e.g., SNMP traps or syslog events), you can do so without manual intervention. This eliminates the need to wake up an engineer in the middle of the night to click buttons on the Megaport portal and reduces the risk of human error, making the entire process more efficient and reliable.</p>
-<p>Here’s method to check the current bandwidth value for a give circuit:</p>
+<p>Here’s method to check the current bandwidth value for a given circuit:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_megaport_product_bandwidth</span>(access_token, productUid):
     url <span style="color:#f92672">=</span> f<span style="color:#e6db74">&#34;https://api.megaport.com/v2/product/{productUid}&#34;</span>
     payload <span style="color:#f92672">=</span> {}
@@ -519,7 +519,7 @@ The following method accepts the access token and the product UID to retrieve th
         <span style="color:#66d9ef">return</span> rate_limit_mbps
     <span style="color:#66d9ef">else</span>:
         <span style="color:#66d9ef">return</span>(<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;Could not get Vxc product details. API request has failed with status code {response.status_code}&#34;</span>)) 
-</code></pre></div><p>Here&rsquo;s a method to upgrade the Megaport circuit&rsquo;s bandwidth for a specific circuit</p>
+</code></pre></div><p>Here&rsquo;s a method to upgrade the Megaport circuit&rsquo;s bandwidth for a specific circuit:</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">upgrade_megaport_product_bandwidth</span>(access_token, productUid, new_bandwidth):
     url <span style="color:#f92672">=</span> f<span style="color:#e6db74">&#34;https://api.megaport.com/v2/product/{productUid}&#34;</span>
     payload <span style="color:#f92672">=</span> {
@@ -540,7 +540,7 @@ The following method accepts the access token and the product UID to retrieve th
 Out[<span style="color:#ae81ff">23</span>]: <span style="color:#ae81ff">10</span>
 </code></pre></div><p>lets upgrade the bandwidth of the circuit using the &ldquo;upgrade_megaport_product_bandwidth&rdquo; method to 500 Mbps.</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">In [<span style="color:#ae81ff">22</span>]: update_bandwidth_product_detail_1 <span style="color:#f92672">=</span> update_megaport_product_bandwidth(access_token, active_megaport_product_list[<span style="color:#ae81ff">12</span>], <span style="color:#ae81ff">500</span>)
-Out[<span style="color:#ae81ff">23</span>]: COMPANY<span style="color:#f92672">-</span>CORE<span style="color:#f92672">-</span>B1<span style="color:#f92672">-</span>M1<span style="color:#f92672">-</span>Megaport<span style="color:#f92672">-</span><span style="color:#ae81ff">10</span>M (BW:variable) VXC <span style="color:#ae81ff">85050</span> has been updated to a new rate limit of <span style="color:#ae81ff">50</span> Mbps<span style="color:#f92672">.</span>
+Out[<span style="color:#ae81ff">23</span>]: COMPANY<span style="color:#f92672">-</span>CORE<span style="color:#f92672">-</span>B1<span style="color:#f92672">-</span>M1<span style="color:#f92672">-</span>Megaport<span style="color:#f92672">-</span><span style="color:#ae81ff">10</span>M (BW:variable) VXC <span style="color:#ae81ff">85050</span> has been updated to a new rate limit of <span style="color:#ae81ff">500</span> Mbps<span style="color:#f92672">.</span>
 </code></pre></div><p>Notice that the PUT request has successfully upgraded the bandwdith parsing the name and the VXC along with the new speed.</p>
 <p>We can run the &ldquo;get_megaport_product_bandwidth&rdquo; again to confirm</p>
 <div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">In [<span style="color:#ae81ff">20</span>]: current_bandwidth_megaport_product_1 <span style="color:#f92672">=</span> get_megaport_product_bandwidth(access_token, active_megaport_product_list[<span style="color:#ae81ff">12</span>])
