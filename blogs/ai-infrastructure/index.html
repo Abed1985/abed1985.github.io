@@ -28,15 +28,16 @@
 
 
 
-<meta property="og:title" content="Tags" />
-<meta property="og:description" content="A collection of blogs in the NetSecOps space, or tech that matters" />
-<meta property="og:type" content="website" />
-<meta property="og:url" content="https://abed1985.github.io/tags/" />
-<meta property="og:updated_time" content="2025-04-23T05:15:14+00:00" /><meta property="og:site_name" content="NetSecOps Navigator" />
+<meta property="og:title" content="AI Infrastructure" />
+<meta property="og:description" content="AI Infrastructure" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://abed1985.github.io/blogs/ai-infrastructure/" />
+<meta property="article:published_time" content="2025-04-23T05:15:14+00:00" />
+<meta property="article:modified_time" content="2025-04-23T05:15:14+00:00" /><meta property="og:site_name" content="NetSecOps Navigator" />
 
 <meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Tags"/>
-<meta name="twitter:description" content="A collection of blogs in the NetSecOps space, or tech that matters"/>
+<meta name="twitter:title" content="AI Infrastructure"/>
+<meta name="twitter:description" content="AI Infrastructure"/>
 
 
 <link rel="stylesheet" href="/bootstrap-5/css/bootstrap.min.css" media="all"><link rel="stylesheet" href="/css/header.css" media="all">
@@ -100,15 +101,18 @@
 
 
 
-<meta name="description" content="Tags of NetSecOps Navigator">
-<link rel="stylesheet" href="/css/list.css" media="all">
+<meta name="description" content="AI Infrastructure">
+<link rel="stylesheet" href="/css/single.css">
+
+
+<script defer src="/fontawesome-6/all-6.4.2.js"></script>
 
 
   
   
 
   <title>
-Tags | NetSecOps Navigator
+AI Infrastructure | NetSecOps Navigator
 
   </title>
 </head>
@@ -289,139 +293,250 @@ Tags | NetSecOps Navigator
     </nav>
 </header>
 <div id="content">
-<div class="container pt-5" id="list-page">
-    <h2 class="text-center pb-2">Tags</h2>
-    <div class="row">
-        
-        <div class="col-lg-4 col-md-6 my-3">
-            <div class="card-columns">
-                <div class="card h-100">
-                    
-                    <div class="card-body bg-transparent p-4 shadow-sm">
-                        <a href="/tags/ai/" class="primary-font card-title">
-                            <h5 class="card-title bg-transparent" title="AI">AI</h5>
-                        </a>
-                        <div class="card-text secondary-font">
-                            <p></p>
-                        </div>
-                    </div>
-                    <div class="mt-auto post-footer bg-transparent py-3">
-                        <span class="float-start bg-transparent">Apr 23, 2025</span>
-                        <a href="/tags/ai/" class="float-end btn btn-outline-info btn-sm">Read</a>
-                    </div>
-                </div>
+<section id="single">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-sm-12 col-md-12 col-lg-9">
+        <div class="pr-lg-4">
+          <div class="title mb-5">
+            <h1 class="text-center mb-4">AI Infrastructure</h1>
+            <div class="text-center">
+              
+                Abood Alakhras
+                <small>|</small>
+              
+              Apr 23, 2025
+
+              
+              <span id="readingTime">
+                min read
+              </span>
+              
             </div>
+          </div>
+          
+          <div class="featured-image">
+            <img class="img-fluid mx-auto d-block" src="/images/ai_infra_cover.PNG" alt="AI Infrastructure">
+          </div>
+          
+          <article class="page-content  p-2">
+          <p>In this blog post, we explore the foundational technologies that power AI/ML infrastructure—from training and inference clusters to the specialized networking required to keep GPU-driven workloads running smoothly. While we touch on some technical topics like RoCEv2, RDMA, and congestion control mechanisms (PFC, ECN), the goal is to provide a broad understanding for readers who are curious about how AI systems are built and scaled. You don’t need to be a deep technical expert to follow along, but a little networking or systems background will help you appreciate the complexities involved.</p>
+<h2 id="infiniband-vs-roce-evolving-high-performance-networking"><strong>Infiniband vs RoCE: Evolving High-Performance Networking</strong></h2>
+<p>High-performance computing (HPC), AI workloads, and hyperscale data centers have traditionally relied on <strong>Infiniband</strong> to meet the stringent demands of low latency, high throughput, and reliability. Infiniband’s tight integration with RDMA and native support for congestion control and lossless behavior has made it a natural fit.</p>
+<p>But the ecosystem is changing — <strong>Ethernet-based RDMA</strong>, especially <strong>RoCEv2 (RDMA over Converged Ethernet)</strong>, is gaining traction. Hardware and software improvements are narrowing the performance gap, offering new flexibility for data centers built on commodity Ethernet.</p>
+<hr>
+<h2 id="how-things-are-today-the-infiniband-dominance"><strong>How Things Are Today: The Infiniband Dominance</strong></h2>
+<p>Infiniband offers a purpose-built stack for low-latency, zero-copy communication. It offloads most of the data path from the CPU to the NIC (HCA), allowing direct memory access between nodes via RDMA.</p>
+<p><strong>Key strengths:</strong></p>
+<ul>
+<li>End-to-end congestion control using ECN (Explicit Congestion Notification)</li>
+<li>Lossless communication via credit-based flow control</li>
+<li>Low jitter and consistent latency</li>
+<li>Mature integration with MPI, NCCL for distributed training</li>
+</ul>
+<p>It&rsquo;s a gold standard for tightly-coupled applications such as large-scale scientific simulations or training massive deep learning models.</p>
+<hr>
+<p><img src="/images/ai_infiniband_vs_rocev2_arch.png" alt="My Image">
+<em>Infiniband vs RoCEv2 stack comparison — illustrating how RoCEv2 layers RDMA on top of UDP/IP to make it routable and Ethernet-compatible</em></p>
+<hr>
+<h2 id="the-shift-why-rocev2-is-gaining-ground"><strong>The Shift: Why RoCEv2 is Gaining Ground</strong></h2>
+<p>RoCEv2 wraps RDMA in a UDP/IP envelope, making it <strong>routable across L3 boundaries</strong> and compatible with existing Ethernet infrastructure. With the right tuning, RoCEv2 can approach the lossless behavior of Infiniband.</p>
+<h3 id="what-makes-rocev2-appealing"><strong>What makes RoCEv2 appealing:</strong></h3>
+<ul>
+<li>Leverages commodity Ethernet hardware and cabling</li>
+<li>Reduces cost compared to Infiniband fabrics</li>
+<li>Allows scalable routing over IP networks</li>
+<li>Supported by modern NICs (NVIDIA, Intel, Broadcom)</li>
+</ul>
+<hr>
+<h2 id="enabling-lossless-ethernet-for-roce"><strong>Enabling Lossless Ethernet for RoCE</strong></h2>
+<p>To mimic Infiniband&rsquo;s lossless design, RoCE networks need careful tuning.</p>
+<h3 id="key-techniques"><strong>Key techniques:</strong></h3>
+<ul>
+<li><strong>PFC (Priority Flow Control):</strong> Prevents packet loss for RDMA traffic by pausing specific classes of traffic.</li>
+<li><strong>DCQCN (Data Center Quantized Congestion Notification):</strong> An ECN-based mechanism to throttle RDMA traffic during congestion.</li>
+<li><strong>QoS Mapping:</strong> Ensures RDMA flows are prioritized and isolated from regular traffic.</li>
+</ul>
+<p>Without these, RoCE suffers from performance hits due to retransmissions, as Ethernet is inherently best-effort.</p>
+<hr>
+<p><img src="/images/ai_infra_qos_demarkations.png" alt="My Image">
+<em>Congestion Control mechanisms(PFC,ECN) in RoCEv2 stack in lossless Ethernet fabric</em></p>
+<hr>
+<h2 id="challenges-with-rocev2"><strong>Challenges with RoCEv2</strong></h2>
+<p>RoCEv2 isn&rsquo;t a drop-in replacement for Infiniband. Its Ethernet roots introduce complexity:</p>
+<ul>
+<li><strong>Packet loss sensitivity:</strong> Retransmission is application-level, not handled by the NIC.</li>
+<li><strong>Complex configuration:</strong> Tuning PFC and DCQCN correctly across all switches is non-trivial.</li>
+<li><strong>Vendor inconsistency:</strong> Support for ECN, traffic classes, and hardware offload varies.</li>
+</ul>
+<p>These challenges can make RoCE feel fragile if not well architected.</p>
+<hr>
+<h2 id="looking-ahead-convergence-and-coexistence"><strong>Looking Ahead: Convergence and Coexistence</strong></h2>
+<p>The future likely holds <strong>hybrid deployments</strong>:</p>
+<ul>
+<li>Infiniband will continue to serve traditional HPC where <strong>ultra-low latency and predictability</strong> are critical.</li>
+<li>RoCEv2 is becoming the default in <strong>cloud-native and AI-focused data centers</strong>, especially where scaling and cost-efficiency matter more.</li>
+</ul>
+<h3 id="enablers-for-this-transition"><strong>Enablers for this transition:</strong></h3>
+<ul>
+<li>SmartNICs with programmable congestion control</li>
+<li>Switches with ECN support and per-priority queuing</li>
+<li>Middleware like <strong>Libfabric</strong> and <strong>UCX</strong> that abstract the RDMA backend</li>
+</ul>
+<hr>
+<h2 id="conclusion"><strong>Conclusion</strong></h2>
+<p>Infiniband remains unmatched for deterministic, low-latency workloads, but RoCEv2 is becoming a strong contender. With Ethernet-based networks already widespread, RoCEv2 offers an opportunity to <strong>extend RDMA benefits across scalable, cost-effective, and routable infrastructures</strong>.</p>
+<p>Proper QoS and lossless configuration are essential, but once in place, RoCEv2 can rival Infiniband in performance for many applications.</p>
+<p>Understanding both Infiniband and RoCEv2 lets you design better fabrics for the next generation of AI, HPC, and data-intensive workloads.</p>
+<hr>
+<h2 id="additional-resources"><strong>Additional Resources</strong></h2>
+<p>If you&rsquo;re interested in diving deeper into the technical nuances of AI/ML infrastructure and network design, the following resources provide excellent insights and guidance:</p>
+<ul>
+<li><a href="https://www.cisco.com/c/en/us/td/docs/dcn/whitepapers/cisco-addressing-ai-ml-network-challenges.html">Cisco Data Center Networking Solutions: Addressing the Challenges of AI/ML Infrastructure</a> - An overview of how Cisco addresses the complex requirements of AI/ML workloads with purpose-built networking solutions.</li>
+<li><a href="https://www.cisco.com/c/en/us/td/docs/dcn/whitepapers/cvd-for-data-center-networking-blueprint-for-ai.html">Cisco Validated Design for Data Center Networking Blueprint for AI/ML Applications</a> – A detailed, field-tested architecture tailored for scalable and high-performance AI/ML environments.</li>
+<li><a href="https://www.cisco.com/c/en/us/td/docs/dcn/whitepapers/cisco-data-center-networking-blueprint-for-ai-ml-applications.html">Cisco Data Center Networking Blueprint for AI/ML Applications</a> – An in-depth blueprint that provides practical design guidance for deploying AI/ML workloads in modern data centers.</li>
+<li>For those looking to explore this topic in greater depth, <a href="https://nwktimes.blogspot.com/2025/">Toni Pasanen’s blog</a> offers a wealth of insights drawn from extensive hands-on experience and research. It&rsquo;s a valuable resource for anyone serious about understanding AI networking infrastructure.</li>
+</ul>
+
+          </article>
         </div>
-        
-        <div class="col-lg-4 col-md-6 my-3">
-            <div class="card-columns">
-                <div class="card h-100">
-                    
-                    <div class="card-body bg-transparent p-4 shadow-sm">
-                        <a href="/tags/networking/" class="primary-font card-title">
-                            <h5 class="card-title bg-transparent" title="Networking">Networking</h5>
-                        </a>
-                        <div class="card-text secondary-font">
-                            <p></p>
-                        </div>
-                    </div>
-                    <div class="mt-auto post-footer bg-transparent py-3">
-                        <span class="float-start bg-transparent">Apr 23, 2025</span>
-                        <a href="/tags/networking/" class="float-end btn btn-outline-info btn-sm">Read</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="col-lg-4 col-md-6 my-3">
-            <div class="card-columns">
-                <div class="card h-100">
-                    
-                    <div class="card-body bg-transparent p-4 shadow-sm">
-                        <a href="/tags/networkautomation/" class="primary-font card-title">
-                            <h5 class="card-title bg-transparent" title="NetworkAutomation">NetworkAutomation</h5>
-                        </a>
-                        <div class="card-text secondary-font">
-                            <p></p>
-                        </div>
-                    </div>
-                    <div class="mt-auto post-footer bg-transparent py-3">
-                        <span class="float-start bg-transparent">Mar 20, 2025</span>
-                        <a href="/tags/networkautomation/" class="float-end btn btn-outline-info btn-sm">Read</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="col-lg-4 col-md-6 my-3">
-            <div class="card-columns">
-                <div class="card h-100">
-                    
-                    <div class="card-body bg-transparent p-4 shadow-sm">
-                        <a href="/tags/fortinet/" class="primary-font card-title">
-                            <h5 class="card-title bg-transparent" title="fortinet">fortinet</h5>
-                        </a>
-                        <div class="card-text secondary-font">
-                            <p></p>
-                        </div>
-                    </div>
-                    <div class="mt-auto post-footer bg-transparent py-3">
-                        <span class="float-start bg-transparent">Mar 18, 2025</span>
-                        <a href="/tags/fortinet/" class="float-end btn btn-outline-info btn-sm">Read</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="col-lg-4 col-md-6 my-3">
-            <div class="card-columns">
-                <div class="card h-100">
-                    
-                    <div class="card-body bg-transparent p-4 shadow-sm">
-                        <a href="/tags/security/" class="primary-font card-title">
-                            <h5 class="card-title bg-transparent" title="security">security</h5>
-                        </a>
-                        <div class="card-text secondary-font">
-                            <p></p>
-                        </div>
-                    </div>
-                    <div class="mt-auto post-footer bg-transparent py-3">
-                        <span class="float-start bg-transparent">Mar 18, 2025</span>
-                        <a href="/tags/security/" class="float-end btn btn-outline-info btn-sm">Read</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="col-lg-4 col-md-6 my-3">
-            <div class="card-columns">
-                <div class="card h-100">
-                    
-                    <div class="card-body bg-transparent p-4 shadow-sm">
-                        <a href="/tags/zerotrust/" class="primary-font card-title">
-                            <h5 class="card-title bg-transparent" title="zerotrust">zerotrust</h5>
-                        </a>
-                        <div class="card-text secondary-font">
-                            <p></p>
-                        </div>
-                    </div>
-                    <div class="mt-auto post-footer bg-transparent py-3">
-                        <span class="float-start bg-transparent">Mar 18, 2025</span>
-                        <a href="/tags/zerotrust/" class="float-end btn btn-outline-info btn-sm">Read</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="row justify-content-center">
-            <div class="col-auto m-3">
+      </div>
+      <div class="col-sm-12 col-md-12 col-lg-3">
+        <div id="stickySideBar" class="sticky-sidebar">
+          
+          <aside class="toc">
+              <h5>
+                Table Of Contents
+              </h5>
+              <div class="toc-content">
+                <nav id="TableOfContents">
+  <ul>
+    <li><a href="#infiniband-vs-roce-evolving-high-performance-networking"><strong>Infiniband vs RoCE: Evolving High-Performance Networking</strong></a></li>
+    <li><a href="#how-things-are-today-the-infiniband-dominance"><strong>How Things Are Today: The Infiniband Dominance</strong></a></li>
+    <li><a href="#the-shift-why-rocev2-is-gaining-ground"><strong>The Shift: Why RoCEv2 is Gaining Ground</strong></a>
+      <ul>
+        <li><a href="#what-makes-rocev2-appealing"><strong>What makes RoCEv2 appealing:</strong></a></li>
+      </ul>
+    </li>
+    <li><a href="#enabling-lossless-ethernet-for-roce"><strong>Enabling Lossless Ethernet for RoCE</strong></a>
+      <ul>
+        <li><a href="#key-techniques"><strong>Key techniques:</strong></a></li>
+      </ul>
+    </li>
+    <li><a href="#challenges-with-rocev2"><strong>Challenges with RoCEv2</strong></a></li>
+    <li><a href="#looking-ahead-convergence-and-coexistence"><strong>Looking Ahead: Convergence and Coexistence</strong></a>
+      <ul>
+        <li><a href="#enablers-for-this-transition"><strong>Enablers for this transition:</strong></a></li>
+      </ul>
+    </li>
+    <li><a href="#conclusion"><strong>Conclusion</strong></a></li>
+    <li><a href="#additional-resources"><strong>Additional Resources</strong></a></li>
+  </ul>
+</nav>
+              </div>
+          </aside>
+          
+
+          
+          <aside class="tags">
+            <h5>Tags</h5>
+            <ul class="tags-ul list-unstyled list-inline">
+              
+              <li class="list-inline-item"><a href="https://abed1985.github.io/tags/networking"
                 
+              >Networking</a></li>
+              
+              <li class="list-inline-item"><a href="https://abed1985.github.io/tags/ai"
+                
+              >AI</a></li>
+              
+            </ul>
+          </aside>
+          
 
-
+          
+          <aside class="social">
+            <h5>Social</h5>
+            <div class="social-content">
+              <ul class="list-inline">
+                <li class="list-inline-item text-center">
+                  <a target="_blank" href="https://www.linkedin.com/shareArticle?mini=true&url=https%3a%2f%2fabed1985.github.io%2fblogs%2fai-infrastructure%2f">
+                    <i class="fab fa-linkedin"></i>
+                  </a>
+                </li>
+                <li class="list-inline-item text-center">
+                  <a target="_blank" href="https://twitter.com/share?text=AI%20Infrastructure&url=https%3a%2f%2fabed1985.github.io%2fblogs%2fai-infrastructure%2f">
+                    <i class="fab fa-twitter"></i>
+                  </a>
+                </li>
+                <li class="list-inline-item text-center">
+                  <a target="_blank" href="https://api.whatsapp.com/send?text=AI%20Infrastructure: https%3a%2f%2fabed1985.github.io%2fblogs%2fai-infrastructure%2f">
+                    <i class="fab fa-whatsapp"></i>
+                  </a>
+                </li>
+                <li class="list-inline-item text-center">
+                  <a target="_blank" href='mailto:?subject=AI%20Infrastructure&amp;body=Check%20out%20this%20site https%3a%2f%2fabed1985.github.io%2fblogs%2fai-infrastructure%2f'>
+                    <i class="fa fa-envelope"></i>
+                  </a>
+                </li>
+              </ul>
             </div>
+          </aside>
+          
         </div>
+      </div>
     </div>
+    <div class="row">
+      <div class="col-sm-12 col-md-12 col-lg-9 p-4">
+        
+      </div>
+    </div>
+  </div>
+  <button class="p-2 px-3" onclick="topFunction()" id="topScroll">
+    <i class="fas fa-angle-up"></i>
+  </button>
+</section>
+
+
+<div class="progress">
+  <div id="scroll-progress-bar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
 </div>
+<Script src="/js/scrollProgressBar.js"></script>
+
+
+<script>
+  var topScroll = document.getElementById("topScroll");
+  window.onscroll = function() {scrollFunction()};
+
+  function scrollFunction() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+      topScroll.style.display = "block";
+    } else {
+      topScroll.style.display = "none";
+    }
+  }
+
+  function topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  }
+
+  
+  let stickySideBarElem = document.getElementById("stickySideBar");
+  let stickyNavBar =  true ;
+  if(stickyNavBar) {
+    let headerElem = document.getElementById("profileHeader");
+    let headerHeight = headerElem.offsetHeight + 15;
+    stickySideBarElem.style.top = headerHeight + "px";
+  } else {
+    stickySideBarElem.style.top = "50px";
+  }
+</script>
+
+
+<script src="/js/readingTime.js"></script>
+
+
 
   </div><footer>
     
