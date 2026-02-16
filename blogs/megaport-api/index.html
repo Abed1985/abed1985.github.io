@@ -31,12 +31,12 @@
 <meta property="og:title" content="Megaport API" />
 <meta property="og:description" content="Megaport API" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://abed1985.github.io/blogs/megaport-api/" />
+<meta property="og:url" content="https://abed1985.github.io/blogs/megaport-api/" /><meta property="article:section" content="blogs" />
 <meta property="article:published_time" content="2025-03-20T07:39:51+00:00" />
 <meta property="article:modified_time" content="2025-03-20T07:39:51+00:00" /><meta property="og:site_name" content="NetSecOps Navigator" />
 
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Megaport API"/>
+
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Megaport API"/>
 <meta name="twitter:description" content="Megaport API"/>
 
 
@@ -329,234 +329,234 @@ You can generate your API key and secret in your :<a href="https://portal.megapo
 <p>Once you have your credentials, let&rsquo;s move on to the next steps.</p>
 <h4 id="storing-api-keys-securely">Storing API Keys Securely</h4>
 <p>Store your API keys and secret securely in an environment variable file. Here&rsquo;s an example of what the .env file should look like:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-bash" data-lang="bash">cat .env
-MP_STAGE_API_KEY_SECRET<span style="color:#f92672">=</span>someapikeysecret
-MP_STAGE_API_KEY<span style="color:#f92672">=</span>someapikey
-</code></pre></div><p>Next, I’ve written a Python function with basic error handling to fetch an access token using the API key. Megaport follows good security practices for API security, which is beyond the scope of this discussion.</p>
-<p>The endpoint URL is <a href="https://auth-m2m.megaport.com/oauth2/token,">https://auth-m2m.megaport.com/oauth2/token,</a> and the Python method to get the token looks like this:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#f92672">import</span> requests
-<span style="color:#f92672">import</span> base64
-<span style="color:#f92672">import</span> os
-<span style="color:#f92672">import</span> json
-<span style="color:#f92672">from</span> dotenv <span style="color:#f92672">import</span> load_dotenv
-
-<span style="color:#75715e"># Load environment variables from the .env file</span>
-load_dotenv()
-
-<span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_megaport_token</span>():
-    API_KEY <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>getenv(<span style="color:#e6db74">&#39;MP_STAGE_API_KEY&#39;</span>)
-    API_KEY_SECRET <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>getenv(<span style="color:#e6db74">&#39;MP_STAGE_API_KEY_SECRET&#39;</span>)
-    credentials <span style="color:#f92672">=</span> f<span style="color:#e6db74">&#34;{API_KEY}:{API_KEY_SECRET}&#34;</span>
-    credentials_b64 <span style="color:#f92672">=</span> base64<span style="color:#f92672">.</span>b64encode(credentials<span style="color:#f92672">.</span>encode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>)
-    url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;https://auth-m2m.megaport.com/oauth2/token&#34;</span>
-    headers <span style="color:#f92672">=</span> {
-        <span style="color:#e6db74">&#34;Authorization&#34;</span>: f<span style="color:#e6db74">&#34;Basic {credentials_b64}&#34;</span>,
-        <span style="color:#e6db74">&#34;Content-Type&#34;</span>: <span style="color:#e6db74">&#34;application/x-www-form-urlencoded&#34;</span>,
-    }
-    payload <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;grant_type=client_credentials&#39;</span>
-    response <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>post(url, headers<span style="color:#f92672">=</span>headers, data<span style="color:#f92672">=</span>payload)
-    
-    <span style="color:#66d9ef">if</span> response<span style="color:#f92672">.</span>status_code <span style="color:#f92672">==</span> <span style="color:#ae81ff">200</span>:
-        <span style="color:#66d9ef">return</span> response<span style="color:#f92672">.</span>json()[<span style="color:#e6db74">&#39;access_token&#39;</span>]
-    <span style="color:#66d9ef">else</span>:
-        <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;Could not get access token. API request failed with status code {response.status_code}&#34;</span>)
-        <span style="color:#66d9ef">return</span> None
-</code></pre></div><p>Now let&rsquo;s run the method to retrieve the access token:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">In [<span style="color:#ae81ff">9</span>]: access_token <span style="color:#f92672">=</span> get_megaport_token()
-
-In [<span style="color:#ae81ff">10</span>]: <span style="color:#66d9ef">print</span>(access_token)
-someobfusicated token 
-</code></pre></div><h3 id="step-2-get-active-megaport-circuits">Step 2: Get Active Megaport Circuits</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cat .env
+</span></span><span style="display:flex;"><span>MP_STAGE_API_KEY_SECRET<span style="color:#f92672">=</span>someapikeysecret
+</span></span><span style="display:flex;"><span>MP_STAGE_API_KEY<span style="color:#f92672">=</span>someapikey
+</span></span></code></pre></div><p>Next, I’ve written a Python function with basic error handling to fetch an access token using the API key. Megaport follows good security practices for API security, which is beyond the scope of this discussion.</p>
+<p>The endpoint URL is <a href="https://auth-m2m.megaport.com/oauth2/token">https://auth-m2m.megaport.com/oauth2/token</a>, and the Python method to get the token looks like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> requests
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> base64
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> os
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> json
+</span></span><span style="display:flex;"><span><span style="color:#f92672">from</span> dotenv <span style="color:#f92672">import</span> load_dotenv
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># Load environment variables from the .env file</span>
+</span></span><span style="display:flex;"><span>load_dotenv()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_megaport_token</span>():
+</span></span><span style="display:flex;"><span>    API_KEY <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>getenv(<span style="color:#e6db74">&#39;MP_STAGE_API_KEY&#39;</span>)
+</span></span><span style="display:flex;"><span>    API_KEY_SECRET <span style="color:#f92672">=</span> os<span style="color:#f92672">.</span>getenv(<span style="color:#e6db74">&#39;MP_STAGE_API_KEY_SECRET&#39;</span>)
+</span></span><span style="display:flex;"><span>    credentials <span style="color:#f92672">=</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{</span>API_KEY<span style="color:#e6db74">}</span><span style="color:#e6db74">:</span><span style="color:#e6db74">{</span>API_KEY_SECRET<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>    credentials_b64 <span style="color:#f92672">=</span> base64<span style="color:#f92672">.</span>b64encode(credentials<span style="color:#f92672">.</span>encode(<span style="color:#e6db74">&#34;utf-8&#34;</span>))<span style="color:#f92672">.</span>decode(<span style="color:#e6db74">&#34;utf-8&#34;</span>)
+</span></span><span style="display:flex;"><span>    url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;https://auth-m2m.megaport.com/oauth2/token&#34;</span>
+</span></span><span style="display:flex;"><span>    headers <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;Authorization&#34;</span>: <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Basic </span><span style="color:#e6db74">{</span>credentials_b64<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;Content-Type&#34;</span>: <span style="color:#e6db74">&#34;application/x-www-form-urlencoded&#34;</span>,
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    payload <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;grant_type=client_credentials&#39;</span>
+</span></span><span style="display:flex;"><span>    response <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>post(url, headers<span style="color:#f92672">=</span>headers, data<span style="color:#f92672">=</span>payload)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> response<span style="color:#f92672">.</span>status_code <span style="color:#f92672">==</span> <span style="color:#ae81ff">200</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> response<span style="color:#f92672">.</span>json()[<span style="color:#e6db74">&#39;access_token&#39;</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Could not get access token. API request failed with status code </span><span style="color:#e6db74">{</span>response<span style="color:#f92672">.</span>status_code<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">None</span>
+</span></span></code></pre></div><p>Now let&rsquo;s run the method to retrieve the access token:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>In [<span style="color:#ae81ff">9</span>]: access_token <span style="color:#f92672">=</span> get_megaport_token()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>In [<span style="color:#ae81ff">10</span>]: print(access_token)
+</span></span><span style="display:flex;"><span>someobfusicated token 
+</span></span></code></pre></div><h3 id="step-2-get-active-megaport-circuits">Step 2: Get Active Megaport Circuits</h3>
 <p>Now that we have the access token, let&rsquo;s retrieve all the active Megaport circuits.
 The following Python script uses the access token to get the active Megaport product list in your account:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_active_megaport_product_list</span>(access_token):
-    url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;https://api.megaport.com/v2/products&#34;</span>
-    payload <span style="color:#f92672">=</span> {}
-    headers <span style="color:#f92672">=</span> {
-        <span style="color:#e6db74">&#34;Authorization&#34;</span>: f<span style="color:#e6db74">&#34;Bearer {access_token}&#34;</span>,
-        <span style="color:#e6db74">&#34;Content-Type&#34;</span>: <span style="color:#e6db74">&#34;application/json&#34;</span>,
-    }
-    response <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(url, headers<span style="color:#f92672">=</span>headers, data<span style="color:#f92672">=</span>payload)
-    
-    product_uids <span style="color:#f92672">=</span> []
-    <span style="color:#66d9ef">if</span> response<span style="color:#f92672">.</span>status_code <span style="color:#f92672">==</span> <span style="color:#ae81ff">200</span>:
-        products <span style="color:#f92672">=</span> response<span style="color:#f92672">.</span>json()[<span style="color:#e6db74">&#39;data&#39;</span>]
-        <span style="color:#66d9ef">for</span> product <span style="color:#f92672">in</span> products:
-            <span style="color:#66d9ef">if</span> product[<span style="color:#e6db74">&#34;provisioningStatus&#34;</span>] <span style="color:#f92672">in</span> [<span style="color:#e6db74">&#34;LIVE&#34;</span>, <span style="color:#e6db74">&#34;CONFIGURED&#34;</span>]:
-                <span style="color:#66d9ef">for</span> vxc <span style="color:#f92672">in</span> product[<span style="color:#e6db74">&#34;associatedVxcs&#34;</span>]:
-                    product_uids<span style="color:#f92672">.</span>append(vxc[<span style="color:#e6db74">&#34;productUid&#34;</span>])
-        <span style="color:#66d9ef">return</span> list(set(product_uids))
-    <span style="color:#66d9ef">else</span>:
-        <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;Could not get active products. API request failed with status code {response.status_code}&#34;</span>)
-        <span style="color:#66d9ef">return</span> None
-</code></pre></div><p>Running the method will return the list of active circuits:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">In [<span style="color:#ae81ff">11</span>]: active_megaport_product_list <span style="color:#f92672">=</span> get_active_megaport_product_list(access_token)
-
-In [<span style="color:#ae81ff">12</span>]: <span style="color:#f92672">from</span> pprint <span style="color:#f92672">import</span> pprint
-</code></pre></div><p>The output should look like this (note that all the product UIDs are replaced with dummy values):</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">In [<span style="color:#ae81ff">13</span>]: pprint(active_megaport_product_list)
-[<span style="color:#e6db74">&#39;a1vvvvvv-c9ww-43xx-8ayy-dd2b7c951d27&#39;</span>,
- <span style="color:#e6db74">&#39;9cvvvvvv-eaww-40xx-bbyy-61ccbe3a5023&#39;</span>,
- <span style="color:#e6db74">&#39;69vvvvvv-adww-4exx-81yy-acbc001d6e46&#39;</span>,
- <span style="color:#e6db74">&#39;f5vvvvvv-d9ww-47xx-89yy-a2b56bef950a&#39;</span>,
- <span style="color:#e6db74">&#39;e1vvvvvv-4aww-49xx-a6yy-b861cbc079c2&#39;</span>,
- <span style="color:#e6db74">&#39;45vvvvvv-4bww-4dxx-8ayy-0ba6bcedd3f4&#39;</span>,
- <span style="color:#e6db74">&#39;02vvvvvv-e0ww-4cxx-b3yy-bab09a4ed768&#39;</span>,
- <span style="color:#e6db74">&#39;cevvvvvv-fdww-4bxx-92yy-fczzzzzzzzzz&#39;</span>,
- <span style="color:#e6db74">&#39;bfvvvvvv-57ww-46xx-b4yy-5ezzzzzzzzzz&#39;</span>,
- <span style="color:#e6db74">&#39;48vvvvvv-f6ww-41xx-abyy-5ezzzzzzzzzz&#39;</span>,
- <span style="color:#e6db74">&#39;36vvvvvv-84ww-43xx-b5yy-ebzzzzzzzzzz&#39;</span>,
- <span style="color:#e6db74">&#39;83vvvvvv-3cww-4fxx-94yy-15zzzzzzzzzz&#39;</span>,
- <span style="color:#e6db74">&#39;61vvvvvv-5bww-44xx-afyy-b6zzzzzzzzzz&#39;</span>,
- <span style="color:#e6db74">&#39;a1vvvvvv-89ww-4axx-85yy-f3zzzzzzzzzz&#39;</span>,
- <span style="color:#e6db74">&#39;63vvvvvv-72ww-4bxx-b0yy-b7zzzzzzzzzz&#39;</span>,
- <span style="color:#e6db74">&#39;36vvvvvv-3fww-42xx-9cyy-bdzzzzzzzzzz&#39;</span>,
- <span style="color:#e6db74">&#39;41vvvvvv-b7ww-4exx-a6yy-d7zzzzzzzzzz&#39;</span>,
- <span style="color:#e6db74">&#39;80vvvvvv-f7ww-40xx-bdyy-89zzzzzzzzzz&#39;</span>,
- <span style="color:#e6db74">&#39;89vvvvvv-e7ww-45xx-b5yy-23zzzzzzzzzz&#39;</span>,
- <span style="color:#e6db74">&#39;25vvvvvv-f5ww-4dxx-afyy-1ezzzzzzzzzz&#39;</span>,
- <span style="color:#e6db74">&#39;79vvvvvv-05ww-4dxx-96yy-51zzzzzzzzzz&#39;</span>,
- <span style="color:#e6db74">&#39;2bvvvvvv-f8ww-43xx-a7yy-92zzzzzzzzzz&#39;</span>,
- <span style="color:#e6db74">&#39;41vvvvvv-75ww-42xx-93yy-aezzzzzzzzzz&#39;</span>,
- <span style="color:#e6db74">&#39;62vvvvvv-99ww-4exx-b1yy-fbzzzzzzzzzz&#39;</span>,
-]
-</code></pre></div><p>From this output, we can see that there are 12 active circuits in our account.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">In [<span style="color:#ae81ff">41</span>]: len(active_megaport_product_list)
-Out[<span style="color:#ae81ff">41</span>]: <span style="color:#ae81ff">12</span>
-</code></pre></div><h3 id="step-3-retrieve-product-details-for-a-specific-circuit">Step 3: Retrieve Product Details for a Specific Circuit</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_active_megaport_product_list</span>(access_token):
+</span></span><span style="display:flex;"><span>    url <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;https://api.megaport.com/v2/products&#34;</span>
+</span></span><span style="display:flex;"><span>    payload <span style="color:#f92672">=</span> {}
+</span></span><span style="display:flex;"><span>    headers <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;Authorization&#34;</span>: <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Bearer </span><span style="color:#e6db74">{</span>access_token<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;Content-Type&#34;</span>: <span style="color:#e6db74">&#34;application/json&#34;</span>,
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    response <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(url, headers<span style="color:#f92672">=</span>headers, data<span style="color:#f92672">=</span>payload)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    product_uids <span style="color:#f92672">=</span> []
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> response<span style="color:#f92672">.</span>status_code <span style="color:#f92672">==</span> <span style="color:#ae81ff">200</span>:
+</span></span><span style="display:flex;"><span>        products <span style="color:#f92672">=</span> response<span style="color:#f92672">.</span>json()[<span style="color:#e6db74">&#39;data&#39;</span>]
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> product <span style="color:#f92672">in</span> products:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> product[<span style="color:#e6db74">&#34;provisioningStatus&#34;</span>] <span style="color:#f92672">in</span> [<span style="color:#e6db74">&#34;LIVE&#34;</span>, <span style="color:#e6db74">&#34;CONFIGURED&#34;</span>]:
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">for</span> vxc <span style="color:#f92672">in</span> product[<span style="color:#e6db74">&#34;associatedVxcs&#34;</span>]:
+</span></span><span style="display:flex;"><span>                    product_uids<span style="color:#f92672">.</span>append(vxc[<span style="color:#e6db74">&#34;productUid&#34;</span>])
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> list(set(product_uids))
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Could not get active products. API request failed with status code </span><span style="color:#e6db74">{</span>response<span style="color:#f92672">.</span>status_code<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">None</span>
+</span></span></code></pre></div><p>Running the method will return the list of active circuits:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>In [<span style="color:#ae81ff">11</span>]: active_megaport_product_list <span style="color:#f92672">=</span> get_active_megaport_product_list(access_token)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>In [<span style="color:#ae81ff">12</span>]: <span style="color:#f92672">from</span> pprint <span style="color:#f92672">import</span> pprint
+</span></span></code></pre></div><p>The output should look like this (note that all the product UIDs are replaced with dummy values):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>In [<span style="color:#ae81ff">13</span>]: pprint(active_megaport_product_list)
+</span></span><span style="display:flex;"><span>[<span style="color:#e6db74">&#39;a1vvvvvv-c9ww-43xx-8ayy-dd2b7c951d27&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;9cvvvvvv-eaww-40xx-bbyy-61ccbe3a5023&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;69vvvvvv-adww-4exx-81yy-acbc001d6e46&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;f5vvvvvv-d9ww-47xx-89yy-a2b56bef950a&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;e1vvvvvv-4aww-49xx-a6yy-b861cbc079c2&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;45vvvvvv-4bww-4dxx-8ayy-0ba6bcedd3f4&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;02vvvvvv-e0ww-4cxx-b3yy-bab09a4ed768&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;cevvvvvv-fdww-4bxx-92yy-fczzzzzzzzzz&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;bfvvvvvv-57ww-46xx-b4yy-5ezzzzzzzzzz&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;48vvvvvv-f6ww-41xx-abyy-5ezzzzzzzzzz&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;36vvvvvv-84ww-43xx-b5yy-ebzzzzzzzzzz&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;83vvvvvv-3cww-4fxx-94yy-15zzzzzzzzzz&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;61vvvvvv-5bww-44xx-afyy-b6zzzzzzzzzz&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;a1vvvvvv-89ww-4axx-85yy-f3zzzzzzzzzz&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;63vvvvvv-72ww-4bxx-b0yy-b7zzzzzzzzzz&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;36vvvvvv-3fww-42xx-9cyy-bdzzzzzzzzzz&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;41vvvvvv-b7ww-4exx-a6yy-d7zzzzzzzzzz&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;80vvvvvv-f7ww-40xx-bdyy-89zzzzzzzzzz&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;89vvvvvv-e7ww-45xx-b5yy-23zzzzzzzzzz&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;25vvvvvv-f5ww-4dxx-afyy-1ezzzzzzzzzz&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;79vvvvvv-05ww-4dxx-96yy-51zzzzzzzzzz&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;2bvvvvvv-f8ww-43xx-a7yy-92zzzzzzzzzz&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;41vvvvvv-75ww-42xx-93yy-aezzzzzzzzzz&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;62vvvvvv-99ww-4exx-b1yy-fbzzzzzzzzzz&#39;</span>,
+</span></span><span style="display:flex;"><span>]
+</span></span></code></pre></div><p>From this output, we can see that there are 12 active circuits in our account.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>In [<span style="color:#ae81ff">41</span>]: len(active_megaport_product_list)
+</span></span><span style="display:flex;"><span>Out[<span style="color:#ae81ff">41</span>]: <span style="color:#ae81ff">12</span>
+</span></span></code></pre></div><h3 id="step-3-retrieve-product-details-for-a-specific-circuit">Step 3: Retrieve Product Details for a Specific Circuit</h3>
 <p>Next, let&rsquo;s retrieve the details for a specific Megaport product (circuit) by its product UID.
 The following method accepts the access token and the product UID to retrieve the circuit details in JSON format:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_megaport_product_detail</span>(access_token, productUid):
-    url <span style="color:#f92672">=</span> f<span style="color:#e6db74">&#34;https://api.megaport.com/v2/product/{productUid}&#34;</span>
-    headers <span style="color:#f92672">=</span> {
-        <span style="color:#e6db74">&#34;Authorization&#34;</span>: f<span style="color:#e6db74">&#34;Bearer {access_token}&#34;</span>,
-        <span style="color:#e6db74">&#34;Content-Type&#34;</span>: <span style="color:#e6db74">&#34;application/json&#34;</span>,
-    }
-    response <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(url, headers<span style="color:#f92672">=</span>headers)
-    
-    <span style="color:#66d9ef">if</span> response<span style="color:#f92672">.</span>status_code <span style="color:#f92672">==</span> <span style="color:#ae81ff">200</span>:
-        product_details <span style="color:#f92672">=</span> response<span style="color:#f92672">.</span>json()[<span style="color:#e6db74">&#39;data&#39;</span>]
-        <span style="color:#66d9ef">return</span> product_details
-    <span style="color:#66d9ef">else</span>:
-        <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;Could not get product details. API request failed with status code {response.status_code}&#34;</span>)
-        <span style="color:#66d9ef">return</span> None
-</code></pre></div><p>Running the method for a specific product:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">In [<span style="color:#ae81ff">14</span>]: megaport_product_detail_1 <span style="color:#f92672">=</span> get_megaport_product_detail(access_token,active_megaport_product_list[<span style="color:#ae81ff">12</span>])
-</code></pre></div><p>This will output the details of the selected circuit, such as its bandwidth, provisioning status, and location:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">In [<span style="color:#ae81ff">19</span>]: pprint(megaport_product_detail_1)
-{<span style="color:#e6db74">&#39;aEnd&#39;</span>: {<span style="color:#e6db74">&#39;connectType&#39;</span>: <span style="color:#e6db74">&#39;DEFAULT&#39;</span>,
-          <span style="color:#e6db74">&#39;diversityZone&#39;</span>: <span style="color:#e6db74">&#39;red&#39;</span>,
-          <span style="color:#e6db74">&#39;innerVlan&#39;</span>: None,
-          <span style="color:#e6db74">&#39;location&#39;</span>: <span style="color:#e6db74">&#39;NextDC B1&#39;</span>,
-          <span style="color:#e6db74">&#39;locationDetail&#39;</span>: {<span style="color:#e6db74">&#39;city&#39;</span>: <span style="color:#e6db74">&#39;Brisbane&#39;</span>,
-                             <span style="color:#e6db74">&#39;country&#39;</span>: <span style="color:#e6db74">&#39;Australia&#39;</span>,
-                             <span style="color:#e6db74">&#39;metro&#39;</span>: <span style="color:#e6db74">&#39;Brisbane&#39;</span>,
-                             <span style="color:#e6db74">&#39;name&#39;</span>: <span style="color:#e6db74">&#39;NextDC B1&#39;</span>},
-          <span style="color:#e6db74">&#39;locationId&#39;</span>: <span style="color:#ae81ff">5</span>,
-          <span style="color:#e6db74">&#39;ownerUid&#39;</span>: <span style="color:#e6db74">&#39;a-b-c-d&#39;</span>,
-          <span style="color:#e6db74">&#39;productName&#39;</span>: <span style="color:#e6db74">&#39;BNE-MEGAPORT-LINK&#39;</span>,
-          <span style="color:#e6db74">&#39;productUid&#39;</span>: <span style="color:#e6db74">&#39;e-f-g-h&#39;</span>,
-          <span style="color:#e6db74">&#39;secondaryName&#39;</span>: None,
-          <span style="color:#e6db74">&#39;vlan&#39;</span>: <span style="color:#ae81ff">1200</span>},
- <span style="color:#e6db74">&#39;adminLocked&#39;</span>: False,
- <span style="color:#e6db74">&#39;attributeTags&#39;</span>: {},
- <span style="color:#e6db74">&#39;autoRenewTerm&#39;</span>: False,
- <span style="color:#e6db74">&#39;bEnd&#39;</span>: {<span style="color:#e6db74">&#39;connectType&#39;</span>: <span style="color:#e6db74">&#39;DEFAULT&#39;</span>,
-          <span style="color:#e6db74">&#39;diversityZone&#39;</span>: <span style="color:#e6db74">&#39;blue&#39;</span>,
-          <span style="color:#e6db74">&#39;innerVlan&#39;</span>: None,
-          <span style="color:#e6db74">&#39;location&#39;</span>: <span style="color:#e6db74">&#39;NextDC M1&#39;</span>,
-          <span style="color:#e6db74">&#39;locationDetail&#39;</span>: {<span style="color:#e6db74">&#39;city&#39;</span>: <span style="color:#e6db74">&#39;Melbourne&#39;</span>,
-                             <span style="color:#e6db74">&#39;country&#39;</span>: <span style="color:#e6db74">&#39;Australia&#39;</span>,
-                             <span style="color:#e6db74">&#39;metro&#39;</span>: <span style="color:#e6db74">&#39;Melbourne&#39;</span>,
-                             <span style="color:#e6db74">&#39;name&#39;</span>: <span style="color:#e6db74">&#39;NextDC M1&#39;</span>},
-          <span style="color:#e6db74">&#39;locationId&#39;</span>: <span style="color:#ae81ff">4</span>,
-          <span style="color:#e6db74">&#39;ownerUid&#39;</span>: <span style="color:#e6db74">&#39;a-b-c-d&#39;</span>,
-          <span style="color:#e6db74">&#39;productName&#39;</span>: <span style="color:#e6db74">&#39;COMPANY-CORE-M1-10G&#39;</span>,
-          <span style="color:#e6db74">&#39;productUid&#39;</span>: <span style="color:#e6db74">&#39;i-j-k-l&#39;</span>,
-          <span style="color:#e6db74">&#39;secondaryName&#39;</span>: None,
-          <span style="color:#e6db74">&#39;vlan&#39;</span>: <span style="color:#ae81ff">1200</span>},
- <span style="color:#e6db74">&#39;cancelable&#39;</span>: True,
- <span style="color:#e6db74">&#39;companyName&#39;</span>: <span style="color:#e6db74">&#39;Comany name under the megaport portal&#39;</span>,
- <span style="color:#e6db74">&#39;companyUid&#39;</span>: <span style="color:#e6db74">&#39;m-n-o-p&#39;</span>,
- <span style="color:#e6db74">&#39;contractEndDate&#39;</span>: <span style="color:#ae81ff">1622037600000</span>,
- <span style="color:#e6db74">&#39;contractStartDate&#39;</span>: <span style="color:#ae81ff">1619501590224</span>,
- <span style="color:#e6db74">&#39;contractTermMonths&#39;</span>: <span style="color:#ae81ff">1</span>,
- <span style="color:#e6db74">&#39;costCentre&#39;</span>: <span style="color:#e6db74">&#39;COM001&#39;</span>,
- <span style="color:#e6db74">&#39;createDate&#39;</span>: <span style="color:#ae81ff">1619501558536</span>,
- <span style="color:#e6db74">&#39;createdBy&#39;</span>: <span style="color:#e6db74">&#39;t-r-e-w&#39;</span>,
- <span style="color:#e6db74">&#39;dealUid&#39;</span>: <span style="color:#e6db74">&#39;z-x-c-v&#39;</span>,
- <span style="color:#e6db74">&#39;distanceBand&#39;</span>: <span style="color:#e6db74">&#39;INTERZONE&#39;</span>,
- <span style="color:#e6db74">&#39;liveDate&#39;</span>: <span style="color:#ae81ff">1619501590908</span>,
- <span style="color:#e6db74">&#39;locked&#39;</span>: False,
- <span style="color:#e6db74">&#39;maximumRate&#39;</span>: <span style="color:#ae81ff">10000</span>,
- <span style="color:#e6db74">&#39;productId&#39;</span>: <span style="color:#ae81ff">85050</span>,
- <span style="color:#e6db74">&#39;productName&#39;</span>: <span style="color:#e6db74">&#39;COMPANY-CORE-B1-M1-Megaport-10M (BW:variable)&#39;</span>,
- <span style="color:#e6db74">&#39;productType&#39;</span>: <span style="color:#e6db74">&#39;VXC&#39;</span>,
- <span style="color:#e6db74">&#39;productUid&#39;</span>: <span style="color:#e6db74">&#39;61vvvvvv-5bww-44xx-afyy-b6zzzzzzzzzz&#39;</span>,
- <span style="color:#e6db74">&#39;provisioningStatus&#39;</span>: <span style="color:#e6db74">&#39;LIVE&#39;</span>,
- <span style="color:#e6db74">&#39;rateLimit&#39;</span>: <span style="color:#ae81ff">10</span>,
- <span style="color:#e6db74">&#39;resources&#39;</span>: {<span style="color:#e6db74">&#39;vll&#39;</span>: {<span style="color:#e6db74">&#39;a_vlan&#39;</span>: <span style="color:#ae81ff">1200</span>,
-                       <span style="color:#e6db74">&#39;b_vlan&#39;</span>: <span style="color:#ae81ff">1200</span>,
-                       <span style="color:#e6db74">&#39;rate_limit_mbps&#39;</span>: <span style="color:#ae81ff">10</span>,
-                       <span style="color:#e6db74">&#39;resource_name&#39;</span>: <span style="color:#e6db74">&#39;vll&#39;</span>,
-                       <span style="color:#e6db74">&#39;resource_type&#39;</span>: <span style="color:#e6db74">&#39;vll&#39;</span>,
-                       <span style="color:#e6db74">&#39;shutdown&#39;</span>: False,
-                       <span style="color:#e6db74">&#39;up&#39;</span>: <span style="color:#ae81ff">1</span>}},
- <span style="color:#e6db74">&#39;secondaryName&#39;</span>: <span style="color:#e6db74">&#39;COMPANY-CORE-PToP-B1-M1-Megaport-10M&#39;</span>,
- <span style="color:#e6db74">&#39;shutdown&#39;</span>: False,
- <span style="color:#e6db74">&#39;up&#39;</span>: True,
- <span style="color:#e6db74">&#39;usageAlgorithm&#39;</span>: <span style="color:#e6db74">&#39;POST_PAID_HOURLY_SPEED_LONG_HAUL_VXC&#39;</span>,
- <span style="color:#e6db74">&#39;vxcApproval&#39;</span>: {<span style="color:#e6db74">&#39;message&#39;</span>: None,
-                 <span style="color:#e6db74">&#39;newSpeed&#39;</span>: None,
-                 <span style="color:#e6db74">&#39;status&#39;</span>: None,
-                 <span style="color:#e6db74">&#39;type&#39;</span>: None,
-                 <span style="color:#e6db74">&#39;uid&#39;</span>: None}}
-</code></pre></div><h3 id="step-4-use-case-for-automated-bandwidth-upgrade">Step 4: Use Case for Automated Bandwidth Upgrade</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_megaport_product_detail</span>(access_token, productUid):
+</span></span><span style="display:flex;"><span>    url <span style="color:#f92672">=</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;https://api.megaport.com/v2/product/</span><span style="color:#e6db74">{</span>productUid<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>    headers <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;Authorization&#34;</span>: <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Bearer </span><span style="color:#e6db74">{</span>access_token<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;Content-Type&#34;</span>: <span style="color:#e6db74">&#34;application/json&#34;</span>,
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    response <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>get(url, headers<span style="color:#f92672">=</span>headers)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> response<span style="color:#f92672">.</span>status_code <span style="color:#f92672">==</span> <span style="color:#ae81ff">200</span>:
+</span></span><span style="display:flex;"><span>        product_details <span style="color:#f92672">=</span> response<span style="color:#f92672">.</span>json()[<span style="color:#e6db74">&#39;data&#39;</span>]
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> product_details
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Could not get product details. API request failed with status code </span><span style="color:#e6db74">{</span>response<span style="color:#f92672">.</span>status_code<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">None</span>
+</span></span></code></pre></div><p>Running the method for a specific product:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>In [<span style="color:#ae81ff">14</span>]: megaport_product_detail_1 <span style="color:#f92672">=</span> get_megaport_product_detail(access_token,active_megaport_product_list[<span style="color:#ae81ff">12</span>])
+</span></span></code></pre></div><p>This will output the details of the selected circuit, such as its bandwidth, provisioning status, and location:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>In [<span style="color:#ae81ff">19</span>]: pprint(megaport_product_detail_1)
+</span></span><span style="display:flex;"><span>{<span style="color:#e6db74">&#39;aEnd&#39;</span>: {<span style="color:#e6db74">&#39;connectType&#39;</span>: <span style="color:#e6db74">&#39;DEFAULT&#39;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#39;diversityZone&#39;</span>: <span style="color:#e6db74">&#39;red&#39;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#39;innerVlan&#39;</span>: <span style="color:#66d9ef">None</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#39;location&#39;</span>: <span style="color:#e6db74">&#39;NextDC B1&#39;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#39;locationDetail&#39;</span>: {<span style="color:#e6db74">&#39;city&#39;</span>: <span style="color:#e6db74">&#39;Brisbane&#39;</span>,
+</span></span><span style="display:flex;"><span>                             <span style="color:#e6db74">&#39;country&#39;</span>: <span style="color:#e6db74">&#39;Australia&#39;</span>,
+</span></span><span style="display:flex;"><span>                             <span style="color:#e6db74">&#39;metro&#39;</span>: <span style="color:#e6db74">&#39;Brisbane&#39;</span>,
+</span></span><span style="display:flex;"><span>                             <span style="color:#e6db74">&#39;name&#39;</span>: <span style="color:#e6db74">&#39;NextDC B1&#39;</span>},
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#39;locationId&#39;</span>: <span style="color:#ae81ff">5</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#39;ownerUid&#39;</span>: <span style="color:#e6db74">&#39;a-b-c-d&#39;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#39;productName&#39;</span>: <span style="color:#e6db74">&#39;BNE-MEGAPORT-LINK&#39;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#39;productUid&#39;</span>: <span style="color:#e6db74">&#39;e-f-g-h&#39;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#39;secondaryName&#39;</span>: <span style="color:#66d9ef">None</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#39;vlan&#39;</span>: <span style="color:#ae81ff">1200</span>},
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;adminLocked&#39;</span>: <span style="color:#66d9ef">False</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;attributeTags&#39;</span>: {},
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;autoRenewTerm&#39;</span>: <span style="color:#66d9ef">False</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;bEnd&#39;</span>: {<span style="color:#e6db74">&#39;connectType&#39;</span>: <span style="color:#e6db74">&#39;DEFAULT&#39;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#39;diversityZone&#39;</span>: <span style="color:#e6db74">&#39;blue&#39;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#39;innerVlan&#39;</span>: <span style="color:#66d9ef">None</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#39;location&#39;</span>: <span style="color:#e6db74">&#39;NextDC M1&#39;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#39;locationDetail&#39;</span>: {<span style="color:#e6db74">&#39;city&#39;</span>: <span style="color:#e6db74">&#39;Melbourne&#39;</span>,
+</span></span><span style="display:flex;"><span>                             <span style="color:#e6db74">&#39;country&#39;</span>: <span style="color:#e6db74">&#39;Australia&#39;</span>,
+</span></span><span style="display:flex;"><span>                             <span style="color:#e6db74">&#39;metro&#39;</span>: <span style="color:#e6db74">&#39;Melbourne&#39;</span>,
+</span></span><span style="display:flex;"><span>                             <span style="color:#e6db74">&#39;name&#39;</span>: <span style="color:#e6db74">&#39;NextDC M1&#39;</span>},
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#39;locationId&#39;</span>: <span style="color:#ae81ff">4</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#39;ownerUid&#39;</span>: <span style="color:#e6db74">&#39;a-b-c-d&#39;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#39;productName&#39;</span>: <span style="color:#e6db74">&#39;COMPANY-CORE-M1-10G&#39;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#39;productUid&#39;</span>: <span style="color:#e6db74">&#39;i-j-k-l&#39;</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#39;secondaryName&#39;</span>: <span style="color:#66d9ef">None</span>,
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">&#39;vlan&#39;</span>: <span style="color:#ae81ff">1200</span>},
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;cancelable&#39;</span>: <span style="color:#66d9ef">True</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;companyName&#39;</span>: <span style="color:#e6db74">&#39;Comany name under the megaport portal&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;companyUid&#39;</span>: <span style="color:#e6db74">&#39;m-n-o-p&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;contractEndDate&#39;</span>: <span style="color:#ae81ff">1622037600000</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;contractStartDate&#39;</span>: <span style="color:#ae81ff">1619501590224</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;contractTermMonths&#39;</span>: <span style="color:#ae81ff">1</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;costCentre&#39;</span>: <span style="color:#e6db74">&#39;COM001&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;createDate&#39;</span>: <span style="color:#ae81ff">1619501558536</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;createdBy&#39;</span>: <span style="color:#e6db74">&#39;t-r-e-w&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;dealUid&#39;</span>: <span style="color:#e6db74">&#39;z-x-c-v&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;distanceBand&#39;</span>: <span style="color:#e6db74">&#39;INTERZONE&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;liveDate&#39;</span>: <span style="color:#ae81ff">1619501590908</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;locked&#39;</span>: <span style="color:#66d9ef">False</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;maximumRate&#39;</span>: <span style="color:#ae81ff">10000</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;productId&#39;</span>: <span style="color:#ae81ff">85050</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;productName&#39;</span>: <span style="color:#e6db74">&#39;COMPANY-CORE-B1-M1-Megaport-10M (BW:variable)&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;productType&#39;</span>: <span style="color:#e6db74">&#39;VXC&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;productUid&#39;</span>: <span style="color:#e6db74">&#39;61vvvvvv-5bww-44xx-afyy-b6zzzzzzzzzz&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;provisioningStatus&#39;</span>: <span style="color:#e6db74">&#39;LIVE&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;rateLimit&#39;</span>: <span style="color:#ae81ff">10</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;resources&#39;</span>: {<span style="color:#e6db74">&#39;vll&#39;</span>: {<span style="color:#e6db74">&#39;a_vlan&#39;</span>: <span style="color:#ae81ff">1200</span>,
+</span></span><span style="display:flex;"><span>                       <span style="color:#e6db74">&#39;b_vlan&#39;</span>: <span style="color:#ae81ff">1200</span>,
+</span></span><span style="display:flex;"><span>                       <span style="color:#e6db74">&#39;rate_limit_mbps&#39;</span>: <span style="color:#ae81ff">10</span>,
+</span></span><span style="display:flex;"><span>                       <span style="color:#e6db74">&#39;resource_name&#39;</span>: <span style="color:#e6db74">&#39;vll&#39;</span>,
+</span></span><span style="display:flex;"><span>                       <span style="color:#e6db74">&#39;resource_type&#39;</span>: <span style="color:#e6db74">&#39;vll&#39;</span>,
+</span></span><span style="display:flex;"><span>                       <span style="color:#e6db74">&#39;shutdown&#39;</span>: <span style="color:#66d9ef">False</span>,
+</span></span><span style="display:flex;"><span>                       <span style="color:#e6db74">&#39;up&#39;</span>: <span style="color:#ae81ff">1</span>}},
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;secondaryName&#39;</span>: <span style="color:#e6db74">&#39;COMPANY-CORE-PToP-B1-M1-Megaport-10M&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;shutdown&#39;</span>: <span style="color:#66d9ef">False</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;up&#39;</span>: <span style="color:#66d9ef">True</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;usageAlgorithm&#39;</span>: <span style="color:#e6db74">&#39;POST_PAID_HOURLY_SPEED_LONG_HAUL_VXC&#39;</span>,
+</span></span><span style="display:flex;"><span> <span style="color:#e6db74">&#39;vxcApproval&#39;</span>: {<span style="color:#e6db74">&#39;message&#39;</span>: <span style="color:#66d9ef">None</span>,
+</span></span><span style="display:flex;"><span>                 <span style="color:#e6db74">&#39;newSpeed&#39;</span>: <span style="color:#66d9ef">None</span>,
+</span></span><span style="display:flex;"><span>                 <span style="color:#e6db74">&#39;status&#39;</span>: <span style="color:#66d9ef">None</span>,
+</span></span><span style="display:flex;"><span>                 <span style="color:#e6db74">&#39;type&#39;</span>: <span style="color:#66d9ef">None</span>,
+</span></span><span style="display:flex;"><span>                 <span style="color:#e6db74">&#39;uid&#39;</span>: <span style="color:#66d9ef">None</span>}}
+</span></span></code></pre></div><h3 id="step-4-use-case-for-automated-bandwidth-upgrade">Step 4: Use Case for Automated Bandwidth Upgrade</h3>
 <p>Now that we have the circuit details, let’s explore a use case. Imagine you have multiple redundant circuits between two data centers, and the Megaport-provisioned link serves as a backup. You may be running IGP with metrics or BGP with local AS path, preferring the circuit with higher bandwidth. However, you don’t want to pay extra fees for the backup circuit unless it&rsquo;s needed.</p>
 <p>With Megaport’s SDN fabric, you can upgrade the circuit’s bandwidth on-demand, and I’ve written a Python method to automate this process.</p>
 <p>For example, if you want to upgrade a circuit to 500Mbps based on certain triggers (e.g., SNMP traps or syslog events), you can do so without manual intervention. This eliminates the need to wake up an engineer in the middle of the night to click buttons on the Megaport portal and reduces the risk of human error, making the entire process more efficient and reliable.</p>
 <p>Here’s method to check the current bandwidth value for a given circuit:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_megaport_product_bandwidth</span>(access_token, productUid):
-    url <span style="color:#f92672">=</span> f<span style="color:#e6db74">&#34;https://api.megaport.com/v2/product/{productUid}&#34;</span>
-    payload <span style="color:#f92672">=</span> {}
-    headers <span style="color:#f92672">=</span> {
-    <span style="color:#e6db74">&#34;Authorization&#34;</span>: f<span style="color:#e6db74">&#34;Bearer {access_token}&#34;</span>,
-    <span style="color:#e6db74">&#34;Content-Type&#34;</span>: <span style="color:#e6db74">&#34;application/json&#34;</span>,
-    }
-    response <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>request(<span style="color:#e6db74">&#34;GET&#34;</span>, url, headers<span style="color:#f92672">=</span>headers, data<span style="color:#f92672">=</span>payload)
-    <span style="color:#66d9ef">if</span> response<span style="color:#f92672">.</span>status_code <span style="color:#f92672">==</span> <span style="color:#ae81ff">200</span>:
-        rate_limit_mbps <span style="color:#f92672">=</span> response<span style="color:#f92672">.</span>json()[<span style="color:#e6db74">&#39;data&#39;</span>][<span style="color:#e6db74">&#39;resources&#39;</span>][<span style="color:#e6db74">&#39;vll&#39;</span>][<span style="color:#e6db74">&#39;rate_limit_mbps&#39;</span>]
-        <span style="color:#66d9ef">return</span> rate_limit_mbps
-    <span style="color:#66d9ef">else</span>:
-        <span style="color:#66d9ef">return</span>(<span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;Could not get Vxc product details. API request has failed with status code {response.status_code}&#34;</span>)) 
-</code></pre></div><p>Here&rsquo;s a method to upgrade the Megaport circuit&rsquo;s bandwidth for a specific circuit:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python"><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">upgrade_megaport_product_bandwidth</span>(access_token, productUid, new_bandwidth):
-    url <span style="color:#f92672">=</span> f<span style="color:#e6db74">&#34;https://api.megaport.com/v2/product/{productUid}&#34;</span>
-    payload <span style="color:#f92672">=</span> {
-        <span style="color:#e6db74">&#34;rateLimit&#34;</span>: new_bandwidth
-    }
-    headers <span style="color:#f92672">=</span> {
-        <span style="color:#e6db74">&#34;Authorization&#34;</span>: f<span style="color:#e6db74">&#34;Bearer {access_token}&#34;</span>,
-        <span style="color:#e6db74">&#34;Content-Type&#34;</span>: <span style="color:#e6db74">&#34;application/json&#34;</span>,
-    }
-    response <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>put(url, headers<span style="color:#f92672">=</span>headers, json<span style="color:#f92672">=</span>payload)
-    
-    <span style="color:#66d9ef">if</span> response<span style="color:#f92672">.</span>status_code <span style="color:#f92672">==</span> <span style="color:#ae81ff">200</span>:
-        <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;Successfully upgraded the circuit to {new_bandwidth} Mbps.&#34;</span>)
-    <span style="color:#66d9ef">else</span>:
-        <span style="color:#66d9ef">print</span>(f<span style="color:#e6db74">&#34;Failed to upgrade the circuit. Status code: {response.status_code}&#34;</span>)
-</code></pre></div><p>lets confirm and get the existing bandwidth for a circuit we are interested in</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">In [<span style="color:#ae81ff">42</span>]: current_bandwidth_megaport_product_1 <span style="color:#f92672">=</span> get_megaport_product_bandwidth(access_token, active_megaport_product_list[<span style="color:#ae81ff">12</span>])
-Out[<span style="color:#ae81ff">23</span>]: <span style="color:#ae81ff">10</span>
-</code></pre></div><p>lets upgrade the bandwidth of the circuit using the &ldquo;upgrade_megaport_product_bandwidth&rdquo; method to 500 Mbps.</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">In [<span style="color:#ae81ff">22</span>]: update_bandwidth_product_detail_1 <span style="color:#f92672">=</span> update_megaport_product_bandwidth(access_token, active_megaport_product_list[<span style="color:#ae81ff">12</span>], <span style="color:#ae81ff">500</span>)
-Out[<span style="color:#ae81ff">23</span>]: COMPANY<span style="color:#f92672">-</span>CORE<span style="color:#f92672">-</span>B1<span style="color:#f92672">-</span>M1<span style="color:#f92672">-</span>Megaport<span style="color:#f92672">-</span><span style="color:#ae81ff">10</span>M (BW:variable) VXC <span style="color:#ae81ff">85050</span> has been updated to a new rate limit of <span style="color:#ae81ff">500</span> Mbps<span style="color:#f92672">.</span>
-</code></pre></div><p>Notice that the PUT request has successfully upgraded the bandwdith parsing the name and the VXC along with the new speed.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">get_megaport_product_bandwidth</span>(access_token, productUid):
+</span></span><span style="display:flex;"><span>    url <span style="color:#f92672">=</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;https://api.megaport.com/v2/product/</span><span style="color:#e6db74">{</span>productUid<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>    payload <span style="color:#f92672">=</span> {}
+</span></span><span style="display:flex;"><span>    headers <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;Authorization&#34;</span>: <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Bearer </span><span style="color:#e6db74">{</span>access_token<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>,
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;Content-Type&#34;</span>: <span style="color:#e6db74">&#34;application/json&#34;</span>,
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    response <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>request(<span style="color:#e6db74">&#34;GET&#34;</span>, url, headers<span style="color:#f92672">=</span>headers, data<span style="color:#f92672">=</span>payload)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> response<span style="color:#f92672">.</span>status_code <span style="color:#f92672">==</span> <span style="color:#ae81ff">200</span>:
+</span></span><span style="display:flex;"><span>        rate_limit_mbps <span style="color:#f92672">=</span> response<span style="color:#f92672">.</span>json()[<span style="color:#e6db74">&#39;data&#39;</span>][<span style="color:#e6db74">&#39;resources&#39;</span>][<span style="color:#e6db74">&#39;vll&#39;</span>][<span style="color:#e6db74">&#39;rate_limit_mbps&#39;</span>]
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> rate_limit_mbps
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span>(print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Could not get Vxc product details. API request has failed with status code </span><span style="color:#e6db74">{</span>response<span style="color:#f92672">.</span>status_code<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)) 
+</span></span></code></pre></div><p>Here&rsquo;s a method to upgrade the Megaport circuit&rsquo;s bandwidth for a specific circuit:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">upgrade_megaport_product_bandwidth</span>(access_token, productUid, new_bandwidth):
+</span></span><span style="display:flex;"><span>    url <span style="color:#f92672">=</span> <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;https://api.megaport.com/v2/product/</span><span style="color:#e6db74">{</span>productUid<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>
+</span></span><span style="display:flex;"><span>    payload <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;rateLimit&#34;</span>: new_bandwidth
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    headers <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;Authorization&#34;</span>: <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Bearer </span><span style="color:#e6db74">{</span>access_token<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>,
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;Content-Type&#34;</span>: <span style="color:#e6db74">&#34;application/json&#34;</span>,
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>    response <span style="color:#f92672">=</span> requests<span style="color:#f92672">.</span>put(url, headers<span style="color:#f92672">=</span>headers, json<span style="color:#f92672">=</span>payload)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> response<span style="color:#f92672">.</span>status_code <span style="color:#f92672">==</span> <span style="color:#ae81ff">200</span>:
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Successfully upgraded the circuit to </span><span style="color:#e6db74">{</span>new_bandwidth<span style="color:#e6db74">}</span><span style="color:#e6db74"> Mbps.&#34;</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>:
+</span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;Failed to upgrade the circuit. Status code: </span><span style="color:#e6db74">{</span>response<span style="color:#f92672">.</span>status_code<span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span></code></pre></div><p>lets confirm and get the existing bandwidth for a circuit we are interested in</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>In [<span style="color:#ae81ff">42</span>]: current_bandwidth_megaport_product_1 <span style="color:#f92672">=</span> get_megaport_product_bandwidth(access_token, active_megaport_product_list[<span style="color:#ae81ff">12</span>])
+</span></span><span style="display:flex;"><span>Out[<span style="color:#ae81ff">23</span>]: <span style="color:#ae81ff">10</span>
+</span></span></code></pre></div><p>lets upgrade the bandwidth of the circuit using the &ldquo;upgrade_megaport_product_bandwidth&rdquo; method to 500 Mbps.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>In [<span style="color:#ae81ff">22</span>]: update_bandwidth_product_detail_1 <span style="color:#f92672">=</span> update_megaport_product_bandwidth(access_token, active_megaport_product_list[<span style="color:#ae81ff">12</span>], <span style="color:#ae81ff">500</span>)
+</span></span><span style="display:flex;"><span>Out[<span style="color:#ae81ff">23</span>]: COMPANY<span style="color:#f92672">-</span>CORE<span style="color:#f92672">-</span>B1<span style="color:#f92672">-</span>M1<span style="color:#f92672">-</span>Megaport<span style="color:#f92672">-</span><span style="color:#ae81ff">10</span>M (BW:variable) VXC <span style="color:#ae81ff">85050</span> has been updated to a new rate limit of <span style="color:#ae81ff">500</span> Mbps<span style="color:#f92672">.</span>
+</span></span></code></pre></div><p>Notice that the PUT request has successfully upgraded the bandwdith parsing the name and the VXC along with the new speed.</p>
 <p>We can run the &ldquo;get_megaport_product_bandwidth&rdquo; again to confirm</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">In [<span style="color:#ae81ff">20</span>]: current_bandwidth_megaport_product_1 <span style="color:#f92672">=</span> get_megaport_product_bandwidth(access_token, active_megaport_product_list[<span style="color:#ae81ff">12</span>])
-Out [<span style="color:#ae81ff">21</span>]: pprint(bandwidth_megaport_product_1)
-<span style="color:#ae81ff">500</span>
-</code></pre></div><h2 id="conclusion">Conclusion</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>In [<span style="color:#ae81ff">20</span>]: current_bandwidth_megaport_product_1 <span style="color:#f92672">=</span> get_megaport_product_bandwidth(access_token, active_megaport_product_list[<span style="color:#ae81ff">12</span>])
+</span></span><span style="display:flex;"><span>Out [<span style="color:#ae81ff">21</span>]: pprint(bandwidth_megaport_product_1)
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">500</span>
+</span></span></code></pre></div><h2 id="conclusion">Conclusion</h2>
 <p>In this blog post, we&rsquo;ve explored how to interact with the Megaport API to retrieve product details and automate bandwidth upgrades. Automating tasks like circuit bandwidth upgrades can save time, reduce operational costs, and prevent human error in critical situations. By leveraging the power of APIs and SDN, you can streamline your network operations and enhance your infrastructure&rsquo;s responsiveness to changes, ensuring a more agile and cost-effective environment for your business.</p>
 <p>I will write in the near future a blog post on how I utilized the opMantek opEvents (Firstwave) platform that support an automatic script execution on any event received (whether that’s via SNMP/SNMP traps/Syslog, etc.) to upgrade bandwidth for a certain link upon adjacency link failures, store those values in an SQLite database, and open/close ServiceNow tickets. Stay tuned in this space! 🙂</p>
 
@@ -705,6 +705,30 @@ Out [<span style="color:#ae81ff">21</span>]: pprint(bandwidth_megaport_product_1
             <div class="card h-100">
                 
                 <div class="card-header">
+                    <a href="/blogs/multi-cdn-resilience-2026/">
+                        <img src="/images/multipurpose/multi-cdn.png" class="card-img-top" alt="Multi-CDN Resilience: Why Digital Leaders Can’t Rely on a Single Edge Provider">
+                    </a>
+                </div>
+                
+                <div class="card-body bg-transparent p-3 shadow-sm">
+                    <a href="/blogs/multi-cdn-resilience-2026/" class="primary-font card-title">
+                        <h5 class="card-title bg-transparent" title="Multi-CDN Resilience: Why Digital Leaders Can’t Rely on a Single Edge Provider">Multi-CDN Resilience: Why …</h5>
+                    </a>
+                    <div class="card-text secondary-font">
+                        <p>Multi-CDN Resilience: Lessons From Real Outages Earlier this year, I watched closely as Cloudflare experienced a major outage, and separately, Azure Front Door had a rough patch. These weren’t just technical headlines — teams around the world felt the impact on revenue, partner portals, and …</p>
+                    </div>
+                </div>
+                <div class="mt-auto card-footer">
+                    <span class="float-start">Feb 16, 2026</span>
+                    <a href="/blogs/multi-cdn-resilience-2026/" class="float-end btn btn-outline-info btn-sm">Read</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4 col-md-6 pt-2">
+            <div class="card h-100">
+                
+                <div class="card-header">
                     <a href="/blogs/ai-infrastructure/">
                         <img src="/images/ai_infra_cover.PNG" class="card-img-top" alt="AI Infrastructure">
                     </a>
@@ -745,31 +769,6 @@ Out [<span style="color:#ae81ff">21</span>]: pprint(bandwidth_megaport_product_1
                 <div class="mt-auto card-footer">
                     <span class="float-start">Mar 20, 2025</span>
                     <a href="/blogs/megaport-api/" class="float-end btn btn-outline-info btn-sm">Read</a>
-                </div>
-            </div>
-        </div>
-        
-        <div class="col-lg-4 col-md-6 pt-2">
-            <div class="card h-100">
-                
-                <div class="card-header">
-                    <a href="/blogs/fortinet-ztna-part8/">
-                        <img src="/images/fortinet/ztnap.png" class="card-img-top" alt="Fortinet ZTNA Part VIII">
-                    </a>
-                </div>
-                
-                <div class="card-body bg-transparent p-3 shadow-sm">
-                    <a href="/blogs/fortinet-ztna-part8/" class="primary-font card-title">
-                        <h5 class="card-title bg-transparent" title="Fortinet ZTNA Part VIII">Fortinet ZTNA Part VIII</h5>
-                    </a>
-                    <div class="card-text secondary-font">
-                        <p>Finalizing Fortinet ZTNA: Rules, Verification, and Testing In this final installment of the Fortinet ZTNA series, we will explore FortiGate ZTNA rules, conduct final verifications, and test the proof of concept (POC) from an end-user perspective.
-ZTNA Rules ZTNA rules define access policies using …</p>
-                    </div>
-                </div>
-                <div class="mt-auto card-footer">
-                    <span class="float-start">Mar 18, 2025</span>
-                    <a href="/blogs/fortinet-ztna-part8/" class="float-end btn btn-outline-info btn-sm">Read</a>
                 </div>
             </div>
         </div>
@@ -835,7 +834,7 @@ ZTNA Rules ZTNA rules define access policies using …</p>
                     </a>
                 </div>
             
-            &copy; 2025  All rights reserved
+            &copy; 2026  All rights reserved
             <div class="text-secondary">
                 Made with
                 <span class="text-danger">

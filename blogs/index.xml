@@ -6,142 +6,105 @@
     <description>Recent content in Blogs on NetSecOps Navigator</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 23 Apr 2025 05:15:14 +0000</lastBuildDate>
-    
-	<atom:link href="https://abed1985.github.io/blogs/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Mon, 16 Feb 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://abed1985.github.io/blogs/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Multi-CDN Resilience: Why Digital Leaders Can’t Rely on a Single Edge Provider</title>
+      <link>https://abed1985.github.io/blogs/multi-cdn-resilience-2026/</link>
+      <pubDate>Mon, 16 Feb 2026 00:00:00 +0000</pubDate>
+      <guid>https://abed1985.github.io/blogs/multi-cdn-resilience-2026/</guid>
+      <description>Multi-CDN Resilience: Lessons From Real Outages Earlier this year, I watched closely as Cloudflare experienced a major outage, and separately, Azure Front Door had a rough patch. These weren’t just technical headlines — teams around the world felt the impact on revenue, partner portals, and customer-facing applications.&#xA;The takeaway is clear: relying on a single CDN is a single point of failure.&#xA;Your digital infrastructure matters and ignoring this risk is no longer an option.</description>
+    </item>
     <item>
       <title>AI Infrastructure</title>
       <link>https://abed1985.github.io/blogs/ai-infrastructure/</link>
       <pubDate>Wed, 23 Apr 2025 05:15:14 +0000</pubDate>
-      
       <guid>https://abed1985.github.io/blogs/ai-infrastructure/</guid>
       <description>In this blog post, we explore the foundational technologies that power AI/ML infrastructure—from training and inference clusters to the specialized networking required to keep GPU-driven workloads running smoothly. While we touch on some technical topics like RoCEv2, RDMA, and congestion control mechanisms (PFC, ECN), the goal is to provide a broad understanding for readers who are curious about how AI systems are built and scaled. You don’t need to be a deep technical expert to follow along, but a little networking or systems background will help you appreciate the complexities involved.</description>
     </item>
-    
     <item>
       <title>Megaport API</title>
       <link>https://abed1985.github.io/blogs/megaport-api/</link>
       <pubDate>Thu, 20 Mar 2025 07:39:51 +0000</pubDate>
-      
       <guid>https://abed1985.github.io/blogs/megaport-api/</guid>
-      <description>Introduction In this blog post, I will discuss utilizing the Megaport API from the end customer&amp;rsquo;s perspective. As you may already know, Megaport works with SDN (Software-Defined Networking) and leverages extensive automation in the backend. It provides both production and development environments to test your API queries with the provisioned circuits. You can find the API reference guide and additional details at :Megaport API Documentation.
-As an end client, I would like to use the API to run various calls against my circuits.</description>
+      <description>Introduction In this blog post, I will discuss utilizing the Megaport API from the end customer&amp;rsquo;s perspective. As you may already know, Megaport works with SDN (Software-Defined Networking) and leverages extensive automation in the backend. It provides both production and development environments to test your API queries with the provisioned circuits. You can find the API reference guide and additional details at :Megaport API Documentation.&#xA;As an end client, I would like to use the API to run various calls against my circuits.</description>
     </item>
-    
     <item>
       <title>Fortinet ZTNA Part VIII</title>
       <link>https://abed1985.github.io/blogs/fortinet-ztna-part8/</link>
       <pubDate>Tue, 18 Mar 2025 23:40:02 +0000</pubDate>
-      
       <guid>https://abed1985.github.io/blogs/fortinet-ztna-part8/</guid>
-      <description>Finalizing Fortinet ZTNA: Rules, Verification, and Testing In this final installment of the Fortinet ZTNA series, we will explore FortiGate ZTNA rules, conduct final verifications, and test the proof of concept (POC) from an end-user perspective.
-ZTNA Rules ZTNA rules define access policies using proxy policies to enforce Zero Trust role-based access control. These policies can include ZTNA tags, which are synchronized from FortiClient EMS, and security profiles for additional protection.</description>
+      <description>Finalizing Fortinet ZTNA: Rules, Verification, and Testing In this final installment of the Fortinet ZTNA series, we will explore FortiGate ZTNA rules, conduct final verifications, and test the proof of concept (POC) from an end-user perspective.&#xA;ZTNA Rules ZTNA rules define access policies using proxy policies to enforce Zero Trust role-based access control. These policies can include ZTNA tags, which are synchronized from FortiClient EMS, and security profiles for additional protection.</description>
     </item>
-    
     <item>
       <title>Fortinet ZTNA Part VII</title>
       <link>https://abed1985.github.io/blogs/fortinet-ztna-part7/</link>
       <pubDate>Tue, 11 Mar 2025 21:22:27 +0000</pubDate>
-      
       <guid>https://abed1985.github.io/blogs/fortinet-ztna-part7/</guid>
-      <description>Introduction Welcome to the seventh installment of our Fortinet ZTNA series! In this guide, we explore the configuration of ZTNA tags and tagging rules—essential components that determine whether an endpoint is compliant or non-compliant when accessing data center (DC) resources. This step-by-step tutorial will walk you through setting up ZTNA tags, defining tagging rules, and understanding the available configuration options.
-Zero-Trust Tagging Rules Tagging rules are configured within FortiClient EMS (Endpoint Management System) and help classify endpoints based on compliance criteria.</description>
+      <description>Introduction Welcome to the seventh installment of our Fortinet ZTNA series! In this guide, we explore the configuration of ZTNA tags and tagging rules—essential components that determine whether an endpoint is compliant or non-compliant when accessing data center (DC) resources. This step-by-step tutorial will walk you through setting up ZTNA tags, defining tagging rules, and understanding the available configuration options.&#xA;Zero-Trust Tagging Rules Tagging rules are configured within FortiClient EMS (Endpoint Management System) and help classify endpoints based on compliance criteria.</description>
     </item>
-    
     <item>
       <title>Fortinet ZTNA Part VI</title>
       <link>https://abed1985.github.io/blogs/fortinet-ztna-part6/</link>
       <pubDate>Mon, 10 Mar 2025 04:03:33 +0000</pubDate>
-      
       <guid>https://abed1985.github.io/blogs/fortinet-ztna-part6/</guid>
-      <description>In this sixth installment of our Fortinet ZTNA series, we delve into the configuration of ZTNA destinations in FortiEMS. These destinations play a crucial role in enabling secure access to internal resources through the access proxy. This guide provides a step-by-step overview of setting up ZTNA destinations, including key configuration elements and best practices.
-ZTNA Destinations We have a ZTNA Destination profile named &amp;ldquo;ENDPOINTPOLICY-OFF-NETWORK&amp;rdquo; created under Endpoint Profiles &amp;gt; ZTNA Destinations.</description>
+      <description>In this sixth installment of our Fortinet ZTNA series, we delve into the configuration of ZTNA destinations in FortiEMS. These destinations play a crucial role in enabling secure access to internal resources through the access proxy. This guide provides a step-by-step overview of setting up ZTNA destinations, including key configuration elements and best practices.&#xA;ZTNA Destinations We have a ZTNA Destination profile named &amp;ldquo;ENDPOINTPOLICY-OFF-NETWORK&amp;rdquo; created under Endpoint Profiles &amp;gt; ZTNA Destinations.</description>
     </item>
-    
     <item>
       <title>Fortinet ZTNA Part V</title>
       <link>https://abed1985.github.io/blogs/fortinet-ztna-part5/</link>
       <pubDate>Sun, 09 Mar 2025 02:18:29 +0000</pubDate>
-      
       <guid>https://abed1985.github.io/blogs/fortinet-ztna-part5/</guid>
-      <description>Introduction In this fifth installment of our Fortinet ZTNA series, we explore ZTNA certificate management and its role in securing client authentication and access control.
-ZTNA Certificate Management FortiClient EMS plays a central role in managing certificates for ZTNA authentication. Below are key points regarding ZTNA CA and certificate handling:
- FortiClient EMS has a default root CA certificate (default_ZTNARootCA), which is assigned to the default customer site. Each customer site, such as CUSTOMER-TEST, has a unique root CA.</description>
+      <description>Introduction In this fifth installment of our Fortinet ZTNA series, we explore ZTNA certificate management and its role in securing client authentication and access control.&#xA;ZTNA Certificate Management FortiClient EMS plays a central role in managing certificates for ZTNA authentication. Below are key points regarding ZTNA CA and certificate handling:&#xA;FortiClient EMS has a default root CA certificate (default_ZTNARootCA), which is assigned to the default customer site. Each customer site, such as CUSTOMER-TEST, has a unique root CA.</description>
     </item>
-    
     <item>
       <title>Fortinet ZTNA Part IV</title>
       <link>https://abed1985.github.io/blogs/fortinet-ztna-part4/</link>
       <pubDate>Sat, 08 Mar 2025 06:46:32 +0000</pubDate>
-      
       <guid>https://abed1985.github.io/blogs/fortinet-ztna-part4/</guid>
-      <description>Introduction In this fourth installment of our Fortinet ZTNA series, we delve into ZTNA access proxy server types and how each is applied in our Proof of Concept (PoC).
-The ZTNA server defines the access proxy VIP and the real servers that clients connect to. Once configured, client requests are redirected to the access proxy VIP, with authentication mechanisms such as SAML layered on top.
-ZTNA supports multiple HTTP and SAML authentication methods.</description>
+      <description>Introduction In this fourth installment of our Fortinet ZTNA series, we delve into ZTNA access proxy server types and how each is applied in our Proof of Concept (PoC).&#xA;The ZTNA server defines the access proxy VIP and the real servers that clients connect to. Once configured, client requests are redirected to the access proxy VIP, with authentication mechanisms such as SAML layered on top.&#xA;ZTNA supports multiple HTTP and SAML authentication methods.</description>
     </item>
-    
     <item>
       <title>Fortinet ZTNA Part III</title>
       <link>https://abed1985.github.io/blogs/fortinet-ztna-part3/</link>
       <pubDate>Fri, 07 Mar 2025 01:45:48 +0000</pubDate>
-      
       <guid>https://abed1985.github.io/blogs/fortinet-ztna-part3/</guid>
-      <description>In this third installment of our Fortinet ZTNA series, we explore integrating SAML authentication with Microsoft Azure as the Identity Provider (IdP) and FortiGate as the Service Provider (SP). By leveraging SAML, authentication is offloaded from the access proxy to the IdP, allowing organizations to enforce advanced authentication policies such as Multi-Factor Authentication (MFA)
-To learn more about SAML authentication, check out my by blog post: SAML Authentication
-Configuring a SAML Application (IdP) on Microsoft Azure Step 1: Create an Enterprise Application  Log in to the Azure Administration Console under your customer tenant.</description>
+      <description>In this third installment of our Fortinet ZTNA series, we explore integrating SAML authentication with Microsoft Azure as the Identity Provider (IdP) and FortiGate as the Service Provider (SP). By leveraging SAML, authentication is offloaded from the access proxy to the IdP, allowing organizations to enforce advanced authentication policies such as Multi-Factor Authentication (MFA)&#xA;To learn more about SAML authentication, check out my by blog post: SAML Authentication&#xA;Configuring a SAML Application (IdP) on Microsoft Azure Step 1: Create an Enterprise Application Log in to the Azure Administration Console under your customer tenant.</description>
     </item>
-    
     <item>
       <title>Fortinet ZTNA Part II</title>
       <link>https://abed1985.github.io/blogs/fortinet-ztna-part2/</link>
       <pubDate>Thu, 06 Mar 2025 04:32:54 +0000</pubDate>
-      
       <guid>https://abed1985.github.io/blogs/fortinet-ztna-part2/</guid>
-      <description>In the second part of our Fortinet ZTNA series, we explore a practical use case involving remote access to basic on-premises data center resources.
-The following high-level diagram illustrates the setup:
-This scenario involves the need for remote access to four servers within the data center, each with different access requirements:    Server IP OS Service ZTNA Server Access Proxy Type     192.168.5.100 web server over linux Web access over TCP/443 HTTPS Access Proxy   192.</description>
+      <description>In the second part of our Fortinet ZTNA series, we explore a practical use case involving remote access to basic on-premises data center resources.&#xA;The following high-level diagram illustrates the setup:&#xA;This scenario involves the need for remote access to four servers within the data center, each with different access requirements: Server IP OS Service ZTNA Server Access Proxy Type 192.168.5.100 web server over linux Web access over TCP/443 HTTPS Access Proxy 192.</description>
     </item>
-    
     <item>
       <title>Fortinet ZTNA Part I</title>
       <link>https://abed1985.github.io/blogs/fortinet-ztna-part1/</link>
       <pubDate>Thu, 06 Mar 2025 00:58:01 +0000</pubDate>
-      
       <guid>https://abed1985.github.io/blogs/fortinet-ztna-part1/</guid>
       <description>Solution Overview Definition &amp;amp; Overview Zero Trust Network Access (ZTNA) is an advanced access control method that leverages client device identification, authentication, and Zero Trust tags to provide role-based access to applications. ZTNA enables administrators to manage network access for both on-fabric local users and off-fabric remote users. Access is granted only after a series of checks: device verification, user identity authentication, user authorization, and context-based posture checks, all using Zero Trust tags.</description>
     </item>
-    
     <item>
       <title>Fortigate user level DLP</title>
       <link>https://abed1985.github.io/blogs/fortinet-dlp/</link>
       <pubDate>Tue, 04 Mar 2025 23:54:30 +0000</pubDate>
-      
       <guid>https://abed1985.github.io/blogs/fortinet-dlp/</guid>
-      <description>Block sensitive data leak to ChatGPT example DLP (Data Leak Prevention) has become increasingly crucial with the rise of LLM AI platforms. Many users rely on AI chat platforms to simplify both their work and personal tasks.
-While this convenience is beneficial, it also raises the risk of unintentionally exposing sensitive organizational information. LLM models can incorporate leaked data into their training sets, potentially making it part of responses to external users which in return significantly increasing security risks.</description>
+      <description>Block sensitive data leak to ChatGPT example DLP (Data Leak Prevention) has become increasingly crucial with the rise of LLM AI platforms. Many users rely on AI chat platforms to simplify both their work and personal tasks.&#xA;While this convenience is beneficial, it also raises the risk of unintentionally exposing sensitive organizational information. LLM models can incorporate leaked data into their training sets, potentially making it part of responses to external users which in return significantly increasing security risks.</description>
     </item>
-    
     <item>
       <title>Saml Authentication</title>
       <link>https://abed1985.github.io/blogs/saml-authentication/</link>
       <pubDate>Tue, 04 Mar 2025 04:51:13 +0000</pubDate>
-      
       <guid>https://abed1985.github.io/blogs/saml-authentication/</guid>
-      <description>What is SAML SAML (Security Assertion Markup Language) is an XML based (but Base64 encoded) protocol.It is a standard protocol for web Single Sign-On (SSO) &amp;amp; Federated identity. SAML allows apps and services to offload &amp;ldquo;authentication&amp;rdquo; to a trusted 3rd party. SSO intended to be easy for the user and transparent after the user has logged in the first time.
-Key terms  Federated Identity: Linking a user&amp;rsquo;s identity across different identity management systems or domains, such as between two different organizations, like a service porvider &amp;amp; a customer.</description>
+      <description>What is SAML SAML (Security Assertion Markup Language) is an XML based (but Base64 encoded) protocol.It is a standard protocol for web Single Sign-On (SSO) &amp;amp; Federated identity. SAML allows apps and services to offload &amp;ldquo;authentication&amp;rdquo; to a trusted 3rd party. SSO intended to be easy for the user and transparent after the user has logged in the first time.&#xA;Key terms Federated Identity: Linking a user&amp;rsquo;s identity across different identity management systems or domains, such as between two different organizations, like a service porvider &amp;amp; a customer.</description>
     </item>
-    
     <item>
       <title>Fortinet Guest Wifi with Captive Portal</title>
       <link>https://abed1985.github.io/blogs/fortinet-guest-wifi/</link>
       <pubDate>Mon, 03 Mar 2025 05:57:15 +0000</pubDate>
-      
       <guid>https://abed1985.github.io/blogs/fortinet-guest-wifi/</guid>
-      <description>FortiGate support guest Wi-Fi with a captive portal with the portal being the FortiGate itself. The following two login methods can be used:
- Captive portal login with username/password provided to guest users:Accounts are created in bulk on the FortiGate and printed to be provided to end users (e.g., by reception). Captive portal login with guests’ email address only:This is a less preferred option. Email collection can be done from FortiGate and exported for marketing use if a certain legal agreement allow it.</description>
+      <description>FortiGate support guest Wi-Fi with a captive portal with the portal being the FortiGate itself. The following two login methods can be used:&#xA;Captive portal login with username/password provided to guest users:Accounts are created in bulk on the FortiGate and printed to be provided to end users (e.g., by reception). Captive portal login with guests’ email address only:This is a less preferred option. Email collection can be done from FortiGate and exported for marketing use if a certain legal agreement allow it.</description>
     </item>
-    
   </channel>
 </rss>

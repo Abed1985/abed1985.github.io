@@ -31,12 +31,12 @@
 <meta property="og:title" content="Fortinet Guest Wifi with Captive Portal" />
 <meta property="og:description" content="Guest WiFi Access with FortiWifi" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="https://abed1985.github.io/blogs/fortinet-guest-wifi/" />
+<meta property="og:url" content="https://abed1985.github.io/blogs/fortinet-guest-wifi/" /><meta property="article:section" content="blogs" />
 <meta property="article:published_time" content="2025-03-03T05:57:15+00:00" />
 <meta property="article:modified_time" content="2025-03-03T05:57:15+00:00" /><meta property="og:site_name" content="NetSecOps Navigator" />
 
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Fortinet Guest Wifi with Captive Portal"/>
+
+<meta name="twitter:card" content="summary"/><meta name="twitter:title" content="Fortinet Guest Wifi with Captive Portal"/>
 <meta name="twitter:description" content="Guest WiFi Access with FortiWifi"/>
 
 
@@ -370,27 +370,27 @@ Fortinet Guest Wifi with Captive Portal | NetSecOps Navigator
 <p><img src="/images/fortinet/add_devicemanagement_widget.PNG" alt="My Image"></p>
 <h3 id="step-4-update-the-firewall-policy">Step 4: Update the Firewall Policy</h3>
 <p>In CLI, allow &ldquo;email-collect&rdquo; under the firewall policy for guest traffic to the internet:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">FG<span style="color:#f92672">-</span>ABOOD<span style="color:#f92672">-</span>DC<span style="color:#f92672">-</span>WAN <span style="color:#75715e"># config firewall policy </span>
-FG<span style="color:#f92672">-</span>ABOOD<span style="color:#f92672">-</span>DC<span style="color:#f92672">-</span>WAN (policy) <span style="color:#75715e"># edit 7</span>
-FG<span style="color:#f92672">-</span>ABOOD<span style="color:#f92672">-</span>DC<span style="color:#f92672">-</span>WAN (<span style="color:#ae81ff">7</span>) <span style="color:#75715e"># show</span>
-config firewall policy
-    edit <span style="color:#ae81ff">7</span>
-        set name <span style="color:#e6db74">&#34;GuestWiFi&#34;</span>
-        set uuid bb2c74d4<span style="color:#f92672">-</span><span style="color:#ae81ff">29</span>c9<span style="color:#f92672">-</span><span style="color:#ae81ff">51</span>ee<span style="color:#f92672">-</span>b1e5<span style="color:#f92672">-</span>c452b399da9f
-        set srcintf <span style="color:#e6db74">&#34;Alakhras Guests&#34;</span> <span style="color:#e6db74">&#34;Alakhras Guest2&#34;</span>
-        set dstintf <span style="color:#e6db74">&#34;WAN&#34;</span>
-        set action accept
-        set srcaddr <span style="color:#e6db74">&#34;Alakhras Guests address&#34;</span> <span style="color:#e6db74">&#34;Alakhras Guest2 address&#34;</span>
-        set dstaddr <span style="color:#e6db74">&#34;all&#34;</span>
-        set schedule <span style="color:#e6db74">&#34;always&#34;</span>
-        set service <span style="color:#e6db74">&#34;ALL&#34;</span>
-        set logtraffic all
-        set nat enable
-        set email<span style="color:#f92672">-</span>collect enable
-    next
-end
-FG<span style="color:#f92672">-</span>ABOOD<span style="color:#f92672">-</span>DC<span style="color:#f92672">-</span>WAN (<span style="color:#ae81ff">7</span>) <span style="color:#75715e"># </span>
-</code></pre></div><h2 id="other-required-settings">Other Required Settings</h2>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>FG<span style="color:#f92672">-</span>ABOOD<span style="color:#f92672">-</span>DC<span style="color:#f92672">-</span>WAN <span style="color:#75715e"># config firewall policy </span>
+</span></span><span style="display:flex;"><span>FG<span style="color:#f92672">-</span>ABOOD<span style="color:#f92672">-</span>DC<span style="color:#f92672">-</span>WAN (policy) <span style="color:#75715e"># edit 7</span>
+</span></span><span style="display:flex;"><span>FG<span style="color:#f92672">-</span>ABOOD<span style="color:#f92672">-</span>DC<span style="color:#f92672">-</span>WAN (<span style="color:#ae81ff">7</span>) <span style="color:#75715e"># show</span>
+</span></span><span style="display:flex;"><span>config firewall policy
+</span></span><span style="display:flex;"><span>    edit <span style="color:#ae81ff">7</span>
+</span></span><span style="display:flex;"><span>        set name <span style="color:#e6db74">&#34;GuestWiFi&#34;</span>
+</span></span><span style="display:flex;"><span>        set uuid bb2c74d4<span style="color:#f92672">-</span><span style="color:#ae81ff">29</span>c9<span style="color:#f92672">-</span><span style="color:#ae81ff">51</span>ee<span style="color:#f92672">-</span>b1e5<span style="color:#f92672">-</span>c452b399da9f
+</span></span><span style="display:flex;"><span>        set srcintf <span style="color:#e6db74">&#34;Alakhras Guests&#34;</span> <span style="color:#e6db74">&#34;Alakhras Guest2&#34;</span>
+</span></span><span style="display:flex;"><span>        set dstintf <span style="color:#e6db74">&#34;WAN&#34;</span>
+</span></span><span style="display:flex;"><span>        set action accept
+</span></span><span style="display:flex;"><span>        set srcaddr <span style="color:#e6db74">&#34;Alakhras Guests address&#34;</span> <span style="color:#e6db74">&#34;Alakhras Guest2 address&#34;</span>
+</span></span><span style="display:flex;"><span>        set dstaddr <span style="color:#e6db74">&#34;all&#34;</span>
+</span></span><span style="display:flex;"><span>        set schedule <span style="color:#e6db74">&#34;always&#34;</span>
+</span></span><span style="display:flex;"><span>        set service <span style="color:#e6db74">&#34;ALL&#34;</span>
+</span></span><span style="display:flex;"><span>        set logtraffic all
+</span></span><span style="display:flex;"><span>        set nat enable
+</span></span><span style="display:flex;"><span>        set email<span style="color:#f92672">-</span>collect enable
+</span></span><span style="display:flex;"><span>    next
+</span></span><span style="display:flex;"><span>end
+</span></span><span style="display:flex;"><span>FG<span style="color:#f92672">-</span>ABOOD<span style="color:#f92672">-</span>DC<span style="color:#f92672">-</span>WAN (<span style="color:#ae81ff">7</span>) <span style="color:#75715e"># </span>
+</span></span></code></pre></div><h2 id="other-required-settings">Other Required Settings</h2>
 <h3 id="customize-the-login-portal-page">Customize the Login Portal Page</h3>
 <p>The portal can be customized under System → Replacement Messages:</p>
 <ul>
@@ -418,20 +418,20 @@ The changes are dynamic and visible while you edit. You don&rsquo;t have to be a
 </li>
 </ol>
 <p>The above can be executed from either the GUI under Network &gt; DNS Servers or from the CLI like below:</p>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">FG<span style="color:#f92672">-</span>ABOOD<span style="color:#f92672">-</span>DC<span style="color:#f92672">-</span>WAN (netsecops) <span style="color:#75715e"># show</span>
-config system dns<span style="color:#f92672">-</span>database
-    edit <span style="color:#e6db74">&#34;netsecops&#34;</span>
-        set domain <span style="color:#e6db74">&#34;net-sec-ops.com&#34;</span>
-        set authoritative disable
-        config dns<span style="color:#f92672">-</span>entry
-            edit <span style="color:#ae81ff">1</span>
-                set hostname <span style="color:#e6db74">&#34;guest&#34;</span>
-                set ip <span style="color:#ae81ff">192.168</span><span style="color:#f92672">.</span><span style="color:#ae81ff">50.1</span>
-            next
-        end
-    next
-end
-</code></pre></div><ol start="2">
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>FG<span style="color:#f92672">-</span>ABOOD<span style="color:#f92672">-</span>DC<span style="color:#f92672">-</span>WAN (netsecops) <span style="color:#75715e"># show</span>
+</span></span><span style="display:flex;"><span>config system dns<span style="color:#f92672">-</span>database
+</span></span><span style="display:flex;"><span>    edit <span style="color:#e6db74">&#34;netsecops&#34;</span>
+</span></span><span style="display:flex;"><span>        set domain <span style="color:#e6db74">&#34;net-sec-ops.com&#34;</span>
+</span></span><span style="display:flex;"><span>        set authoritative disable
+</span></span><span style="display:flex;"><span>        config dns<span style="color:#f92672">-</span>entry
+</span></span><span style="display:flex;"><span>            edit <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>                set hostname <span style="color:#e6db74">&#34;guest&#34;</span>
+</span></span><span style="display:flex;"><span>                set ip <span style="color:#ae81ff">192.168.50.1</span>
+</span></span><span style="display:flex;"><span>            next
+</span></span><span style="display:flex;"><span>        end
+</span></span><span style="display:flex;"><span>    next
+</span></span><span style="display:flex;"><span>end
+</span></span></code></pre></div><ol start="2">
 <li>Trusted Certificate:
 <ul>
 <li>Import a trusted certificate (e.g., a wildcard certificate for customerx.com) into the FortiGate that has the FQDN address as SN.</li>
@@ -439,18 +439,18 @@ end
 </ul>
 </li>
 </ol>
-<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-python" data-lang="python">config wireless<span style="color:#f92672">-</span>controller vap
-    edit <span style="color:#e6db74">&#34;Alakhras Guest2&#34;</span>
-        set ssid <span style="color:#e6db74">&#34;Alakhras Guest2&#34;</span>
-        set security captive<span style="color:#f92672">-</span>portal
-        set portal<span style="color:#f92672">-</span>type email<span style="color:#f92672">-</span>collect
-        set security<span style="color:#f92672">-</span>redirect<span style="color:#f92672">-</span>url <span style="color:#e6db74">&#34;http://www.net-sec-ops.com/redirect-url/&#34;</span>
-        set auth<span style="color:#f92672">-</span>cert <span style="color:#e6db74">&#34;abood-dc-wan.net-sec-ops.com&#34;</span>
-        set auth<span style="color:#f92672">-</span>portal<span style="color:#f92672">-</span>addr <span style="color:#e6db74">&#34;guest.net-sec-ops.com&#34;</span>
-        set schedule <span style="color:#e6db74">&#34;always&#34;</span>
-    next
-end
-</code></pre></div><h3 id="managing-guest-users">Managing Guest Users</h3>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span>config wireless<span style="color:#f92672">-</span>controller vap
+</span></span><span style="display:flex;"><span>    edit <span style="color:#e6db74">&#34;Alakhras Guest2&#34;</span>
+</span></span><span style="display:flex;"><span>        set ssid <span style="color:#e6db74">&#34;Alakhras Guest2&#34;</span>
+</span></span><span style="display:flex;"><span>        set security captive<span style="color:#f92672">-</span>portal
+</span></span><span style="display:flex;"><span>        set portal<span style="color:#f92672">-</span>type email<span style="color:#f92672">-</span>collect
+</span></span><span style="display:flex;"><span>        set security<span style="color:#f92672">-</span>redirect<span style="color:#f92672">-</span>url <span style="color:#e6db74">&#34;http://www.net-sec-ops.com/redirect-url/&#34;</span>
+</span></span><span style="display:flex;"><span>        set auth<span style="color:#f92672">-</span>cert <span style="color:#e6db74">&#34;abood-dc-wan.net-sec-ops.com&#34;</span>
+</span></span><span style="display:flex;"><span>        set auth<span style="color:#f92672">-</span>portal<span style="color:#f92672">-</span>addr <span style="color:#e6db74">&#34;guest.net-sec-ops.com&#34;</span>
+</span></span><span style="display:flex;"><span>        set schedule <span style="color:#e6db74">&#34;always&#34;</span>
+</span></span><span style="display:flex;"><span>    next
+</span></span><span style="display:flex;"><span>end
+</span></span></code></pre></div><h3 id="managing-guest-users">Managing Guest Users</h3>
 <p>If the customer wishes to manage guest user accounts, create a guest admin account tied to a trusted host subnet.
 This allows the admin to log in and access only the Guest Management section of the FortiGate interface.</p>
 <p><img src="/images/fortinet/guest_admin_page.PNG" alt="My Image"></p>
@@ -614,6 +614,30 @@ This allows the admin to log in and access only the Guest Management section of 
             <div class="card h-100">
                 
                 <div class="card-header">
+                    <a href="/blogs/multi-cdn-resilience-2026/">
+                        <img src="/images/multipurpose/multi-cdn.png" class="card-img-top" alt="Multi-CDN Resilience: Why Digital Leaders Can’t Rely on a Single Edge Provider">
+                    </a>
+                </div>
+                
+                <div class="card-body bg-transparent p-3 shadow-sm">
+                    <a href="/blogs/multi-cdn-resilience-2026/" class="primary-font card-title">
+                        <h5 class="card-title bg-transparent" title="Multi-CDN Resilience: Why Digital Leaders Can’t Rely on a Single Edge Provider">Multi-CDN Resilience: Why …</h5>
+                    </a>
+                    <div class="card-text secondary-font">
+                        <p>Multi-CDN Resilience: Lessons From Real Outages Earlier this year, I watched closely as Cloudflare experienced a major outage, and separately, Azure Front Door had a rough patch. These weren’t just technical headlines — teams around the world felt the impact on revenue, partner portals, and …</p>
+                    </div>
+                </div>
+                <div class="mt-auto card-footer">
+                    <span class="float-start">Feb 16, 2026</span>
+                    <a href="/blogs/multi-cdn-resilience-2026/" class="float-end btn btn-outline-info btn-sm">Read</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-lg-4 col-md-6 pt-2">
+            <div class="card h-100">
+                
+                <div class="card-header">
                     <a href="/blogs/ai-infrastructure/">
                         <img src="/images/ai_infra_cover.PNG" class="card-img-top" alt="AI Infrastructure">
                     </a>
@@ -654,31 +678,6 @@ This allows the admin to log in and access only the Guest Management section of 
                 <div class="mt-auto card-footer">
                     <span class="float-start">Mar 20, 2025</span>
                     <a href="/blogs/megaport-api/" class="float-end btn btn-outline-info btn-sm">Read</a>
-                </div>
-            </div>
-        </div>
-        
-        <div class="col-lg-4 col-md-6 pt-2">
-            <div class="card h-100">
-                
-                <div class="card-header">
-                    <a href="/blogs/fortinet-ztna-part8/">
-                        <img src="/images/fortinet/ztnap.png" class="card-img-top" alt="Fortinet ZTNA Part VIII">
-                    </a>
-                </div>
-                
-                <div class="card-body bg-transparent p-3 shadow-sm">
-                    <a href="/blogs/fortinet-ztna-part8/" class="primary-font card-title">
-                        <h5 class="card-title bg-transparent" title="Fortinet ZTNA Part VIII">Fortinet ZTNA Part VIII</h5>
-                    </a>
-                    <div class="card-text secondary-font">
-                        <p>Finalizing Fortinet ZTNA: Rules, Verification, and Testing In this final installment of the Fortinet ZTNA series, we will explore FortiGate ZTNA rules, conduct final verifications, and test the proof of concept (POC) from an end-user perspective.
-ZTNA Rules ZTNA rules define access policies using …</p>
-                    </div>
-                </div>
-                <div class="mt-auto card-footer">
-                    <span class="float-start">Mar 18, 2025</span>
-                    <a href="/blogs/fortinet-ztna-part8/" class="float-end btn btn-outline-info btn-sm">Read</a>
                 </div>
             </div>
         </div>
@@ -744,7 +743,7 @@ ZTNA Rules ZTNA rules define access policies using …</p>
                     </a>
                 </div>
             
-            &copy; 2025  All rights reserved
+            &copy; 2026  All rights reserved
             <div class="text-secondary">
                 Made with
                 <span class="text-danger">

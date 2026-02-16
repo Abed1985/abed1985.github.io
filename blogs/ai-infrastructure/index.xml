@@ -7,9 +7,6 @@
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 23 Apr 2025 05:15:14 +0000</lastBuildDate>
-    
-	<atom:link href="https://abed1985.github.io/blogs/ai-infrastructure/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <atom:link href="https://abed1985.github.io/blogs/ai-infrastructure/index.xml" rel="self" type="application/rss+xml" />
   </channel>
 </rss>
